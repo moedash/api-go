@@ -7,13 +7,12 @@
 package enums
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	"strconv"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -45,6 +44,7 @@ const (
 	COMMAND_TYPE_MODIFY_WORKFLOW_PROPERTIES                 CommandType = 16
 	COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION                   CommandType = 17
 	COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION             CommandType = 18
+	COMMAND_TYPE_ADD_STREAM_MESSAGES                        CommandType = 19
 )
 
 // Enum value maps for CommandType.
@@ -68,6 +68,7 @@ var (
 		16: "COMMAND_TYPE_MODIFY_WORKFLOW_PROPERTIES",
 		17: "COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION",
 		18: "COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION",
+		19: "COMMAND_TYPE_ADD_STREAM_MESSAGES",
 	}
 	CommandType_value = map[string]int32{
 		"COMMAND_TYPE_UNSPECIFIED":                                0,
@@ -88,6 +89,7 @@ var (
 		"COMMAND_TYPE_MODIFY_WORKFLOW_PROPERTIES":                 16,
 		"COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION":                   17,
 		"COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION":             18,
+		"COMMAND_TYPE_ADD_STREAM_MESSAGES":                        19,
 	}
 )
 
@@ -137,6 +139,8 @@ func (x CommandType) String() string {
 		return "ScheduleNexusOperation"
 	case COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION:
 		return "RequestCancelNexusOperation"
+	case COMMAND_TYPE_ADD_STREAM_MESSAGES:
+		return "AddStreamMessages"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -163,7 +167,7 @@ var File_temporal_api_enums_v1_command_type_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"\n" +
-	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\x9c\x06\n" +
+	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\xc2\x06\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
 	"#COMMAND_TYPE_SCHEDULE_ACTIVITY_TASK\x10\x01\x12-\n" +
@@ -183,7 +187,8 @@ const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"\x1dCOMMAND_TYPE_PROTOCOL_MESSAGE\x10\x0e\x12+\n" +
 	"'COMMAND_TYPE_MODIFY_WORKFLOW_PROPERTIES\x10\x10\x12)\n" +
 	"%COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION\x10\x11\x12/\n" +
-	"+COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION\x10\x12B\x88\x01\n" +
+	"+COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION\x10\x12\x12$\n" +
+	" COMMAND_TYPE_ADD_STREAM_MESSAGES\x10\x13B\x88\x01\n" +
 	"\x18io.temporal.api.enums.v1B\x10CommandTypeProtoP\x01Z!go.temporal.io/api/enums/v1;enums\xaa\x02\x17Temporalio.Api.Enums.V1\xea\x02\x1aTemporalio::Api::Enums::V1b\x06proto3"
 
 var (
