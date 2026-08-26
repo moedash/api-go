@@ -101,10 +101,19 @@ type StreamSlice struct {
 	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
 	// Exclusive. Equal to from_offset when the subscription observed nothing,
 	// which is a fact replay has to reproduce rather than an absence of one.
-	ToOffset      int64            `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
-	Messages      []*StreamMessage `protobuf:"bytes,5,rep,name=messages,proto3" json:"messages,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ToOffset int64            `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
+	Messages []*StreamMessage `protobuf:"bytes,5,rep,name=messages,proto3" json:"messages,omitempty"`
+	// The WorkflowTaskCompleted event whose stream_cursors recorded this range.
+	// Set only when the server is re-supplying a range for a task being
+	// replayed; a slice for the task now being started leaves it unset, because
+	// the event closing that task does not exist yet.
+	//
+	// Replay needs this because a Workflow Task response carries one slice set
+	// while a cache miss replays every prior task, so the ranges have to be
+	// matched to the events that recorded them rather than to the response.
+	WorkflowTaskCompletedEventId int64 `protobuf:"varint,6,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *StreamSlice) Reset() {
@@ -170,6 +179,13 @@ func (x *StreamSlice) GetMessages() []*StreamMessage {
 		return x.Messages
 	}
 	return nil
+}
+
+func (x *StreamSlice) GetWorkflowTaskCompletedEventId() int64 {
+	if x != nil {
+		return x.WorkflowTaskCompletedEventId
+	}
+	return 0
 }
 
 // The offsets a Workflow Task consumed, without the payloads. Recorded on
@@ -247,14 +263,15 @@ const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
 	"\x0etopic_sequence\x18\x04 \x01(\x03R\rtopicSequence\x1a\\\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\xc2\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\x8a\x02\n" +
 	"\vStreamSlice\x12\x1b\n" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12\x1f\n" +
 	"\vfrom_offset\x18\x03 \x01(\x03R\n" +
 	"fromOffset\x12\x1b\n" +
 	"\tto_offset\x18\x04 \x01(\x03R\btoOffset\x12A\n" +
-	"\bmessages\x18\x05 \x03(\v2%.temporal.api.stream.v1.StreamMessageR\bmessages\"i\n" +
+	"\bmessages\x18\x05 \x03(\v2%.temporal.api.stream.v1.StreamMessageR\bmessages\x12F\n" +
+	" workflow_task_completed_event_id\x18\x06 \x01(\x03R\x1cworkflowTaskCompletedEventId\"i\n" +
 	"\fStreamCursor\x12\x1b\n" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x1f\n" +
 	"\vfrom_offset\x18\x02 \x01(\x03R\n" +
