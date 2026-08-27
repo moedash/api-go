@@ -190,6 +190,10 @@ const (
 	EVENT_TYPE_WORKFLOW_EXECUTION_UNPAUSED EventType = 59
 	// An event that indicates time skipping advanced time or was disabled automatically after a bound was reached.
 	EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED EventType = 60
+	// A Workflow subscribed to a stream. Recorded once per subscription, not
+	// per message: the offsets a task consumed ride WorkflowTaskCompleted and
+	// the payloads never enter History at all.
+	EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED EventType = 61
 )
 
 // Enum value maps for EventType.
@@ -256,6 +260,7 @@ var (
 		58: "EVENT_TYPE_WORKFLOW_EXECUTION_PAUSED",
 		59: "EVENT_TYPE_WORKFLOW_EXECUTION_UNPAUSED",
 		60: "EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED",
+		61: "EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED",
 	}
 	EventType_value = map[string]int32{
 		"EVENT_TYPE_UNSPECIFIED":                                          0,
@@ -319,6 +324,7 @@ var (
 		"EVENT_TYPE_WORKFLOW_EXECUTION_PAUSED":                            58,
 		"EVENT_TYPE_WORKFLOW_EXECUTION_UNPAUSED":                          59,
 		"EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED":        60,
+		"EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED":                           61,
 	}
 )
 
@@ -454,6 +460,8 @@ func (x EventType) String() string {
 		return "WorkflowExecutionUnpaused"
 	case EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED:
 		return "WorkflowExecutionTimeSkippingTransitioned"
+	case EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED:
+		return "WorkflowStreamSubscribed"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -480,7 +488,7 @@ var File_temporal_api_enums_v1_event_type_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_event_type_proto_rawDesc = "" +
 	"\n" +
-	"&temporal/api/enums/v1/event_type.proto\x12\x15temporal.api.enums.v1*\x9e\x16\n" +
+	"&temporal/api/enums/v1/event_type.proto\x12\x15temporal.api.enums.v1*\xc9\x16\n" +
 	"\tEventType\x12\x1a\n" +
 	"\x16EVENT_TYPE_UNSPECIFIED\x10\x00\x12)\n" +
 	"%EVENT_TYPE_WORKFLOW_EXECUTION_STARTED\x10\x01\x12+\n" +
@@ -543,7 +551,8 @@ const file_temporal_api_enums_v1_event_type_proto_rawDesc = "" +
 	"0EVENT_TYPE_NEXUS_OPERATION_CANCEL_REQUEST_FAILED\x109\x12(\n" +
 	"$EVENT_TYPE_WORKFLOW_EXECUTION_PAUSED\x10:\x12*\n" +
 	"&EVENT_TYPE_WORKFLOW_EXECUTION_UNPAUSED\x10;\x12<\n" +
-	"8EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED\x10<B\x86\x01\n" +
+	"8EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED\x10<\x12)\n" +
+	"%EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED\x10=B\x86\x01\n" +
 	"\x18io.temporal.api.enums.v1B\x0eEventTypeProtoP\x01Z!go.temporal.io/api/enums/v1;enums\xaa\x02\x17Temporalio.Api.Enums.V1\xea\x02\x1aTemporalio::Api::Enums::V1b\x06proto3"
 
 var (
