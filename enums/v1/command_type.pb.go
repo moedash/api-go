@@ -45,6 +45,7 @@ const (
 	COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION                   CommandType = 17
 	COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION             CommandType = 18
 	COMMAND_TYPE_ADD_STREAM_MESSAGES                        CommandType = 19
+	COMMAND_TYPE_SUBSCRIBE_STREAM                           CommandType = 20
 )
 
 // Enum value maps for CommandType.
@@ -69,6 +70,7 @@ var (
 		17: "COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION",
 		18: "COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION",
 		19: "COMMAND_TYPE_ADD_STREAM_MESSAGES",
+		20: "COMMAND_TYPE_SUBSCRIBE_STREAM",
 	}
 	CommandType_value = map[string]int32{
 		"COMMAND_TYPE_UNSPECIFIED":                                0,
@@ -90,6 +92,7 @@ var (
 		"COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION":                   17,
 		"COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION":             18,
 		"COMMAND_TYPE_ADD_STREAM_MESSAGES":                        19,
+		"COMMAND_TYPE_SUBSCRIBE_STREAM":                           20,
 	}
 )
 
@@ -141,6 +144,8 @@ func (x CommandType) String() string {
 		return "RequestCancelNexusOperation"
 	case COMMAND_TYPE_ADD_STREAM_MESSAGES:
 		return "AddStreamMessages"
+	case COMMAND_TYPE_SUBSCRIBE_STREAM:
+		return "SubscribeStream"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -167,7 +172,7 @@ var File_temporal_api_enums_v1_command_type_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"\n" +
-	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\xc2\x06\n" +
+	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\xe5\x06\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
 	"#COMMAND_TYPE_SCHEDULE_ACTIVITY_TASK\x10\x01\x12-\n" +
@@ -188,7 +193,8 @@ const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"'COMMAND_TYPE_MODIFY_WORKFLOW_PROPERTIES\x10\x10\x12)\n" +
 	"%COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION\x10\x11\x12/\n" +
 	"+COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION\x10\x12\x12$\n" +
-	" COMMAND_TYPE_ADD_STREAM_MESSAGES\x10\x13B\x88\x01\n" +
+	" COMMAND_TYPE_ADD_STREAM_MESSAGES\x10\x13\x12!\n" +
+	"\x1dCOMMAND_TYPE_SUBSCRIBE_STREAM\x10\x14B\x88\x01\n" +
 	"\x18io.temporal.api.enums.v1B\x10CommandTypeProtoP\x01Z!go.temporal.io/api/enums/v1;enums\xaa\x02\x17Temporalio.Api.Enums.V1\xea\x02\x1aTemporalio::Api::Enums::V1b\x06proto3"
 
 var (
