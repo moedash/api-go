@@ -69,6 +69,7 @@ var (
 		"WorkflowExecutionUnpaused":                       59,
 		"WorkflowExecutionTimeSkippingTransitioned":       60,
 		"WorkflowStreamSubscribed":                        61,
+		"WorkflowStreamMessagesAdded":                     62,
 	}
 )
 
