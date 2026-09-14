@@ -26,6 +26,7 @@ import (
 	"go.temporal.io/api/query/v1"
 	"go.temporal.io/api/schedule/v1"
 	"go.temporal.io/api/sdk/v1"
+	"go.temporal.io/api/stream/v1"
 	"go.temporal.io/api/update/v1"
 	"go.temporal.io/api/workflow/v1"
 	workflowservice "go.temporal.io/api/workflowservice/v1"
@@ -748,6 +749,32 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
+		case *command.AddStreamMessagesCommandAttributes:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetMessages(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
 		case *command.CancelWorkflowExecutionCommandAttributes:
 
 			if o == nil {
@@ -800,6 +827,7 @@ func visitPayloads(
 				options,
 				o,
 				concState,
+				o.GetAddStreamMessagesCommandAttributes(),
 				o.GetCancelWorkflowExecutionCommandAttributes(),
 				o.GetCompleteWorkflowExecutionCommandAttributes(),
 				o.GetContinueAsNewWorkflowExecutionCommandAttributes(),
@@ -3389,6 +3417,78 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
+		case []*stream.StreamMessage:
+			for _, x := range o {
+				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
+					return err
+				}
+			}
+
+		case *stream.StreamMessage:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if o.Body != nil {
+				if err := visitPayload(ctx, options, o, concState, &o.Body); err != nil {
+					return err
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetMetadata(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
+		case []*stream.StreamSlice:
+			for _, x := range o {
+				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
+					return err
+				}
+			}
+
+		case *stream.StreamSlice:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetMessages(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
 		case *update.Acceptance:
 
 			if o == nil {
@@ -4871,6 +4971,7 @@ func visitPayloads(
 				o.GetMessages(),
 				o.GetQueries(),
 				o.GetQuery(),
+				o.GetStreamSlices(),
 			); err != nil {
 				return err
 			}
