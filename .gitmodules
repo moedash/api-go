@@ -1,7 +1,6 @@
 [submodule "proto/api"]
 	path = proto/api
 	url = https://github.com/moedash/api
-	branch = moe/AI-198-stream-protos
 [submodule "proto/api-cloud"]
 	path = proto/api-cloud
 	url = https://github.com/temporalio/api-cloud

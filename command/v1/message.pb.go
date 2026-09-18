@@ -7,6 +7,10 @@
 package command
 
 import (
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
+
 	v1 "go.temporal.io/api/common/v1"
 	v13 "go.temporal.io/api/enums/v1"
 	v12 "go.temporal.io/api/failure/v1"
@@ -17,9 +21,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
@@ -1858,7 +1859,8 @@ func (*Command_AddStreamMessagesCommandAttributes) isCommand_Attributes() {}
 func (*Command_SubscribeStreamCommandAttributes) isCommand_Attributes() {}
 
 // Appends to a stream the Workflow owns. Applied inside the Workflow Task's own
-// commit, so it emits no History Event and does not schedule further work.
+// commit. Produces one `WorkflowStreamMessagesAdded` event carrying the offset
+// range and none of the payload; it schedules no further work.
 type AddStreamMessagesCommandAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Empty means the Workflow's default output stream.
@@ -1922,6 +1924,9 @@ type SubscribeStreamCommandAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Stream to consume. A stream in another execution is addressed by its id;
 	// one this Workflow owns is addressed by the name it was published under.
+	// The server resolves an owned name first and falls back to a standalone
+	// id, so a Workflow that owns a stream under this name cannot reach a
+	// standalone stream with the same id.
 	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
 	// Where to start. Negative means from wherever the stream is when the
 	// subscription is registered, which the server resolves and records so

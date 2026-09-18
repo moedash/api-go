@@ -7,12 +7,13 @@
 package stream
 
 import (
-	v1 "go.temporal.io/api/common/v1"
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	v1 "go.temporal.io/api/common/v1"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,11 +24,16 @@ const (
 )
 
 type StreamMessage struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Body          *v1.Payload            `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
-	Metadata      map[string]*v1.Payload `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Topic         string                 `protobuf:"bytes,3,opt,name=topic,proto3" json:"topic,omitempty"`
-	TopicSequence int64                  `protobuf:"varint,4,opt,name=topic_sequence,json=topicSequence,proto3" json:"topic_sequence,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The message itself, stored as sent.
+	Body *v1.Payload `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
+	// Producer-supplied provenance, stored as sent.
+	Metadata map[string]*v1.Payload `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Producer-supplied grouping label, stored as sent.
+	Topic string `protobuf:"bytes,3,opt,name=topic,proto3" json:"topic,omitempty"`
+	// Producer-supplied position within `topic`. The server stores it as sent
+	// and does not assign, validate or order by it.
+	TopicSequence int64 `protobuf:"varint,4,opt,name=topic_sequence,json=topicSequence,proto3" json:"topic_sequence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -96,7 +102,9 @@ func (x *StreamMessage) GetTopicSequence() int64 {
 type StreamSlice struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
 	StreamId string                 `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	RunId    string                 `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	// Run id of the execution that owns the stream. Set on both a slice for the
+	// task being started and a re-supplied one.
+	RunId string `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	// Inclusive.
 	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
 	// Exclusive. Equal to from_offset when the subscription observed nothing,

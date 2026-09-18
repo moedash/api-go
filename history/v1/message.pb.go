@@ -1208,11 +1208,6 @@ type WorkflowTaskCompletedEventAttributes struct {
 	// execution. UNSPECIFIED means the task was completed by an unversioned worker. This value
 	// updates workflow execution's `versioning_info.behavior`.
 	VersioningBehavior v12.VersioningBehavior `protobuf:"varint,8,opt,name=versioning_behavior,json=versioningBehavior,proto3,enum=temporal.api.enums.v1.VersioningBehavior" json:"versioning_behavior,omitempty"`
-	// Offset ranges this Workflow Task consumed from streams it subscribes to.
-	// Recorded on every task where a subscription is active, including when it
-	// observed nothing: an empty range is a fact replay must reproduce, and
-	// omitting it would let replay deliver messages the Workflow did not have.
-	StreamCursors []*v17.StreamCursor `protobuf:"bytes,20,rep,name=stream_cursors,json=streamCursors,proto3" json:"stream_cursors,omitempty"`
 	// The Worker Deployment Version that completed this task. Must be set if `versioning_behavior`
 	// is set. This value updates workflow execution's `versioning_info.version`.
 	// Deprecated. Replaced with `deployment_version`.
@@ -1225,8 +1220,14 @@ type WorkflowTaskCompletedEventAttributes struct {
 	// The Worker Deployment Version that completed this task. Must be set if `versioning_behavior`
 	// is set. This value updates workflow execution's `versioning_info.deployment_version`.
 	DeploymentVersion *v15.WorkerDeploymentVersion `protobuf:"bytes,11,opt,name=deployment_version,json=deploymentVersion,proto3" json:"deployment_version,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Offset ranges this Workflow Task consumed from streams it subscribes to.
+	// Recorded on every task where a subscription is active, including when it
+	// observed nothing: an empty range is a fact replay must reproduce, and
+	// omitting it would let replay deliver messages the Workflow did not have.
+	// Numbered 20 to leave 14 through 19 free for fields added on the main line.
+	StreamCursors []*v17.StreamCursor `protobuf:"bytes,20,rep,name=stream_cursors,json=streamCursors,proto3" json:"stream_cursors,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *WorkflowTaskCompletedEventAttributes) Reset() {
@@ -1325,13 +1326,6 @@ func (x *WorkflowTaskCompletedEventAttributes) GetVersioningBehavior() v12.Versi
 	return v12.VersioningBehavior(0)
 }
 
-func (x *WorkflowTaskCompletedEventAttributes) GetStreamCursors() []*v17.StreamCursor {
-	if x != nil {
-		return x.StreamCursors
-	}
-	return nil
-}
-
 // Deprecated: Marked as deprecated in temporal/api/history/v1/message.proto.
 func (x *WorkflowTaskCompletedEventAttributes) GetWorkerDeploymentVersion() string {
 	if x != nil {
@@ -1350,6 +1344,13 @@ func (x *WorkflowTaskCompletedEventAttributes) GetWorkerDeploymentName() string 
 func (x *WorkflowTaskCompletedEventAttributes) GetDeploymentVersion() *v15.WorkerDeploymentVersion {
 	if x != nil {
 		return x.DeploymentVersion
+	}
+	return nil
+}
+
+func (x *WorkflowTaskCompletedEventAttributes) GetStreamCursors() []*v17.StreamCursor {
+	if x != nil {
+		return x.StreamCursors
 	}
 	return nil
 }
@@ -7361,12 +7362,12 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\n" +
 	"deployment\x18\a \x01(\v2&.temporal.api.deployment.v1.DeploymentB\x02\x18\x01R\n" +
 	"deployment\x12Z\n" +
-	"\x13versioning_behavior\x18\b \x01(\x0e2).temporal.api.enums.v1.VersioningBehaviorR\x12versioningBehavior\x12K\n" +
-	"\x0estream_cursors\x18\x14 \x03(\v2$.temporal.api.stream.v1.StreamCursorR\rstreamCursors\x12>\n" +
+	"\x13versioning_behavior\x18\b \x01(\x0e2).temporal.api.enums.v1.VersioningBehaviorR\x12versioningBehavior\x12>\n" +
 	"\x19worker_deployment_version\x18\t \x01(\tB\x02\x18\x01R\x17workerDeploymentVersion\x124\n" +
 	"\x16worker_deployment_name\x18\n" +
 	" \x01(\tR\x14workerDeploymentName\x12b\n" +
-	"\x12deployment_version\x18\v \x01(\v23.temporal.api.deployment.v1.WorkerDeploymentVersionR\x11deploymentVersion\"\xc4\x01\n" +
+	"\x12deployment_version\x18\v \x01(\v23.temporal.api.deployment.v1.WorkerDeploymentVersionR\x11deploymentVersion\x12K\n" +
+	"\x0estream_cursors\x18\x14 \x03(\v2$.temporal.api.stream.v1.StreamCursorR\rstreamCursors\"\xc4\x01\n" +
 	"#WorkflowTaskTimedOutEventAttributes\x12,\n" +
 	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\x12(\n" +
 	"\x10started_event_id\x18\x02 \x01(\x03R\x0estartedEventId\x12E\n" +
@@ -8012,8 +8013,8 @@ var file_temporal_api_history_v1_message_proto_depIdxs = []int32{
 	93,  // 51: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.metering_metadata:type_name -> temporal.api.common.v1.MeteringMetadata
 	94,  // 52: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment:type_name -> temporal.api.deployment.v1.Deployment
 	95,  // 53: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.versioning_behavior:type_name -> temporal.api.enums.v1.VersioningBehavior
-	96,  // 54: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.stream_cursors:type_name -> temporal.api.stream.v1.StreamCursor
-	85,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
+	85,  // 54: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
+	96,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.stream_cursors:type_name -> temporal.api.stream.v1.StreamCursor
 	97,  // 56: temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes.timeout_type:type_name -> temporal.api.enums.v1.TimeoutType
 	98,  // 57: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.WorkflowTaskFailedCause
 	74,  // 58: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
