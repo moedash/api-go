@@ -724,13 +724,15 @@ func TestVisitedPayloads(t *testing.T) {
 		{"temporal.api.update.v1.Rejection", 8},
 		{"temporal.api.query.v1.WorkflowQueryResult", 6},
 		{"temporal.api.protocol.v1.Message", 1},
-		{"temporal.api.command.v1.Command", 38},
+		// AddStreamMessagesCommandAttributes contributes two sites per
+		// StreamMessage: body and the metadata map values.
+		{"temporal.api.command.v1.Command", 40},
 
-		// 	repeated temporal.api.command.v1.Command commands - 38
+		// 	repeated temporal.api.command.v1.Command commands - 40
 		// 	map<string, temporal.api.query.v1.WorkflowQueryResult> query_results - 6
 		// 	repeated temporal.api.protocol.v1.Message messages - 1
-		// TOTAL - 45
-		{"temporal.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest", 45},
+		// TOTAL - 47
+		{"temporal.api.workflowservice.v1.RespondWorkflowTaskCompletedRequest", 47},
 
 		{"temporal.api.workflowservice.v1.CountWorkflowExecutionsResponse", 1},
 		{"temporal.api.update.v1.Response", 6},
