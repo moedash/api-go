@@ -755,7 +755,7 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
-		case *command.AddStreamMessagesCommandAttributes:
+		case *command.AppendStreamRecordsCommandAttributes:
 
 			if o == nil {
 				continue
@@ -774,7 +774,7 @@ func visitPayloads(
 				options,
 				o,
 				concState,
-				o.GetMessages(),
+				o.GetRecords(),
 			); err != nil {
 				return err
 			}
@@ -833,7 +833,7 @@ func visitPayloads(
 				options,
 				o,
 				concState,
-				o.GetAddStreamMessagesCommandAttributes(),
+				o.GetAppendStreamRecordsCommandAttributes(),
 				o.GetCancelWorkflowExecutionCommandAttributes(),
 				o.GetCompleteWorkflowExecutionCommandAttributes(),
 				o.GetContinueAsNewWorkflowExecutionCommandAttributes(),
@@ -3607,14 +3607,14 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
-		case []*stream.StreamMessage:
+		case []*stream.StreamRecord:
 			for _, x := range o {
 				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
 					return err
 				}
 			}
 
-		case *stream.StreamMessage:
+		case *stream.StreamRecord:
 
 			if o == nil {
 				continue
@@ -3672,7 +3672,7 @@ func visitPayloads(
 				options,
 				o,
 				concState,
-				o.GetMessages(),
+				o.GetRecords(),
 			); err != nil {
 				return err
 			}

@@ -1503,7 +1503,7 @@ type Command struct {
 	//	*Command_ModifyWorkflowPropertiesCommandAttributes
 	//	*Command_ScheduleNexusOperationCommandAttributes
 	//	*Command_RequestCancelNexusOperationCommandAttributes
-	//	*Command_AddStreamMessagesCommandAttributes
+	//	*Command_AppendStreamRecordsCommandAttributes
 	//	*Command_SubscribeStreamCommandAttributes
 	Attributes    isCommand_Attributes `protobuf_oneof:"attributes"`
 	unknownFields protoimpl.UnknownFields
@@ -1721,10 +1721,10 @@ func (x *Command) GetRequestCancelNexusOperationCommandAttributes() *RequestCanc
 	return nil
 }
 
-func (x *Command) GetAddStreamMessagesCommandAttributes() *AddStreamMessagesCommandAttributes {
+func (x *Command) GetAppendStreamRecordsCommandAttributes() *AppendStreamRecordsCommandAttributes {
 	if x != nil {
-		if x, ok := x.Attributes.(*Command_AddStreamMessagesCommandAttributes); ok {
-			return x.AddStreamMessagesCommandAttributes
+		if x, ok := x.Attributes.(*Command_AppendStreamRecordsCommandAttributes); ok {
+			return x.AppendStreamRecordsCommandAttributes
 		}
 	}
 	return nil
@@ -1812,8 +1812,8 @@ type Command_RequestCancelNexusOperationCommandAttributes struct {
 	RequestCancelNexusOperationCommandAttributes *RequestCancelNexusOperationCommandAttributes `protobuf:"bytes,19,opt,name=request_cancel_nexus_operation_command_attributes,json=requestCancelNexusOperationCommandAttributes,proto3,oneof"`
 }
 
-type Command_AddStreamMessagesCommandAttributes struct {
-	AddStreamMessagesCommandAttributes *AddStreamMessagesCommandAttributes `protobuf:"bytes,20,opt,name=add_stream_messages_command_attributes,json=addStreamMessagesCommandAttributes,proto3,oneof"`
+type Command_AppendStreamRecordsCommandAttributes struct {
+	AppendStreamRecordsCommandAttributes *AppendStreamRecordsCommandAttributes `protobuf:"bytes,20,opt,name=append_stream_records_command_attributes,json=appendStreamRecordsCommandAttributes,proto3,oneof"`
 }
 
 type Command_SubscribeStreamCommandAttributes struct {
@@ -1854,36 +1854,39 @@ func (*Command_ScheduleNexusOperationCommandAttributes) isCommand_Attributes() {
 
 func (*Command_RequestCancelNexusOperationCommandAttributes) isCommand_Attributes() {}
 
-func (*Command_AddStreamMessagesCommandAttributes) isCommand_Attributes() {}
+func (*Command_AppendStreamRecordsCommandAttributes) isCommand_Attributes() {}
 
 func (*Command_SubscribeStreamCommandAttributes) isCommand_Attributes() {}
 
-// Appends to a stream the Workflow owns. Applied inside the Workflow Task's own
-// commit. Produces one `WorkflowStreamMessagesAdded` event carrying the offset
-// range and none of the payload; it schedules no further work.
-type AddStreamMessagesCommandAttributes struct {
+// Appends records to a stream the Workflow owns. Applied inside the Workflow
+// Task's own commit. Produces one `WorkflowStreamRecordsAppended` event
+// carrying the offset range and none of the payload; it schedules no further
+// work.
+type AppendStreamRecordsCommandAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Empty means the Workflow's default output stream.
-	StreamId      string               `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	Messages      []*v16.StreamMessage `protobuf:"bytes,2,rep,name=messages,proto3" json:"messages,omitempty"`
+	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	// Stored in order. The server sets `producer_id` to empty on each record,
+	// because the owning Workflow is the producer here.
+	Records       []*v16.StreamRecord `protobuf:"bytes,2,rep,name=records,proto3" json:"records,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddStreamMessagesCommandAttributes) Reset() {
-	*x = AddStreamMessagesCommandAttributes{}
+func (x *AppendStreamRecordsCommandAttributes) Reset() {
+	*x = AppendStreamRecordsCommandAttributes{}
 	mi := &file_temporal_api_command_v1_message_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddStreamMessagesCommandAttributes) String() string {
+func (x *AppendStreamRecordsCommandAttributes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddStreamMessagesCommandAttributes) ProtoMessage() {}
+func (*AppendStreamRecordsCommandAttributes) ProtoMessage() {}
 
-func (x *AddStreamMessagesCommandAttributes) ProtoReflect() protoreflect.Message {
+func (x *AppendStreamRecordsCommandAttributes) ProtoReflect() protoreflect.Message {
 	mi := &file_temporal_api_command_v1_message_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1895,21 +1898,21 @@ func (x *AddStreamMessagesCommandAttributes) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddStreamMessagesCommandAttributes.ProtoReflect.Descriptor instead.
-func (*AddStreamMessagesCommandAttributes) Descriptor() ([]byte, []int) {
+// Deprecated: Use AppendStreamRecordsCommandAttributes.ProtoReflect.Descriptor instead.
+func (*AppendStreamRecordsCommandAttributes) Descriptor() ([]byte, []int) {
 	return file_temporal_api_command_v1_message_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *AddStreamMessagesCommandAttributes) GetStreamId() string {
+func (x *AppendStreamRecordsCommandAttributes) GetStreamId() string {
 	if x != nil {
 		return x.StreamId
 	}
 	return ""
 }
 
-func (x *AddStreamMessagesCommandAttributes) GetMessages() []*v16.StreamMessage {
+func (x *AppendStreamRecordsCommandAttributes) GetRecords() []*v16.StreamRecord {
 	if x != nil {
-		return x.Messages
+		return x.Records
 	}
 	return nil
 }
@@ -2104,7 +2107,7 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\\\n" +
 	",RequestCancelNexusOperationCommandAttributes\x12,\n" +
-	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\"\xa9\x1a\n" +
+	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\"\xaf\x1a\n" +
 	"\aCommand\x12E\n" +
 	"\fcommand_type\x18\x01 \x01(\x0e2\".temporal.api.enums.v1.CommandTypeR\vcommandType\x12G\n" +
 	"\ruser_metadata\x18\xad\x02 \x01(\v2!.temporal.api.sdk.v1.UserMetadataR\fuserMetadata\x12V\n" +
@@ -2126,14 +2129,14 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"#protocol_message_command_attributes\x18\x0f \x01(\v29.temporal.api.command.v1.ProtocolMessageCommandAttributesH\x00R protocolMessageCommandAttributes\x12\xa6\x01\n" +
 	"-modify_workflow_properties_command_attributes\x18\x11 \x01(\v2B.temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributesH\x00R)modifyWorkflowPropertiesCommandAttributes\x12\xa0\x01\n" +
 	"+schedule_nexus_operation_command_attributes\x18\x12 \x01(\v2@.temporal.api.command.v1.ScheduleNexusOperationCommandAttributesH\x00R'scheduleNexusOperationCommandAttributes\x12\xb0\x01\n" +
-	"1request_cancel_nexus_operation_command_attributes\x18\x13 \x01(\v2E.temporal.api.command.v1.RequestCancelNexusOperationCommandAttributesH\x00R,requestCancelNexusOperationCommandAttributes\x12\x91\x01\n" +
-	"&add_stream_messages_command_attributes\x18\x14 \x01(\v2;.temporal.api.command.v1.AddStreamMessagesCommandAttributesH\x00R\"addStreamMessagesCommandAttributes\x12\x8a\x01\n" +
+	"1request_cancel_nexus_operation_command_attributes\x18\x13 \x01(\v2E.temporal.api.command.v1.RequestCancelNexusOperationCommandAttributesH\x00R,requestCancelNexusOperationCommandAttributes\x12\x97\x01\n" +
+	"(append_stream_records_command_attributes\x18\x14 \x01(\v2=.temporal.api.command.v1.AppendStreamRecordsCommandAttributesH\x00R$appendStreamRecordsCommandAttributes\x12\x8a\x01\n" +
 	"#subscribe_stream_command_attributes\x18\x15 \x01(\v29.temporal.api.command.v1.SubscribeStreamCommandAttributesH\x00R subscribeStreamCommandAttributesB\f\n" +
 	"\n" +
-	"attributes\"\x84\x01\n" +
-	"\"AddStreamMessagesCommandAttributes\x12\x1b\n" +
-	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12A\n" +
-	"\bmessages\x18\x02 \x03(\v2%.temporal.api.stream.v1.StreamMessageR\bmessages\"b\n" +
+	"attributes\"\x83\x01\n" +
+	"$AppendStreamRecordsCommandAttributes\x12\x1b\n" +
+	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12>\n" +
+	"\arecords\x18\x02 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\"b\n" +
 	" SubscribeStreamCommandAttributes\x12\x1b\n" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12!\n" +
 	"\fstart_offset\x18\x02 \x01(\x03R\vstartOffsetB\x8e\x01\n" +
@@ -2171,32 +2174,32 @@ var file_temporal_api_command_v1_message_proto_goTypes = []any{
 	(*ScheduleNexusOperationCommandAttributes)(nil),                 // 15: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes
 	(*RequestCancelNexusOperationCommandAttributes)(nil),            // 16: temporal.api.command.v1.RequestCancelNexusOperationCommandAttributes
 	(*Command)(nil), // 17: temporal.api.command.v1.Command
-	(*AddStreamMessagesCommandAttributes)(nil), // 18: temporal.api.command.v1.AddStreamMessagesCommandAttributes
-	(*SubscribeStreamCommandAttributes)(nil),   // 19: temporal.api.command.v1.SubscribeStreamCommandAttributes
-	nil,                                        // 20: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
-	nil,                                        // 21: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
-	(*v1.ActivityType)(nil),                    // 22: temporal.api.common.v1.ActivityType
-	(*v11.TaskQueue)(nil),                      // 23: temporal.api.taskqueue.v1.TaskQueue
-	(*v1.Header)(nil),                          // 24: temporal.api.common.v1.Header
-	(*v1.Payloads)(nil),                        // 25: temporal.api.common.v1.Payloads
-	(*durationpb.Duration)(nil),                // 26: google.protobuf.Duration
-	(*v1.RetryPolicy)(nil),                     // 27: temporal.api.common.v1.RetryPolicy
-	(*v1.Priority)(nil),                        // 28: temporal.api.common.v1.Priority
-	(*v12.Failure)(nil),                        // 29: temporal.api.failure.v1.Failure
-	(*v1.WorkflowExecution)(nil),               // 30: temporal.api.common.v1.WorkflowExecution
-	(*v1.SearchAttributes)(nil),                // 31: temporal.api.common.v1.SearchAttributes
-	(*v1.Memo)(nil),                            // 32: temporal.api.common.v1.Memo
-	(*v1.WorkflowType)(nil),                    // 33: temporal.api.common.v1.WorkflowType
-	(v13.ContinueAsNewInitiator)(0),            // 34: temporal.api.enums.v1.ContinueAsNewInitiator
-	(v13.ContinueAsNewVersioningBehavior)(0),   // 35: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
-	(v13.ParentClosePolicy)(0),                 // 36: temporal.api.enums.v1.ParentClosePolicy
-	(v13.WorkflowIdReusePolicy)(0),             // 37: temporal.api.enums.v1.WorkflowIdReusePolicy
-	(*v14.VersioningOverride)(nil),             // 38: temporal.api.workflow.v1.VersioningOverride
-	(*v1.Payload)(nil),                         // 39: temporal.api.common.v1.Payload
-	(v13.CommandType)(0),                       // 40: temporal.api.enums.v1.CommandType
-	(*v15.UserMetadata)(nil),                   // 41: temporal.api.sdk.v1.UserMetadata
-	(*v15.EventGroupMarker)(nil),               // 42: temporal.api.sdk.v1.EventGroupMarker
-	(*v16.StreamMessage)(nil),                  // 43: temporal.api.stream.v1.StreamMessage
+	(*AppendStreamRecordsCommandAttributes)(nil), // 18: temporal.api.command.v1.AppendStreamRecordsCommandAttributes
+	(*SubscribeStreamCommandAttributes)(nil),     // 19: temporal.api.command.v1.SubscribeStreamCommandAttributes
+	nil,                                          // 20: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
+	nil,                                          // 21: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
+	(*v1.ActivityType)(nil),                      // 22: temporal.api.common.v1.ActivityType
+	(*v11.TaskQueue)(nil),                        // 23: temporal.api.taskqueue.v1.TaskQueue
+	(*v1.Header)(nil),                            // 24: temporal.api.common.v1.Header
+	(*v1.Payloads)(nil),                          // 25: temporal.api.common.v1.Payloads
+	(*durationpb.Duration)(nil),                  // 26: google.protobuf.Duration
+	(*v1.RetryPolicy)(nil),                       // 27: temporal.api.common.v1.RetryPolicy
+	(*v1.Priority)(nil),                          // 28: temporal.api.common.v1.Priority
+	(*v12.Failure)(nil),                          // 29: temporal.api.failure.v1.Failure
+	(*v1.WorkflowExecution)(nil),                 // 30: temporal.api.common.v1.WorkflowExecution
+	(*v1.SearchAttributes)(nil),                  // 31: temporal.api.common.v1.SearchAttributes
+	(*v1.Memo)(nil),                              // 32: temporal.api.common.v1.Memo
+	(*v1.WorkflowType)(nil),                      // 33: temporal.api.common.v1.WorkflowType
+	(v13.ContinueAsNewInitiator)(0),              // 34: temporal.api.enums.v1.ContinueAsNewInitiator
+	(v13.ContinueAsNewVersioningBehavior)(0),     // 35: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
+	(v13.ParentClosePolicy)(0),                   // 36: temporal.api.enums.v1.ParentClosePolicy
+	(v13.WorkflowIdReusePolicy)(0),               // 37: temporal.api.enums.v1.WorkflowIdReusePolicy
+	(*v14.VersioningOverride)(nil),               // 38: temporal.api.workflow.v1.VersioningOverride
+	(*v1.Payload)(nil),                           // 39: temporal.api.common.v1.Payload
+	(v13.CommandType)(0),                         // 40: temporal.api.enums.v1.CommandType
+	(*v15.UserMetadata)(nil),                     // 41: temporal.api.sdk.v1.UserMetadata
+	(*v15.EventGroupMarker)(nil),                 // 42: temporal.api.sdk.v1.EventGroupMarker
+	(*v16.StreamRecord)(nil),                     // 43: temporal.api.stream.v1.StreamRecord
 }
 var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
 	22, // 0: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
@@ -2274,9 +2277,9 @@ var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
 	10, // 72: temporal.api.command.v1.Command.modify_workflow_properties_command_attributes:type_name -> temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributes
 	15, // 73: temporal.api.command.v1.Command.schedule_nexus_operation_command_attributes:type_name -> temporal.api.command.v1.ScheduleNexusOperationCommandAttributes
 	16, // 74: temporal.api.command.v1.Command.request_cancel_nexus_operation_command_attributes:type_name -> temporal.api.command.v1.RequestCancelNexusOperationCommandAttributes
-	18, // 75: temporal.api.command.v1.Command.add_stream_messages_command_attributes:type_name -> temporal.api.command.v1.AddStreamMessagesCommandAttributes
+	18, // 75: temporal.api.command.v1.Command.append_stream_records_command_attributes:type_name -> temporal.api.command.v1.AppendStreamRecordsCommandAttributes
 	19, // 76: temporal.api.command.v1.Command.subscribe_stream_command_attributes:type_name -> temporal.api.command.v1.SubscribeStreamCommandAttributes
-	43, // 77: temporal.api.command.v1.AddStreamMessagesCommandAttributes.messages:type_name -> temporal.api.stream.v1.StreamMessage
+	43, // 77: temporal.api.command.v1.AppendStreamRecordsCommandAttributes.records:type_name -> temporal.api.stream.v1.StreamRecord
 	25, // 78: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
 	79, // [79:79] is the sub-list for method output_type
 	79, // [79:79] is the sub-list for method input_type
@@ -2308,7 +2311,7 @@ func file_temporal_api_command_v1_message_proto_init() {
 		(*Command_ModifyWorkflowPropertiesCommandAttributes)(nil),
 		(*Command_ScheduleNexusOperationCommandAttributes)(nil),
 		(*Command_RequestCancelNexusOperationCommandAttributes)(nil),
-		(*Command_AddStreamMessagesCommandAttributes)(nil),
+		(*Command_AppendStreamRecordsCommandAttributes)(nil),
 		(*Command_SubscribeStreamCommandAttributes)(nil),
 	}
 	type x struct{}

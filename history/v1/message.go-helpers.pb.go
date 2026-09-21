@@ -1707,35 +1707,35 @@ func (this *WorkflowStreamSubscribedEventAttributes) Equal(that interface{}) boo
 	return proto.Equal(this, that1)
 }
 
-// Marshal an object of type WorkflowStreamMessagesAddedEventAttributes to the protobuf v3 wire format
-func (val *WorkflowStreamMessagesAddedEventAttributes) Marshal() ([]byte, error) {
+// Marshal an object of type WorkflowStreamRecordsAppendedEventAttributes to the protobuf v3 wire format
+func (val *WorkflowStreamRecordsAppendedEventAttributes) Marshal() ([]byte, error) {
 	return proto.Marshal(val)
 }
 
-// Unmarshal an object of type WorkflowStreamMessagesAddedEventAttributes from the protobuf v3 wire format
-func (val *WorkflowStreamMessagesAddedEventAttributes) Unmarshal(buf []byte) error {
+// Unmarshal an object of type WorkflowStreamRecordsAppendedEventAttributes from the protobuf v3 wire format
+func (val *WorkflowStreamRecordsAppendedEventAttributes) Unmarshal(buf []byte) error {
 	return proto.Unmarshal(buf, val)
 }
 
 // Size returns the size of the object, in bytes, once serialized
-func (val *WorkflowStreamMessagesAddedEventAttributes) Size() int {
+func (val *WorkflowStreamRecordsAppendedEventAttributes) Size() int {
 	return proto.Size(val)
 }
 
-// Equal returns whether two WorkflowStreamMessagesAddedEventAttributes values are equivalent by recursively
+// Equal returns whether two WorkflowStreamRecordsAppendedEventAttributes values are equivalent by recursively
 // comparing the message's fields.
 // For more information see the documentation for
 // https://pkg.go.dev/google.golang.org/protobuf/proto#Equal
-func (this *WorkflowStreamMessagesAddedEventAttributes) Equal(that interface{}) bool {
+func (this *WorkflowStreamRecordsAppendedEventAttributes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	var that1 *WorkflowStreamMessagesAddedEventAttributes
+	var that1 *WorkflowStreamRecordsAppendedEventAttributes
 	switch t := that.(type) {
-	case *WorkflowStreamMessagesAddedEventAttributes:
+	case *WorkflowStreamRecordsAppendedEventAttributes:
 		that1 = t
-	case WorkflowStreamMessagesAddedEventAttributes:
+	case WorkflowStreamRecordsAppendedEventAttributes:
 		that1 = &t
 	default:
 		return false

@@ -48,7 +48,7 @@ var (
 		"ExternalStorageFailure":                              38,
 		"WorkflowPauseRequestedBeforeTaskStarted":             39,
 		"RequestTooLarge":                                     40,
-		"BadAddStreamMessagesAttributes":                      41,
+		"BadAppendStreamRecordsAttributes":                    41,
 		"BadSubscribeStreamAttributes":                        42,
 		"StreamRangeUnavailable":                              43,
 	}

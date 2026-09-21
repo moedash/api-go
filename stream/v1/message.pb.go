@@ -8,6 +8,7 @@ package stream
 
 import (
 	reflect "reflect"
+	"strconv"
 	sync "sync"
 	unsafe "unsafe"
 
@@ -23,35 +24,110 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type StreamMessage struct {
+// What a record means to a reader. Kept on the record itself so every store
+// and every language reads it the same way without a private envelope.
+type StreamRecordKind int32
+
+const (
+	// Read as DATA.
+	STREAM_RECORD_KIND_UNSPECIFIED StreamRecordKind = 0
+	// A value the producer published; `body` carries it.
+	STREAM_RECORD_KIND_DATA StreamRecordKind = 1
+	// The producer named by `producer_id` writes nothing more on `topic`.
+	// Says nothing about that producer's outcome and does not end the stream.
+	STREAM_RECORD_KIND_FINISH StreamRecordKind = 2
+)
+
+// Enum value maps for StreamRecordKind.
+var (
+	StreamRecordKind_name = map[int32]string{
+		0: "STREAM_RECORD_KIND_UNSPECIFIED",
+		1: "STREAM_RECORD_KIND_DATA",
+		2: "STREAM_RECORD_KIND_FINISH",
+	}
+	StreamRecordKind_value = map[string]int32{
+		"STREAM_RECORD_KIND_UNSPECIFIED": 0,
+		"STREAM_RECORD_KIND_DATA":        1,
+		"STREAM_RECORD_KIND_FINISH":      2,
+	}
+)
+
+func (x StreamRecordKind) Enum() *StreamRecordKind {
+	p := new(StreamRecordKind)
+	*p = x
+	return p
+}
+
+func (x StreamRecordKind) String() string {
+	switch x {
+	case STREAM_RECORD_KIND_UNSPECIFIED:
+		return "Unspecified"
+	case STREAM_RECORD_KIND_DATA:
+		return "Data"
+	case STREAM_RECORD_KIND_FINISH:
+		return "Finish"
+	default:
+		return strconv.Itoa(int(x))
+	}
+
+}
+
+func (StreamRecordKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_temporal_api_stream_v1_message_proto_enumTypes[0].Descriptor()
+}
+
+func (StreamRecordKind) Type() protoreflect.EnumType {
+	return &file_temporal_api_stream_v1_message_proto_enumTypes[0]
+}
+
+func (x StreamRecordKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use StreamRecordKind.Descriptor instead.
+func (StreamRecordKind) EnumDescriptor() ([]byte, []int) {
+	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{0}
+}
+
+// One entry in a stream. The record is the wire format: stores keep it
+// serialized as is and readers in every language decode the same bytes.
+type StreamRecord struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The message itself, stored as sent.
+	// The value the producer published, stored as sent. A payload codec
+	// applies here as it does to any other payload.
 	Body *v1.Payload `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	// Producer-supplied provenance, stored as sent.
 	Metadata map[string]*v1.Payload `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Producer-supplied grouping label, stored as sent.
 	Topic string `protobuf:"bytes,3,opt,name=topic,proto3" json:"topic,omitempty"`
-	// Producer-supplied position within `topic`. The server stores it as sent
-	// and does not assign, validate or order by it.
-	TopicSequence int64 `protobuf:"varint,4,opt,name=topic_sequence,json=topicSequence,proto3" json:"topic_sequence,omitempty"`
+	// How to read this record. Unspecified is read as DATA.
+	Kind StreamRecordKind `protobuf:"varint,4,opt,name=kind,proto3,enum=temporal.api.stream.v1.StreamRecordKind" json:"kind,omitempty"`
+	// Who wrote the record. Empty when the owning Workflow did.
+	ProducerId string `protobuf:"bytes,5,opt,name=producer_id,json=producerId,proto3" json:"producer_id,omitempty"`
+	// The producer's attempt. Readers treat a later attempt by the same
+	// producer as superseding what the earlier one wrote.
+	Attempt int64 `protobuf:"varint,6,opt,name=attempt,proto3" json:"attempt,omitempty"`
+	// The producer's position within its attempt, or -1 when unnumbered.
+	// Stored as sent; the server does not assign, validate or order by it.
+	Sequence      int64 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *StreamMessage) Reset() {
-	*x = StreamMessage{}
+func (x *StreamRecord) Reset() {
+	*x = StreamRecord{}
 	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *StreamMessage) String() string {
+func (x *StreamRecord) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StreamMessage) ProtoMessage() {}
+func (*StreamRecord) ProtoMessage() {}
 
-func (x *StreamMessage) ProtoReflect() protoreflect.Message {
+func (x *StreamRecord) ProtoReflect() protoreflect.Message {
 	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -63,41 +139,62 @@ func (x *StreamMessage) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StreamMessage.ProtoReflect.Descriptor instead.
-func (*StreamMessage) Descriptor() ([]byte, []int) {
+// Deprecated: Use StreamRecord.ProtoReflect.Descriptor instead.
+func (*StreamRecord) Descriptor() ([]byte, []int) {
 	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *StreamMessage) GetBody() *v1.Payload {
+func (x *StreamRecord) GetBody() *v1.Payload {
 	if x != nil {
 		return x.Body
 	}
 	return nil
 }
 
-func (x *StreamMessage) GetMetadata() map[string]*v1.Payload {
+func (x *StreamRecord) GetMetadata() map[string]*v1.Payload {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-func (x *StreamMessage) GetTopic() string {
+func (x *StreamRecord) GetTopic() string {
 	if x != nil {
 		return x.Topic
 	}
 	return ""
 }
 
-func (x *StreamMessage) GetTopicSequence() int64 {
+func (x *StreamRecord) GetKind() StreamRecordKind {
 	if x != nil {
-		return x.TopicSequence
+		return x.Kind
+	}
+	return STREAM_RECORD_KIND_UNSPECIFIED
+}
+
+func (x *StreamRecord) GetProducerId() string {
+	if x != nil {
+		return x.ProducerId
+	}
+	return ""
+}
+
+func (x *StreamRecord) GetAttempt() int64 {
+	if x != nil {
+		return x.Attempt
+	}
+	return 0
+}
+
+func (x *StreamRecord) GetSequence() int64 {
+	if x != nil {
+		return x.Sequence
 	}
 	return 0
 }
 
 // A contiguous range of a stream delivered to a Workflow Task, along with the
-// offsets it covers. The offsets are what History records; the messages
+// offsets it covers. The offsets are what History records; the records
 // themselves are never written to History.
 type StreamSlice struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
@@ -109,12 +206,12 @@ type StreamSlice struct {
 	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
 	// Exclusive. Equal to from_offset when the subscription observed nothing,
 	// which is a fact replay has to reproduce rather than an absence of one.
-	ToOffset int64            `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
-	Messages []*StreamMessage `protobuf:"bytes,5,rep,name=messages,proto3" json:"messages,omitempty"`
-	// The WorkflowTaskCompleted event whose stream_cursors recorded this range.
-	// Set only when the server is re-supplying a range for a task being
-	// replayed; a slice for the task now being started leaves it unset, because
-	// the event closing that task does not exist yet.
+	ToOffset int64           `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
+	Records  []*StreamRecord `protobuf:"bytes,5,rep,name=records,proto3" json:"records,omitempty"`
+	// The WorkflowTaskCompleted event whose consumed_stream_ranges recorded
+	// this range. Set only when the server is re-supplying a range for a task
+	// being replayed; a slice for the task now being started leaves it unset,
+	// because the event closing that task does not exist yet.
 	//
 	// Replay needs this because a Workflow Task response carries one slice set
 	// while a cache miss replays every prior task, so the ranges have to be
@@ -182,9 +279,9 @@ func (x *StreamSlice) GetToOffset() int64 {
 	return 0
 }
 
-func (x *StreamSlice) GetMessages() []*StreamMessage {
+func (x *StreamSlice) GetRecords() []*StreamRecord {
 	if x != nil {
-		return x.Messages
+		return x.Records
 	}
 	return nil
 }
@@ -198,30 +295,32 @@ func (x *StreamSlice) GetWorkflowTaskCompletedEventId() int64 {
 
 // The offsets a Workflow Task consumed, without the payloads. Recorded on
 // WorkflowTaskCompleted so History grows with Workflow Tasks rather than with
-// messages.
-type StreamCursor struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	StreamId      string                 `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	FromOffset    int64                  `protobuf:"varint,2,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
-	ToOffset      int64                  `protobuf:"varint,3,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
+// records.
+type StreamRange struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	StreamId string                 `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	// Inclusive.
+	FromOffset int64 `protobuf:"varint,2,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
+	// Exclusive.
+	ToOffset      int64 `protobuf:"varint,3,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *StreamCursor) Reset() {
-	*x = StreamCursor{}
+func (x *StreamRange) Reset() {
+	*x = StreamRange{}
 	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *StreamCursor) String() string {
+func (x *StreamRange) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StreamCursor) ProtoMessage() {}
+func (*StreamRange) ProtoMessage() {}
 
-func (x *StreamCursor) ProtoReflect() protoreflect.Message {
+func (x *StreamRange) ProtoReflect() protoreflect.Message {
 	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -233,26 +332,26 @@ func (x *StreamCursor) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StreamCursor.ProtoReflect.Descriptor instead.
-func (*StreamCursor) Descriptor() ([]byte, []int) {
+// Deprecated: Use StreamRange.ProtoReflect.Descriptor instead.
+func (*StreamRange) Descriptor() ([]byte, []int) {
 	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *StreamCursor) GetStreamId() string {
+func (x *StreamRange) GetStreamId() string {
 	if x != nil {
 		return x.StreamId
 	}
 	return ""
 }
 
-func (x *StreamCursor) GetFromOffset() int64 {
+func (x *StreamRange) GetFromOffset() int64 {
 	if x != nil {
 		return x.FromOffset
 	}
 	return 0
 }
 
-func (x *StreamCursor) GetToOffset() int64 {
+func (x *StreamRange) GetToOffset() int64 {
 	if x != nil {
 		return x.ToOffset
 	}
@@ -263,28 +362,36 @@ var File_temporal_api_stream_v1_message_proto protoreflect.FileDescriptor
 
 const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
 	"\n" +
-	"$temporal/api/stream/v1/message.proto\x12\x16temporal.api.stream.v1\x1a$temporal/api/common/v1/message.proto\"\xb0\x02\n" +
-	"\rStreamMessage\x123\n" +
-	"\x04body\x18\x01 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x04body\x12O\n" +
-	"\bmetadata\x18\x02 \x03(\v23.temporal.api.stream.v1.StreamMessage.MetadataEntryR\bmetadata\x12\x14\n" +
-	"\x05topic\x18\x03 \x01(\tR\x05topic\x12%\n" +
-	"\x0etopic_sequence\x18\x04 \x01(\x03R\rtopicSequence\x1a\\\n" +
+	"$temporal/api/stream/v1/message.proto\x12\x16temporal.api.stream.v1\x1a$temporal/api/common/v1/message.proto\"\x9c\x03\n" +
+	"\fStreamRecord\x123\n" +
+	"\x04body\x18\x01 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x04body\x12N\n" +
+	"\bmetadata\x18\x02 \x03(\v22.temporal.api.stream.v1.StreamRecord.MetadataEntryR\bmetadata\x12\x14\n" +
+	"\x05topic\x18\x03 \x01(\tR\x05topic\x12<\n" +
+	"\x04kind\x18\x04 \x01(\x0e2(.temporal.api.stream.v1.StreamRecordKindR\x04kind\x12\x1f\n" +
+	"\vproducer_id\x18\x05 \x01(\tR\n" +
+	"producerId\x12\x18\n" +
+	"\aattempt\x18\x06 \x01(\x03R\aattempt\x12\x1a\n" +
+	"\bsequence\x18\a \x01(\x03R\bsequence\x1a\\\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\x8a\x02\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\x87\x02\n" +
 	"\vStreamSlice\x12\x1b\n" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12\x1f\n" +
 	"\vfrom_offset\x18\x03 \x01(\x03R\n" +
 	"fromOffset\x12\x1b\n" +
-	"\tto_offset\x18\x04 \x01(\x03R\btoOffset\x12A\n" +
-	"\bmessages\x18\x05 \x03(\v2%.temporal.api.stream.v1.StreamMessageR\bmessages\x12F\n" +
-	" workflow_task_completed_event_id\x18\x06 \x01(\x03R\x1cworkflowTaskCompletedEventId\"i\n" +
-	"\fStreamCursor\x12\x1b\n" +
+	"\tto_offset\x18\x04 \x01(\x03R\btoOffset\x12>\n" +
+	"\arecords\x18\x05 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\x12F\n" +
+	" workflow_task_completed_event_id\x18\x06 \x01(\x03R\x1cworkflowTaskCompletedEventId\"h\n" +
+	"\vStreamRange\x12\x1b\n" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x1f\n" +
 	"\vfrom_offset\x18\x02 \x01(\x03R\n" +
 	"fromOffset\x12\x1b\n" +
-	"\tto_offset\x18\x03 \x01(\x03R\btoOffsetB\x89\x01\n" +
+	"\tto_offset\x18\x03 \x01(\x03R\btoOffset*r\n" +
+	"\x10StreamRecordKind\x12\"\n" +
+	"\x1eSTREAM_RECORD_KIND_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17STREAM_RECORD_KIND_DATA\x10\x01\x12\x1d\n" +
+	"\x19STREAM_RECORD_KIND_FINISH\x10\x02B\x89\x01\n" +
 	"\x19io.temporal.api.stream.v1B\fMessageProtoP\x01Z#go.temporal.io/api/stream/v1;stream\xaa\x02\x18Temporalio.Api.Stream.V1\xea\x02\x1bTemporalio::Api::Stream::V1b\x06proto3"
 
 var (
@@ -299,24 +406,27 @@ func file_temporal_api_stream_v1_message_proto_rawDescGZIP() []byte {
 	return file_temporal_api_stream_v1_message_proto_rawDescData
 }
 
+var file_temporal_api_stream_v1_message_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_temporal_api_stream_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_temporal_api_stream_v1_message_proto_goTypes = []any{
-	(*StreamMessage)(nil), // 0: temporal.api.stream.v1.StreamMessage
-	(*StreamSlice)(nil),   // 1: temporal.api.stream.v1.StreamSlice
-	(*StreamCursor)(nil),  // 2: temporal.api.stream.v1.StreamCursor
-	nil,                   // 3: temporal.api.stream.v1.StreamMessage.MetadataEntry
-	(*v1.Payload)(nil),    // 4: temporal.api.common.v1.Payload
+	(StreamRecordKind)(0), // 0: temporal.api.stream.v1.StreamRecordKind
+	(*StreamRecord)(nil),  // 1: temporal.api.stream.v1.StreamRecord
+	(*StreamSlice)(nil),   // 2: temporal.api.stream.v1.StreamSlice
+	(*StreamRange)(nil),   // 3: temporal.api.stream.v1.StreamRange
+	nil,                   // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry
+	(*v1.Payload)(nil),    // 5: temporal.api.common.v1.Payload
 }
 var file_temporal_api_stream_v1_message_proto_depIdxs = []int32{
-	4, // 0: temporal.api.stream.v1.StreamMessage.body:type_name -> temporal.api.common.v1.Payload
-	3, // 1: temporal.api.stream.v1.StreamMessage.metadata:type_name -> temporal.api.stream.v1.StreamMessage.MetadataEntry
-	0, // 2: temporal.api.stream.v1.StreamSlice.messages:type_name -> temporal.api.stream.v1.StreamMessage
-	4, // 3: temporal.api.stream.v1.StreamMessage.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	5, // 0: temporal.api.stream.v1.StreamRecord.body:type_name -> temporal.api.common.v1.Payload
+	4, // 1: temporal.api.stream.v1.StreamRecord.metadata:type_name -> temporal.api.stream.v1.StreamRecord.MetadataEntry
+	0, // 2: temporal.api.stream.v1.StreamRecord.kind:type_name -> temporal.api.stream.v1.StreamRecordKind
+	1, // 3: temporal.api.stream.v1.StreamSlice.records:type_name -> temporal.api.stream.v1.StreamRecord
+	5, // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_stream_v1_message_proto_init() }
@@ -329,13 +439,14 @@ func file_temporal_api_stream_v1_message_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_stream_v1_message_proto_rawDesc), len(file_temporal_api_stream_v1_message_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_temporal_api_stream_v1_message_proto_goTypes,
 		DependencyIndexes: file_temporal_api_stream_v1_message_proto_depIdxs,
+		EnumInfos:         file_temporal_api_stream_v1_message_proto_enumTypes,
 		MessageInfos:      file_temporal_api_stream_v1_message_proto_msgTypes,
 	}.Build()
 	File_temporal_api_stream_v1_message_proto = out.File

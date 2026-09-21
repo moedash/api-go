@@ -1223,11 +1223,11 @@ type WorkflowTaskCompletedEventAttributes struct {
 	// Offset ranges this Workflow Task consumed from streams it subscribes to.
 	// Recorded on every task where a subscription is active, including when it
 	// observed nothing: an empty range is a fact replay must reproduce, and
-	// omitting it would let replay deliver messages the Workflow did not have.
+	// omitting it would let replay deliver records the Workflow did not have.
 	// Numbered 20 to leave 14 through 19 free for fields added on the main line.
-	StreamCursors []*v17.StreamCursor `protobuf:"bytes,20,rep,name=stream_cursors,json=streamCursors,proto3" json:"stream_cursors,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ConsumedStreamRanges []*v17.StreamRange `protobuf:"bytes,20,rep,name=consumed_stream_ranges,json=consumedStreamRanges,proto3" json:"consumed_stream_ranges,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *WorkflowTaskCompletedEventAttributes) Reset() {
@@ -1348,9 +1348,9 @@ func (x *WorkflowTaskCompletedEventAttributes) GetDeploymentVersion() *v15.Worke
 	return nil
 }
 
-func (x *WorkflowTaskCompletedEventAttributes) GetStreamCursors() []*v17.StreamCursor {
+func (x *WorkflowTaskCompletedEventAttributes) GetConsumedStreamRanges() []*v17.StreamRange {
 	if x != nil {
-		return x.StreamCursors
+		return x.ConsumedStreamRanges
 	}
 	return nil
 }
@@ -4745,37 +4745,37 @@ func (x *WorkflowStreamSubscribedEventAttributes) GetStartOffset() int64 {
 	return 0
 }
 
-type WorkflowStreamMessagesAddedEventAttributes struct {
+type WorkflowStreamRecordsAppendedEventAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The WorkflowTaskCompleted event of the task whose command published this
+	// The WorkflowTaskCompleted event of the task whose command appended this
 	// batch.
 	WorkflowTaskCompletedEventId int64 `protobuf:"varint,1,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
-	// Stream the Workflow published to.
+	// Stream the Workflow appended to.
 	StreamId string `protobuf:"bytes,2,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	// Offset the first message of the batch landed at.
+	// Offset the first record of the batch landed at.
 	FirstOffset int64 `protobuf:"varint,3,opt,name=first_offset,json=firstOffset,proto3" json:"first_offset,omitempty"`
-	// How many messages the batch held. With first_offset this names the range
+	// How many records the batch held. With first_offset this names the range
 	// without carrying any of it, which is what keeps this event a fixed size
 	// no matter how large the batch or its payloads are.
-	MessageCount  int64 `protobuf:"varint,4,opt,name=message_count,json=messageCount,proto3" json:"message_count,omitempty"`
+	RecordCount   int64 `protobuf:"varint,4,opt,name=record_count,json=recordCount,proto3" json:"record_count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) Reset() {
-	*x = WorkflowStreamMessagesAddedEventAttributes{}
+func (x *WorkflowStreamRecordsAppendedEventAttributes) Reset() {
+	*x = WorkflowStreamRecordsAppendedEventAttributes{}
 	mi := &file_temporal_api_history_v1_message_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) String() string {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WorkflowStreamMessagesAddedEventAttributes) ProtoMessage() {}
+func (*WorkflowStreamRecordsAppendedEventAttributes) ProtoMessage() {}
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) ProtoReflect() protoreflect.Message {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) ProtoReflect() protoreflect.Message {
 	mi := &file_temporal_api_history_v1_message_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4787,35 +4787,35 @@ func (x *WorkflowStreamMessagesAddedEventAttributes) ProtoReflect() protoreflect
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WorkflowStreamMessagesAddedEventAttributes.ProtoReflect.Descriptor instead.
-func (*WorkflowStreamMessagesAddedEventAttributes) Descriptor() ([]byte, []int) {
+// Deprecated: Use WorkflowStreamRecordsAppendedEventAttributes.ProtoReflect.Descriptor instead.
+func (*WorkflowStreamRecordsAppendedEventAttributes) Descriptor() ([]byte, []int) {
 	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{46}
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
 	if x != nil {
 		return x.WorkflowTaskCompletedEventId
 	}
 	return 0
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) GetStreamId() string {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetStreamId() string {
 	if x != nil {
 		return x.StreamId
 	}
 	return ""
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) GetFirstOffset() int64 {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetFirstOffset() int64 {
 	if x != nil {
 		return x.FirstOffset
 	}
 	return 0
 }
 
-func (x *WorkflowStreamMessagesAddedEventAttributes) GetMessageCount() int64 {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetRecordCount() int64 {
 	if x != nil {
-		return x.MessageCount
+		return x.RecordCount
 	}
 	return 0
 }
@@ -6084,7 +6084,7 @@ type HistoryEvent struct {
 	//	*HistoryEvent_WorkflowExecutionUnpausedEventAttributes
 	//	*HistoryEvent_WorkflowExecutionTimeSkippingTransitionedEventAttributes
 	//	*HistoryEvent_WorkflowStreamSubscribedEventAttributes
-	//	*HistoryEvent_WorkflowStreamMessagesAddedEventAttributes
+	//	*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes
 	Attributes    isHistoryEvent_Attributes `protobuf_oneof:"attributes"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -6746,10 +6746,10 @@ func (x *HistoryEvent) GetWorkflowStreamSubscribedEventAttributes() *WorkflowStr
 	return nil
 }
 
-func (x *HistoryEvent) GetWorkflowStreamMessagesAddedEventAttributes() *WorkflowStreamMessagesAddedEventAttributes {
+func (x *HistoryEvent) GetWorkflowStreamRecordsAppendedEventAttributes() *WorkflowStreamRecordsAppendedEventAttributes {
 	if x != nil {
-		if x, ok := x.Attributes.(*HistoryEvent_WorkflowStreamMessagesAddedEventAttributes); ok {
-			return x.WorkflowStreamMessagesAddedEventAttributes
+		if x, ok := x.Attributes.(*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes); ok {
+			return x.WorkflowStreamRecordsAppendedEventAttributes
 		}
 	}
 	return nil
@@ -7003,8 +7003,8 @@ type HistoryEvent_WorkflowStreamSubscribedEventAttributes struct {
 	WorkflowStreamSubscribedEventAttributes *WorkflowStreamSubscribedEventAttributes `protobuf:"bytes,66,opt,name=workflow_stream_subscribed_event_attributes,json=workflowStreamSubscribedEventAttributes,proto3,oneof"`
 }
 
-type HistoryEvent_WorkflowStreamMessagesAddedEventAttributes struct {
-	WorkflowStreamMessagesAddedEventAttributes *WorkflowStreamMessagesAddedEventAttributes `protobuf:"bytes,67,opt,name=workflow_stream_messages_added_event_attributes,json=workflowStreamMessagesAddedEventAttributes,proto3,oneof"`
+type HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes struct {
+	WorkflowStreamRecordsAppendedEventAttributes *WorkflowStreamRecordsAppendedEventAttributes `protobuf:"bytes,67,opt,name=workflow_stream_records_appended_event_attributes,json=workflowStreamRecordsAppendedEventAttributes,proto3,oneof"`
 }
 
 func (*HistoryEvent_WorkflowExecutionStartedEventAttributes) isHistoryEvent_Attributes() {}
@@ -7139,7 +7139,7 @@ func (*HistoryEvent_WorkflowExecutionTimeSkippingTransitionedEventAttributes) is
 
 func (*HistoryEvent_WorkflowStreamSubscribedEventAttributes) isHistoryEvent_Attributes() {}
 
-func (*HistoryEvent_WorkflowStreamMessagesAddedEventAttributes) isHistoryEvent_Attributes() {}
+func (*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes) isHistoryEvent_Attributes() {}
 
 type History struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -7350,7 +7350,7 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"(target_worker_deployment_version_changed\x18\t \x01(\bR$targetWorkerDeploymentVersionChanged\x12,\n" +
 	"\x12history_size_bytes\x18\x05 \x01(\x03R\x10historySizeBytes\x12U\n" +
 	"\x0eworker_version\x18\x06 \x01(\v2*.temporal.api.common.v1.WorkerVersionStampB\x02\x18\x01R\rworkerVersion\x12=\n" +
-	"\x19build_id_redirect_counter\x18\a \x01(\x03B\x02\x18\x01R\x16buildIdRedirectCounter\"\x9b\a\n" +
+	"\x19build_id_redirect_counter\x18\a \x01(\x03B\x02\x18\x01R\x16buildIdRedirectCounter\"\xa9\a\n" +
 	"$WorkflowTaskCompletedEventAttributes\x12,\n" +
 	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\x12(\n" +
 	"\x10started_event_id\x18\x02 \x01(\x03R\x0estartedEventId\x12\x1a\n" +
@@ -7366,8 +7366,8 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\x19worker_deployment_version\x18\t \x01(\tB\x02\x18\x01R\x17workerDeploymentVersion\x124\n" +
 	"\x16worker_deployment_name\x18\n" +
 	" \x01(\tR\x14workerDeploymentName\x12b\n" +
-	"\x12deployment_version\x18\v \x01(\v23.temporal.api.deployment.v1.WorkerDeploymentVersionR\x11deploymentVersion\x12K\n" +
-	"\x0estream_cursors\x18\x14 \x03(\v2$.temporal.api.stream.v1.StreamCursorR\rstreamCursors\"\xc4\x01\n" +
+	"\x12deployment_version\x18\v \x01(\v23.temporal.api.deployment.v1.WorkerDeploymentVersionR\x11deploymentVersion\x12Y\n" +
+	"\x16consumed_stream_ranges\x18\x14 \x03(\v2#.temporal.api.stream.v1.StreamRangeR\x14consumedStreamRanges\"\xc4\x01\n" +
 	"#WorkflowTaskTimedOutEventAttributes\x12,\n" +
 	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\x12(\n" +
 	"\x10started_event_id\x18\x02 \x01(\x03R\x0estartedEventId\x12E\n" +
@@ -7651,11 +7651,11 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
 	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12!\n" +
 	"\fstart_offset\x18\x03 \x01(\x03R\vstartOffset\"\xd9\x01\n" +
-	"*WorkflowStreamMessagesAddedEventAttributes\x12F\n" +
+	",WorkflowStreamRecordsAppendedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
 	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12!\n" +
-	"\ffirst_offset\x18\x03 \x01(\x03R\vfirstOffset\x12#\n" +
-	"\rmessage_count\x18\x04 \x01(\x03R\fmessageCount\"\xbd\x02\n" +
+	"\ffirst_offset\x18\x03 \x01(\x03R\vfirstOffset\x12!\n" +
+	"\frecord_count\x18\x04 \x01(\x03R\vrecordCount\"\xbd\x02\n" +
 	".WorkflowExecutionUpdateAcceptedEventAttributes\x120\n" +
 	"\x14protocol_instance_id\x18\x01 \x01(\tR\x12protocolInstanceId\x12=\n" +
 	"\x1baccepted_request_message_id\x18\x02 \x01(\tR\x18acceptedRequestMessageId\x12N\n" +
@@ -7744,7 +7744,7 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\x12requested_event_id\x18\x01 \x01(\x03R\x10requestedEventId\x12F\n" +
 	" workflow_task_completed_event_id\x18\x02 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12:\n" +
 	"\afailure\x18\x03 \x01(\v2 .temporal.api.failure.v1.FailureR\afailure\x12,\n" +
-	"\x12scheduled_event_id\x18\x04 \x01(\x03R\x10scheduledEventId\"\xffW\n" +
+	"\x12scheduled_event_id\x18\x04 \x01(\x03R\x10scheduledEventId\"\x85X\n" +
 	"\fHistoryEvent\x12\x19\n" +
 	"\bevent_id\x18\x01 \x01(\x03R\aeventId\x129\n" +
 	"\n" +
@@ -7819,8 +7819,8 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"*workflow_execution_paused_event_attributes\x18? \x01(\v2?.temporal.api.history.v1.WorkflowExecutionPausedEventAttributesH\x00R&workflowExecutionPausedEventAttributes\x12\xa3\x01\n" +
 	",workflow_execution_unpaused_event_attributes\x18@ \x01(\v2A.temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributesH\x00R(workflowExecutionUnpausedEventAttributes\x12\xd5\x01\n" +
 	">workflow_execution_time_skipping_transitioned_event_attributes\x18A \x01(\v2Q.temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributesH\x00R8workflowExecutionTimeSkippingTransitionedEventAttributes\x12\xa0\x01\n" +
-	"+workflow_stream_subscribed_event_attributes\x18B \x01(\v2@.temporal.api.history.v1.WorkflowStreamSubscribedEventAttributesH\x00R'workflowStreamSubscribedEventAttributes\x12\xaa\x01\n" +
-	"/workflow_stream_messages_added_event_attributes\x18C \x01(\v2C.temporal.api.history.v1.WorkflowStreamMessagesAddedEventAttributesH\x00R*workflowStreamMessagesAddedEventAttributesB\f\n" +
+	"+workflow_stream_subscribed_event_attributes\x18B \x01(\v2@.temporal.api.history.v1.WorkflowStreamSubscribedEventAttributesH\x00R'workflowStreamSubscribedEventAttributes\x12\xb0\x01\n" +
+	"1workflow_stream_records_appended_event_attributes\x18C \x01(\v2E.temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributesH\x00R,workflowStreamRecordsAppendedEventAttributesB\f\n" +
 	"\n" +
 	"attributes\"H\n" +
 	"\aHistory\x12=\n" +
@@ -7887,7 +7887,7 @@ var file_temporal_api_history_v1_message_proto_goTypes = []any{
 	(*WorkflowPropertiesModifiedExternallyEventAttributes)(nil),                        // 43: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes
 	(*ActivityPropertiesModifiedExternallyEventAttributes)(nil),                        // 44: temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes
 	(*WorkflowStreamSubscribedEventAttributes)(nil),                                    // 45: temporal.api.history.v1.WorkflowStreamSubscribedEventAttributes
-	(*WorkflowStreamMessagesAddedEventAttributes)(nil),                                 // 46: temporal.api.history.v1.WorkflowStreamMessagesAddedEventAttributes
+	(*WorkflowStreamRecordsAppendedEventAttributes)(nil),                               // 46: temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
 	(*WorkflowExecutionUpdateAcceptedEventAttributes)(nil),                             // 47: temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes
 	(*WorkflowExecutionUpdateCompletedEventAttributes)(nil),                            // 48: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes
 	(*WorkflowExecutionUpdateRejectedEventAttributes)(nil),                             // 49: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes
@@ -7937,7 +7937,7 @@ var file_temporal_api_history_v1_message_proto_goTypes = []any{
 	(*v1.MeteringMetadata)(nil),                         // 93: temporal.api.common.v1.MeteringMetadata
 	(*v15.Deployment)(nil),                              // 94: temporal.api.deployment.v1.Deployment
 	(v12.VersioningBehavior)(0),                         // 95: temporal.api.enums.v1.VersioningBehavior
-	(*v17.StreamCursor)(nil),                            // 96: temporal.api.stream.v1.StreamCursor
+	(*v17.StreamRange)(nil),                             // 96: temporal.api.stream.v1.StreamRange
 	(v12.TimeoutType)(0),                                // 97: temporal.api.enums.v1.TimeoutType
 	(v12.WorkflowTaskFailedCause)(0),                    // 98: temporal.api.enums.v1.WorkflowTaskFailedCause
 	(*v1.ActivityType)(nil),                             // 99: temporal.api.common.v1.ActivityType
@@ -8014,7 +8014,7 @@ var file_temporal_api_history_v1_message_proto_depIdxs = []int32{
 	94,  // 52: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment:type_name -> temporal.api.deployment.v1.Deployment
 	95,  // 53: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.versioning_behavior:type_name -> temporal.api.enums.v1.VersioningBehavior
 	85,  // 54: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
-	96,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.stream_cursors:type_name -> temporal.api.stream.v1.StreamCursor
+	96,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.consumed_stream_ranges:type_name -> temporal.api.stream.v1.StreamRange
 	97,  // 56: temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes.timeout_type:type_name -> temporal.api.enums.v1.TimeoutType
 	98,  // 57: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.WorkflowTaskFailedCause
 	74,  // 58: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
@@ -8195,7 +8195,7 @@ var file_temporal_api_history_v1_message_proto_depIdxs = []int32{
 	52,  // 233: temporal.api.history.v1.HistoryEvent.workflow_execution_unpaused_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributes
 	53,  // 234: temporal.api.history.v1.HistoryEvent.workflow_execution_time_skipping_transitioned_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes
 	45,  // 235: temporal.api.history.v1.HistoryEvent.workflow_stream_subscribed_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamSubscribedEventAttributes
-	46,  // 236: temporal.api.history.v1.HistoryEvent.workflow_stream_messages_added_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamMessagesAddedEventAttributes
+	46,  // 236: temporal.api.history.v1.HistoryEvent.workflow_stream_records_appended_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
 	63,  // 237: temporal.api.history.v1.History.events:type_name -> temporal.api.history.v1.HistoryEvent
 	71,  // 238: temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
 	82,  // 239: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate.attached_completion_callbacks:type_name -> temporal.api.common.v1.Callback
@@ -8273,7 +8273,7 @@ func file_temporal_api_history_v1_message_proto_init() {
 		(*HistoryEvent_WorkflowExecutionUnpausedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowExecutionTimeSkippingTransitionedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowStreamSubscribedEventAttributes)(nil),
-		(*HistoryEvent_WorkflowStreamMessagesAddedEventAttributes)(nil),
+		(*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
