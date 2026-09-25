@@ -1224,7 +1224,6 @@ type WorkflowTaskCompletedEventAttributes struct {
 	// Recorded on every task where a subscription is active, including when it
 	// observed nothing: an empty range is a fact replay must reproduce, and
 	// omitting it would let replay deliver records the Workflow did not have.
-	// Numbered 20 to leave 14 through 19 free for fields added on the main line.
 	ConsumedStreamRanges []*v17.StreamRange `protobuf:"bytes,20,rep,name=consumed_stream_ranges,json=consumedStreamRanges,proto3" json:"consumed_stream_ranges,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -4683,7 +4682,9 @@ type WorkflowStreamSubscribedEventAttributes struct {
 	// The WorkflowTaskCompleted event of the task whose command created this
 	// subscription.
 	WorkflowTaskCompletedEventId int64 `protobuf:"varint,1,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
-	// Stream the Workflow subscribed to.
+	// The stream the Workflow subscribed to, as the command addressed it:
+	// either the name of a stream this Workflow owns or the id of one in
+	// another execution.
 	StreamId string `protobuf:"bytes,2,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
 	// The offset the subscription actually starts from. Resolved by the server
 	// when the subscription is registered and recorded here, so replay reads
@@ -4750,14 +4751,22 @@ type WorkflowStreamRecordsAppendedEventAttributes struct {
 	// The WorkflowTaskCompleted event of the task whose command appended this
 	// batch.
 	WorkflowTaskCompletedEventId int64 `protobuf:"varint,1,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
-	// Stream the Workflow appended to.
+	// Name of the stream the Workflow appended to.
 	StreamId string `protobuf:"bytes,2,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	// Offset the first record of the batch landed at.
-	FirstOffset int64 `protobuf:"varint,3,opt,name=first_offset,json=firstOffset,proto3" json:"first_offset,omitempty"`
-	// How many records the batch held. With first_offset this names the range
-	// without carrying any of it, which is what keeps this event a fixed size
-	// no matter how large the batch or its payloads are.
-	RecordCount   int64 `protobuf:"varint,4,opt,name=record_count,json=recordCount,proto3" json:"record_count,omitempty"`
+	// Inclusive. Same range vocabulary as StreamRange and StreamSlice, so a
+	// reader does not have to remember which of the three counts and which
+	// bounds.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
+	// Exclusive. With from_offset this names the range without carrying any of
+	// it, which is what keeps this event a fixed size no matter how large the
+	// batch or its payloads are.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	ToOffset      int64 `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4806,16 +4815,16 @@ func (x *WorkflowStreamRecordsAppendedEventAttributes) GetStreamId() string {
 	return ""
 }
 
-func (x *WorkflowStreamRecordsAppendedEventAttributes) GetFirstOffset() int64 {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetFromOffset() int64 {
 	if x != nil {
-		return x.FirstOffset
+		return x.FromOffset
 	}
 	return 0
 }
 
-func (x *WorkflowStreamRecordsAppendedEventAttributes) GetRecordCount() int64 {
+func (x *WorkflowStreamRecordsAppendedEventAttributes) GetToOffset() int64 {
 	if x != nil {
-		return x.RecordCount
+		return x.ToOffset
 	}
 	return 0
 }
@@ -7350,7 +7359,7 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"(target_worker_deployment_version_changed\x18\t \x01(\bR$targetWorkerDeploymentVersionChanged\x12,\n" +
 	"\x12history_size_bytes\x18\x05 \x01(\x03R\x10historySizeBytes\x12U\n" +
 	"\x0eworker_version\x18\x06 \x01(\v2*.temporal.api.common.v1.WorkerVersionStampB\x02\x18\x01R\rworkerVersion\x12=\n" +
-	"\x19build_id_redirect_counter\x18\a \x01(\x03B\x02\x18\x01R\x16buildIdRedirectCounter\"\xa9\a\n" +
+	"\x19build_id_redirect_counter\x18\a \x01(\x03B\x02\x18\x01R\x16buildIdRedirectCounter\"\xaf\a\n" +
 	"$WorkflowTaskCompletedEventAttributes\x12,\n" +
 	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\x12(\n" +
 	"\x10started_event_id\x18\x02 \x01(\x03R\x0estartedEventId\x12\x1a\n" +
@@ -7367,7 +7376,7 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\x16worker_deployment_name\x18\n" +
 	" \x01(\tR\x14workerDeploymentName\x12b\n" +
 	"\x12deployment_version\x18\v \x01(\v23.temporal.api.deployment.v1.WorkerDeploymentVersionR\x11deploymentVersion\x12Y\n" +
-	"\x16consumed_stream_ranges\x18\x14 \x03(\v2#.temporal.api.stream.v1.StreamRangeR\x14consumedStreamRanges\"\xc4\x01\n" +
+	"\x16consumed_stream_ranges\x18\x14 \x03(\v2#.temporal.api.stream.v1.StreamRangeR\x14consumedStreamRangesJ\x04\b\x0e\x10\x14\"\xc4\x01\n" +
 	"#WorkflowTaskTimedOutEventAttributes\x12,\n" +
 	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\x12(\n" +
 	"\x10started_event_id\x18\x02 \x01(\x03R\x0estartedEventId\x12E\n" +
@@ -7650,12 +7659,13 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"'WorkflowStreamSubscribedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
 	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12!\n" +
-	"\fstart_offset\x18\x03 \x01(\x03R\vstartOffset\"\xd9\x01\n" +
+	"\fstart_offset\x18\x03 \x01(\x03R\vstartOffset\"\xd1\x01\n" +
 	",WorkflowStreamRecordsAppendedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
-	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12!\n" +
-	"\ffirst_offset\x18\x03 \x01(\x03R\vfirstOffset\x12!\n" +
-	"\frecord_count\x18\x04 \x01(\x03R\vrecordCount\"\xbd\x02\n" +
+	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12\x1f\n" +
+	"\vfrom_offset\x18\x03 \x01(\x03R\n" +
+	"fromOffset\x12\x1b\n" +
+	"\tto_offset\x18\x04 \x01(\x03R\btoOffset\"\xbd\x02\n" +
 	".WorkflowExecutionUpdateAcceptedEventAttributes\x120\n" +
 	"\x14protocol_instance_id\x18\x01 \x01(\tR\x12protocolInstanceId\x12=\n" +
 	"\x1baccepted_request_message_id\x18\x02 \x01(\tR\x18acceptedRequestMessageId\x12N\n" +

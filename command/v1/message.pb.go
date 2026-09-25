@@ -1864,8 +1864,11 @@ func (*Command_SubscribeStreamCommandAttributes) isCommand_Attributes() {}
 // work.
 type AppendStreamRecordsCommandAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Empty means the Workflow's default output stream.
-	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	// Name of a stream this Workflow owns, scoped to the Workflow. Created on
+	// first use. Empty means the Workflow's default output stream. A Workflow
+	// cannot append to a stream in another execution, so this is never the id
+	// of a standalone stream.
+	StreamName string `protobuf:"bytes,1,opt,name=stream_name,json=streamName,proto3" json:"stream_name,omitempty"`
 	// Stored in order. The server sets `producer_id` to empty on each record,
 	// because the owning Workflow is the producer here.
 	Records       []*v16.StreamRecord `protobuf:"bytes,2,rep,name=records,proto3" json:"records,omitempty"`
@@ -1903,9 +1906,9 @@ func (*AppendStreamRecordsCommandAttributes) Descriptor() ([]byte, []int) {
 	return file_temporal_api_command_v1_message_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *AppendStreamRecordsCommandAttributes) GetStreamId() string {
+func (x *AppendStreamRecordsCommandAttributes) GetStreamName() string {
 	if x != nil {
-		return x.StreamId
+		return x.StreamName
 	}
 	return ""
 }
@@ -1925,15 +1928,21 @@ func (x *AppendStreamRecordsCommandAttributes) GetRecords() []*v16.StreamRecord 
 // be a reading rather than a fact, so it could differ on replay.
 type SubscribeStreamCommandAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Stream to consume. A stream in another execution is addressed by its id;
-	// one this Workflow owns is addressed by the name it was published under.
-	// The server resolves an owned name first and falls back to a standalone
-	// id, so a Workflow that owns a stream under this name cannot reach a
-	// standalone stream with the same id.
-	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	// Where to start. Negative means from wherever the stream is when the
-	// subscription is registered, which the server resolves and records so
-	// replay does not resolve it again.
+	// Stream to consume, named either way round: a stream this Workflow owns
+	// by the name it appends under, a stream in another execution by its id.
+	// The server tries them in that order, so a Workflow that owns a stream
+	// under this name cannot reach a standalone stream with the same id. When
+	// neither exists the Workflow gets a stream of its own by that name, which
+	// is how a reader subscribes before the first record is written.
+	StreamNameOrId string `protobuf:"bytes,1,opt,name=stream_name_or_id,json=streamNameOrId,proto3" json:"stream_name_or_id,omitempty"`
+	// Where to start, as an absolute offset. Any negative value means the head
+	// of the stream as of registration, and they all mean the same thing. The
+	// server resolves it and records the result, so replay does not resolve it
+	// again.
+	//
+	// There is no way to ask for the earliest readable offset of a stream that
+	// has been truncated. Reading it from DescribeStream and passing it here
+	// races with further truncation.
 	StartOffset   int64 `protobuf:"varint,2,opt,name=start_offset,json=startOffset,proto3" json:"start_offset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1969,9 +1978,9 @@ func (*SubscribeStreamCommandAttributes) Descriptor() ([]byte, []int) {
 	return file_temporal_api_command_v1_message_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *SubscribeStreamCommandAttributes) GetStreamId() string {
+func (x *SubscribeStreamCommandAttributes) GetStreamNameOrId() string {
 	if x != nil {
-		return x.StreamId
+		return x.StreamNameOrId
 	}
 	return ""
 }
@@ -2133,12 +2142,13 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"(append_stream_records_command_attributes\x18\x14 \x01(\v2=.temporal.api.command.v1.AppendStreamRecordsCommandAttributesH\x00R$appendStreamRecordsCommandAttributes\x12\x8a\x01\n" +
 	"#subscribe_stream_command_attributes\x18\x15 \x01(\v29.temporal.api.command.v1.SubscribeStreamCommandAttributesH\x00R subscribeStreamCommandAttributesB\f\n" +
 	"\n" +
-	"attributes\"\x83\x01\n" +
-	"$AppendStreamRecordsCommandAttributes\x12\x1b\n" +
-	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12>\n" +
-	"\arecords\x18\x02 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\"b\n" +
-	" SubscribeStreamCommandAttributes\x12\x1b\n" +
-	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12!\n" +
+	"attributes\"\x87\x01\n" +
+	"$AppendStreamRecordsCommandAttributes\x12\x1f\n" +
+	"\vstream_name\x18\x01 \x01(\tR\n" +
+	"streamName\x12>\n" +
+	"\arecords\x18\x02 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\"p\n" +
+	" SubscribeStreamCommandAttributes\x12)\n" +
+	"\x11stream_name_or_id\x18\x01 \x01(\tR\x0estreamNameOrId\x12!\n" +
 	"\fstart_offset\x18\x02 \x01(\x03R\vstartOffsetB\x8e\x01\n" +
 	"\x1aio.temporal.api.command.v1B\fMessageProtoP\x01Z%go.temporal.io/api/command/v1;command\xaa\x02\x19Temporalio.Api.Command.V1\xea\x02\x1cTemporalio::Api::Command::V1b\x06proto3"
 

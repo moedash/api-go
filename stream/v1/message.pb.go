@@ -93,8 +93,13 @@ func (StreamRecordKind) EnumDescriptor() ([]byte, []int) {
 // serialized as is and readers in every language decode the same bytes.
 type StreamRecord struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The value the producer published, stored as sent. A payload codec
-	// applies here as it does to any other payload.
+	// The value the producer published, stored as sent.
+	//
+	// A payload codec applies on the paths this API owns: the append command on
+	// RespondWorkflowTaskCompleted, and the slices on PollWorkflowTaskQueue.
+	// Records a producer writes or reads through the stream service take a
+	// different path, whose messages are not part of this API yet and so are
+	// outside what a codec-applying proxy walks.
 	Body *v1.Payload `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	// Producer-supplied provenance, stored as sent.
 	Metadata map[string]*v1.Payload `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
@@ -107,8 +112,9 @@ type StreamRecord struct {
 	// The producer's attempt. Readers treat a later attempt by the same
 	// producer as superseding what the earlier one wrote.
 	Attempt int64 `protobuf:"varint,6,opt,name=attempt,proto3" json:"attempt,omitempty"`
-	// The producer's position within its attempt, or -1 when unnumbered.
-	// Stored as sent; the server does not assign, validate or order by it.
+	// The producer's position within its attempt, zero when it does not number
+	// its records. Stored as sent; the server does not assign, validate or
+	// order by it, and the stream's own offsets are what order a read.
 	Sequence      int64 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -197,15 +203,24 @@ func (x *StreamRecord) GetSequence() int64 {
 // offsets it covers. The offsets are what History records; the records
 // themselves are never written to History.
 type StreamSlice struct {
-	state    protoimpl.MessageState `protogen:"open.v1"`
-	StreamId string                 `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The stream, as the subscribing command addressed it: either the name of
+	// a stream the consuming Workflow owns or the id of one in another
+	// execution.
+	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
 	// Run id of the execution that owns the stream. Set on both a slice for the
 	// task being started and a re-supplied one.
 	RunId string `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	// Inclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
 	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
 	// Exclusive. Equal to from_offset when the subscription observed nothing,
 	// which is a fact replay has to reproduce rather than an absence of one.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
 	ToOffset int64           `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
 	Records  []*StreamRecord `protobuf:"bytes,5,rep,name=records,proto3" json:"records,omitempty"`
 	// The WorkflowTaskCompleted event whose consumed_stream_ranges recorded
@@ -297,11 +312,20 @@ func (x *StreamSlice) GetWorkflowTaskCompletedEventId() int64 {
 // WorkflowTaskCompleted so History grows with Workflow Tasks rather than with
 // records.
 type StreamRange struct {
-	state    protoimpl.MessageState `protogen:"open.v1"`
-	StreamId string                 `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The stream, as the subscribing command addressed it: either the name of
+	// a stream the consuming Workflow owns or the id of one in another
+	// execution.
+	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
 	// Inclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
 	FromOffset int64 `protobuf:"varint,2,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
 	// Exclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
 	ToOffset      int64 `protobuf:"varint,3,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
