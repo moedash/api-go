@@ -1935,15 +1935,15 @@ type SubscribeStreamCommandAttributes struct {
 	// neither exists the Workflow gets a stream of its own by that name, which
 	// is how a reader subscribes before the first record is written.
 	StreamNameOrId string `protobuf:"bytes,1,opt,name=stream_name_or_id,json=streamNameOrId,proto3" json:"stream_name_or_id,omitempty"`
-	// Where to start, as an absolute offset. Any negative value means the head
-	// of the stream as of registration, and they all mean the same thing. The
-	// server resolves it and records the result, so replay does not resolve it
-	// again.
-	//
-	// There is no way to ask for the earliest readable offset of a stream that
-	// has been truncated. Reading it from DescribeStream and passing it here
-	// races with further truncation.
-	StartOffset   int64 `protobuf:"varint,2,opt,name=start_offset,json=startOffset,proto3" json:"start_offset,omitempty"`
+	// Where to start, as an absolute offset. Read only when `start_position`
+	// is unset. A negative value is refused: the head of the stream is asked
+	// for with `start_position.tail`.
+	StartOffset int64 `protobuf:"varint,2,opt,name=start_offset,json=startOffset,proto3" json:"start_offset,omitempty"`
+	// Where to start. The server resolves it once, when it registers the
+	// subscription, and records the resolved absolute offset on the subscribed
+	// event, so replay does not resolve it again. Setting it together with a
+	// non-zero `start_offset` fails the command.
+	StartPosition *v16.StreamStartPosition `protobuf:"bytes,3,opt,name=start_position,json=startPosition,proto3" json:"start_position,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1990,6 +1990,13 @@ func (x *SubscribeStreamCommandAttributes) GetStartOffset() int64 {
 		return x.StartOffset
 	}
 	return 0
+}
+
+func (x *SubscribeStreamCommandAttributes) GetStartPosition() *v16.StreamStartPosition {
+	if x != nil {
+		return x.StartPosition
+	}
+	return nil
 }
 
 var File_temporal_api_command_v1_message_proto protoreflect.FileDescriptor
@@ -2146,10 +2153,11 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"$AppendStreamRecordsCommandAttributes\x12\x1f\n" +
 	"\vstream_name\x18\x01 \x01(\tR\n" +
 	"streamName\x12>\n" +
-	"\arecords\x18\x02 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\"p\n" +
+	"\arecords\x18\x02 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\"\xc4\x01\n" +
 	" SubscribeStreamCommandAttributes\x12)\n" +
 	"\x11stream_name_or_id\x18\x01 \x01(\tR\x0estreamNameOrId\x12!\n" +
-	"\fstart_offset\x18\x02 \x01(\x03R\vstartOffsetB\x8e\x01\n" +
+	"\fstart_offset\x18\x02 \x01(\x03R\vstartOffset\x12R\n" +
+	"\x0estart_position\x18\x03 \x01(\v2+.temporal.api.stream.v1.StreamStartPositionR\rstartPositionB\x8e\x01\n" +
 	"\x1aio.temporal.api.command.v1B\fMessageProtoP\x01Z%go.temporal.io/api/command/v1;command\xaa\x02\x19Temporalio.Api.Command.V1\xea\x02\x1cTemporalio::Api::Command::V1b\x06proto3"
 
 var (
@@ -2210,6 +2218,7 @@ var file_temporal_api_command_v1_message_proto_goTypes = []any{
 	(*v15.UserMetadata)(nil),                     // 41: temporal.api.sdk.v1.UserMetadata
 	(*v15.EventGroupMarker)(nil),                 // 42: temporal.api.sdk.v1.EventGroupMarker
 	(*v16.StreamRecord)(nil),                     // 43: temporal.api.stream.v1.StreamRecord
+	(*v16.StreamStartPosition)(nil),              // 44: temporal.api.stream.v1.StreamStartPosition
 }
 var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
 	22, // 0: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
@@ -2290,12 +2299,13 @@ var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
 	18, // 75: temporal.api.command.v1.Command.append_stream_records_command_attributes:type_name -> temporal.api.command.v1.AppendStreamRecordsCommandAttributes
 	19, // 76: temporal.api.command.v1.Command.subscribe_stream_command_attributes:type_name -> temporal.api.command.v1.SubscribeStreamCommandAttributes
 	43, // 77: temporal.api.command.v1.AppendStreamRecordsCommandAttributes.records:type_name -> temporal.api.stream.v1.StreamRecord
-	25, // 78: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
-	79, // [79:79] is the sub-list for method output_type
-	79, // [79:79] is the sub-list for method input_type
-	79, // [79:79] is the sub-list for extension type_name
-	79, // [79:79] is the sub-list for extension extendee
-	0,  // [0:79] is the sub-list for field type_name
+	44, // 78: temporal.api.command.v1.SubscribeStreamCommandAttributes.start_position:type_name -> temporal.api.stream.v1.StreamStartPosition
+	25, // 79: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
+	80, // [80:80] is the sub-list for method output_type
+	80, // [80:80] is the sub-list for method input_type
+	80, // [80:80] is the sub-list for extension type_name
+	80, // [80:80] is the sub-list for extension extendee
+	0,  // [0:80] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_command_v1_message_proto_init() }

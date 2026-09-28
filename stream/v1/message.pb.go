@@ -382,6 +382,130 @@ func (x *StreamRange) GetToOffset() int64 {
 	return 0
 }
 
+// Where a new subscription or read begins. The server resolves it against the
+// stream as it stands in the same transaction that registers the reader, so
+// the result does not race with appends or truncation, and records the
+// resolved absolute offset.
+type StreamStartPosition struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Position:
+	//
+	//	*StreamStartPosition_Offset
+	//	*StreamStartPosition_LastN
+	//	*StreamStartPosition_Earliest
+	//	*StreamStartPosition_Tail
+	Position      isStreamStartPosition_Position `protobuf_oneof:"position"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamStartPosition) Reset() {
+	*x = StreamStartPosition{}
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamStartPosition) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamStartPosition) ProtoMessage() {}
+
+func (x *StreamStartPosition) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamStartPosition.ProtoReflect.Descriptor instead.
+func (*StreamStartPosition) Descriptor() ([]byte, []int) {
+	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *StreamStartPosition) GetPosition() isStreamStartPosition_Position {
+	if x != nil {
+		return x.Position
+	}
+	return nil
+}
+
+func (x *StreamStartPosition) GetOffset() int64 {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Offset); ok {
+			return x.Offset
+		}
+	}
+	return 0
+}
+
+func (x *StreamStartPosition) GetLastN() int64 {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_LastN); ok {
+			return x.LastN
+		}
+	}
+	return 0
+}
+
+func (x *StreamStartPosition) GetEarliest() bool {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Earliest); ok {
+			return x.Earliest
+		}
+	}
+	return false
+}
+
+func (x *StreamStartPosition) GetTail() bool {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Tail); ok {
+			return x.Tail
+		}
+	}
+	return false
+}
+
+type isStreamStartPosition_Position interface {
+	isStreamStartPosition_Position()
+}
+
+type StreamStartPosition_Offset struct {
+	// Absolute and inclusive. Refused when below the stream's floor.
+	Offset int64 `protobuf:"varint,1,opt,name=offset,proto3,oneof"`
+}
+
+type StreamStartPosition_LastN struct {
+	// The last N records the stream holds, or all of them when it holds
+	// fewer. Counts records of every kind. Must be positive.
+	LastN int64 `protobuf:"varint,2,opt,name=last_n,json=lastN,proto3,oneof"`
+}
+
+type StreamStartPosition_Earliest struct {
+	// The oldest record the stream still holds. Must be true.
+	Earliest bool `protobuf:"varint,3,opt,name=earliest,proto3,oneof"`
+}
+
+type StreamStartPosition_Tail struct {
+	// Only records appended after registration: the stream's head offset.
+	// Must be true.
+	Tail bool `protobuf:"varint,4,opt,name=tail,proto3,oneof"`
+}
+
+func (*StreamStartPosition_Offset) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_LastN) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_Earliest) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_Tail) isStreamStartPosition_Position() {}
+
 var File_temporal_api_stream_v1_message_proto protoreflect.FileDescriptor
 
 const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
@@ -411,7 +535,14 @@ const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
 	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x1f\n" +
 	"\vfrom_offset\x18\x02 \x01(\x03R\n" +
 	"fromOffset\x12\x1b\n" +
-	"\tto_offset\x18\x03 \x01(\x03R\btoOffset*r\n" +
+	"\tto_offset\x18\x03 \x01(\x03R\btoOffset\"\x88\x01\n" +
+	"\x13StreamStartPosition\x12\x18\n" +
+	"\x06offset\x18\x01 \x01(\x03H\x00R\x06offset\x12\x17\n" +
+	"\x06last_n\x18\x02 \x01(\x03H\x00R\x05lastN\x12\x1c\n" +
+	"\bearliest\x18\x03 \x01(\bH\x00R\bearliest\x12\x14\n" +
+	"\x04tail\x18\x04 \x01(\bH\x00R\x04tailB\n" +
+	"\n" +
+	"\bposition*r\n" +
 	"\x10StreamRecordKind\x12\"\n" +
 	"\x1eSTREAM_RECORD_KIND_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17STREAM_RECORD_KIND_DATA\x10\x01\x12\x1d\n" +
@@ -431,21 +562,22 @@ func file_temporal_api_stream_v1_message_proto_rawDescGZIP() []byte {
 }
 
 var file_temporal_api_stream_v1_message_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_temporal_api_stream_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_temporal_api_stream_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_temporal_api_stream_v1_message_proto_goTypes = []any{
-	(StreamRecordKind)(0), // 0: temporal.api.stream.v1.StreamRecordKind
-	(*StreamRecord)(nil),  // 1: temporal.api.stream.v1.StreamRecord
-	(*StreamSlice)(nil),   // 2: temporal.api.stream.v1.StreamSlice
-	(*StreamRange)(nil),   // 3: temporal.api.stream.v1.StreamRange
-	nil,                   // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry
-	(*v1.Payload)(nil),    // 5: temporal.api.common.v1.Payload
+	(StreamRecordKind)(0),       // 0: temporal.api.stream.v1.StreamRecordKind
+	(*StreamRecord)(nil),        // 1: temporal.api.stream.v1.StreamRecord
+	(*StreamSlice)(nil),         // 2: temporal.api.stream.v1.StreamSlice
+	(*StreamRange)(nil),         // 3: temporal.api.stream.v1.StreamRange
+	(*StreamStartPosition)(nil), // 4: temporal.api.stream.v1.StreamStartPosition
+	nil,                         // 5: temporal.api.stream.v1.StreamRecord.MetadataEntry
+	(*v1.Payload)(nil),          // 6: temporal.api.common.v1.Payload
 }
 var file_temporal_api_stream_v1_message_proto_depIdxs = []int32{
-	5, // 0: temporal.api.stream.v1.StreamRecord.body:type_name -> temporal.api.common.v1.Payload
-	4, // 1: temporal.api.stream.v1.StreamRecord.metadata:type_name -> temporal.api.stream.v1.StreamRecord.MetadataEntry
+	6, // 0: temporal.api.stream.v1.StreamRecord.body:type_name -> temporal.api.common.v1.Payload
+	5, // 1: temporal.api.stream.v1.StreamRecord.metadata:type_name -> temporal.api.stream.v1.StreamRecord.MetadataEntry
 	0, // 2: temporal.api.stream.v1.StreamRecord.kind:type_name -> temporal.api.stream.v1.StreamRecordKind
 	1, // 3: temporal.api.stream.v1.StreamSlice.records:type_name -> temporal.api.stream.v1.StreamRecord
-	5, // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
+	6, // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -458,13 +590,19 @@ func file_temporal_api_stream_v1_message_proto_init() {
 	if File_temporal_api_stream_v1_message_proto != nil {
 		return
 	}
+	file_temporal_api_stream_v1_message_proto_msgTypes[3].OneofWrappers = []any{
+		(*StreamStartPosition_Offset)(nil),
+		(*StreamStartPosition_LastN)(nil),
+		(*StreamStartPosition_Earliest)(nil),
+		(*StreamStartPosition_Tail)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_stream_v1_message_proto_rawDesc), len(file_temporal_api_stream_v1_message_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
