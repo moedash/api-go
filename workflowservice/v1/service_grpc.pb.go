@@ -43,6 +43,7 @@ const (
 	WorkflowService_RespondActivityTaskCanceledById_FullMethodName              = "/temporal.api.workflowservice.v1.WorkflowService/RespondActivityTaskCanceledById"
 	WorkflowService_RequestCancelWorkflowExecution_FullMethodName               = "/temporal.api.workflowservice.v1.WorkflowService/RequestCancelWorkflowExecution"
 	WorkflowService_SignalWorkflowExecution_FullMethodName                      = "/temporal.api.workflowservice.v1.WorkflowService/SignalWorkflowExecution"
+	WorkflowService_WakeWorkflowExecution_FullMethodName                        = "/temporal.api.workflowservice.v1.WorkflowService/WakeWorkflowExecution"
 	WorkflowService_SignalWithStartWorkflowExecution_FullMethodName             = "/temporal.api.workflowservice.v1.WorkflowService/SignalWithStartWorkflowExecution"
 	WorkflowService_ResetWorkflowExecution_FullMethodName                       = "/temporal.api.workflowservice.v1.WorkflowService/ResetWorkflowExecution"
 	WorkflowService_TerminateWorkflowExecution_FullMethodName                   = "/temporal.api.workflowservice.v1.WorkflowService/TerminateWorkflowExecution"
@@ -336,6 +337,12 @@ type WorkflowServiceClient interface {
 	// This results in a `WORKFLOW_EXECUTION_SIGNALED` event recorded in the history and a workflow
 	// task being created for the execution.
 	SignalWorkflowExecution(ctx context.Context, in *SignalWorkflowExecutionRequest, opts ...grpc.CallOption) (*SignalWorkflowExecutionResponse, error)
+	// WakeWorkflowExecution asks a running Workflow Execution to run a Workflow
+	// Task because a source it consumes has moved. Unlike a Signal it records
+	// no event, carries no payload, and folds with other wakes for the same
+	// source, so a burst of writes costs one task. The Workflow learns the
+	// source and its position from the task and reads the source itself.
+	WakeWorkflowExecution(ctx context.Context, in *WakeWorkflowExecutionRequest, opts ...grpc.CallOption) (*WakeWorkflowExecutionResponse, error)
 	// SignalWithStartWorkflowExecution is used to ensure a signal is sent to a workflow, even if
 	// it isn't yet started.
 	//
@@ -1111,6 +1118,16 @@ func (c *workflowServiceClient) SignalWorkflowExecution(ctx context.Context, in 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SignalWorkflowExecutionResponse)
 	err := c.cc.Invoke(ctx, WorkflowService_SignalWorkflowExecution_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) WakeWorkflowExecution(ctx context.Context, in *WakeWorkflowExecutionRequest, opts ...grpc.CallOption) (*WakeWorkflowExecutionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WakeWorkflowExecutionResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_WakeWorkflowExecution_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2308,6 +2325,12 @@ type WorkflowServiceServer interface {
 	// This results in a `WORKFLOW_EXECUTION_SIGNALED` event recorded in the history and a workflow
 	// task being created for the execution.
 	SignalWorkflowExecution(context.Context, *SignalWorkflowExecutionRequest) (*SignalWorkflowExecutionResponse, error)
+	// WakeWorkflowExecution asks a running Workflow Execution to run a Workflow
+	// Task because a source it consumes has moved. Unlike a Signal it records
+	// no event, carries no payload, and folds with other wakes for the same
+	// source, so a burst of writes costs one task. The Workflow learns the
+	// source and its position from the task and reads the source itself.
+	WakeWorkflowExecution(context.Context, *WakeWorkflowExecutionRequest) (*WakeWorkflowExecutionResponse, error)
 	// SignalWithStartWorkflowExecution is used to ensure a signal is sent to a workflow, even if
 	// it isn't yet started.
 	//
@@ -2927,6 +2950,9 @@ func (UnimplementedWorkflowServiceServer) RequestCancelWorkflowExecution(context
 }
 func (UnimplementedWorkflowServiceServer) SignalWorkflowExecution(context.Context, *SignalWorkflowExecutionRequest) (*SignalWorkflowExecutionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SignalWorkflowExecution not implemented")
+}
+func (UnimplementedWorkflowServiceServer) WakeWorkflowExecution(context.Context, *WakeWorkflowExecutionRequest) (*WakeWorkflowExecutionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method WakeWorkflowExecution not implemented")
 }
 func (UnimplementedWorkflowServiceServer) SignalWithStartWorkflowExecution(context.Context, *SignalWithStartWorkflowExecutionRequest) (*SignalWithStartWorkflowExecutionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SignalWithStartWorkflowExecution not implemented")
@@ -3659,6 +3685,24 @@ func _WorkflowService_SignalWorkflowExecution_Handler(srv interface{}, ctx conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowServiceServer).SignalWorkflowExecution(ctx, req.(*SignalWorkflowExecutionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_WakeWorkflowExecution_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WakeWorkflowExecutionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).WakeWorkflowExecution(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_WakeWorkflowExecution_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).WakeWorkflowExecution(ctx, req.(*WakeWorkflowExecutionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5561,6 +5605,10 @@ var WorkflowService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignalWorkflowExecution",
 			Handler:    _WorkflowService_SignalWorkflowExecution_Handler,
+		},
+		{
+			MethodName: "WakeWorkflowExecution",
+			Handler:    _WorkflowService_WakeWorkflowExecution_Handler,
 		},
 		{
 			MethodName: "SignalWithStartWorkflowExecution",

@@ -2496,6 +2496,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) ValidateWorkerDeploymentVersion
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateWorkerDeploymentVersionComputeConfig", reflect.TypeOf((*MockWorkflowServiceClient)(nil).ValidateWorkerDeploymentVersionComputeConfig), varargs...)
 }
 
+// WakeWorkflowExecution mocks base method.
+func (m *MockWorkflowServiceClient) WakeWorkflowExecution(ctx context.Context, in *workflowservice.WakeWorkflowExecutionRequest, opts ...grpc.CallOption) (*workflowservice.WakeWorkflowExecutionResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "WakeWorkflowExecution", varargs...)
+	ret0, _ := ret[0].(*workflowservice.WakeWorkflowExecutionResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// WakeWorkflowExecution indicates an expected call of WakeWorkflowExecution.
+func (mr *MockWorkflowServiceClientMockRecorder) WakeWorkflowExecution(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WakeWorkflowExecution", reflect.TypeOf((*MockWorkflowServiceClient)(nil).WakeWorkflowExecution), varargs...)
+}
+
 // MockWorkflowServiceServer is a mock of WorkflowServiceServer interface.
 type MockWorkflowServiceServer struct {
 	workflowservice.UnimplementedWorkflowServiceServer
@@ -4365,6 +4385,21 @@ func (m *MockWorkflowServiceServer) ValidateWorkerDeploymentVersionComputeConfig
 func (mr *MockWorkflowServiceServerMockRecorder) ValidateWorkerDeploymentVersionComputeConfig(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateWorkerDeploymentVersionComputeConfig", reflect.TypeOf((*MockWorkflowServiceServer)(nil).ValidateWorkerDeploymentVersionComputeConfig), arg0, arg1)
+}
+
+// WakeWorkflowExecution mocks base method.
+func (m *MockWorkflowServiceServer) WakeWorkflowExecution(arg0 context.Context, arg1 *workflowservice.WakeWorkflowExecutionRequest) (*workflowservice.WakeWorkflowExecutionResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WakeWorkflowExecution", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.WakeWorkflowExecutionResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// WakeWorkflowExecution indicates an expected call of WakeWorkflowExecution.
+func (mr *MockWorkflowServiceServerMockRecorder) WakeWorkflowExecution(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WakeWorkflowExecution", reflect.TypeOf((*MockWorkflowServiceServer)(nil).WakeWorkflowExecution), arg0, arg1)
 }
 
 // mustEmbedUnimplementedWorkflowServiceServer mocks base method.
