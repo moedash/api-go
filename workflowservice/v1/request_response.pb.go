@@ -4394,8 +4394,9 @@ type WakeWorkflowExecutionResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The run the wake was stored on.
 	RunId string `protobuf:"bytes,1,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
-	// True when the server already held this counter or a higher one for the
-	// source, so the wake changed nothing.
+	// True when a wake for the source was already pending and no task had
+	// received it yet, so this one changed nothing but possibly the position
+	// and no new task results from it.
 	Folded        bool `protobuf:"varint,2,opt,name=folded,proto3" json:"folded,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
