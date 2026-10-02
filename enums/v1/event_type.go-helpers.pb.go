@@ -70,6 +70,7 @@ var (
 		"WorkflowExecutionTimeSkippingTransitioned":       60,
 		"WorkflowStreamSubscribed":                        61,
 		"WorkflowStreamRecordsAppended":                   62,
+		"WorkflowNotificationChannelSubscribed":           63,
 	}
 )
 

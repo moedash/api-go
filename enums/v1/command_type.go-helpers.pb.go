@@ -27,6 +27,7 @@ var (
 		"RequestCancelNexusOperation":            18,
 		"AppendStreamRecords":                    19,
 		"SubscribeStream":                        20,
+		"SubscribeNotificationChannel":           21,
 	}
 )
 
