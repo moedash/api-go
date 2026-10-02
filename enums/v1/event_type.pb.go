@@ -202,6 +202,10 @@ const (
 	// A Workflow became a listener of a notification channel for its run.
 	// The notifications themselves ride the WorkflowTaskScheduled event.
 	EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED EventType = 63
+	// A Workflow stopped listening on a notification channel for its run.
+	// Recorded for every UnsubscribeNotificationChannel command, including one
+	// naming a channel the run was not subscribed to.
+	EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_UNSUBSCRIBED EventType = 64
 )
 
 // Enum value maps for EventType.
@@ -271,6 +275,7 @@ var (
 		61: "EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED",
 		62: "EVENT_TYPE_WORKFLOW_STREAM_RECORDS_APPENDED",
 		63: "EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED",
+		64: "EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_UNSUBSCRIBED",
 	}
 	EventType_value = map[string]int32{
 		"EVENT_TYPE_UNSPECIFIED":                                          0,
@@ -337,6 +342,7 @@ var (
 		"EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED":                           61,
 		"EVENT_TYPE_WORKFLOW_STREAM_RECORDS_APPENDED":                     62,
 		"EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED":             63,
+		"EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_UNSUBSCRIBED":           64,
 	}
 )
 
@@ -478,6 +484,8 @@ func (x EventType) String() string {
 		return "WorkflowStreamRecordsAppended"
 	case EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED:
 		return "WorkflowNotificationChannelSubscribed"
+	case EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_UNSUBSCRIBED:
+		return "WorkflowNotificationChannelUnsubscribed"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -504,7 +512,7 @@ var File_temporal_api_enums_v1_event_type_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_event_type_proto_rawDesc = "" +
 	"\n" +
-	"&temporal/api/enums/v1/event_type.proto\x12\x15temporal.api.enums.v1*\xb3\x17\n" +
+	"&temporal/api/enums/v1/event_type.proto\x12\x15temporal.api.enums.v1*\xee\x17\n" +
 	"\tEventType\x12\x1a\n" +
 	"\x16EVENT_TYPE_UNSPECIFIED\x10\x00\x12)\n" +
 	"%EVENT_TYPE_WORKFLOW_EXECUTION_STARTED\x10\x01\x12+\n" +
@@ -570,7 +578,8 @@ const file_temporal_api_enums_v1_event_type_proto_rawDesc = "" +
 	"8EVENT_TYPE_WORKFLOW_EXECUTION_TIME_SKIPPING_TRANSITIONED\x10<\x12)\n" +
 	"%EVENT_TYPE_WORKFLOW_STREAM_SUBSCRIBED\x10=\x12/\n" +
 	"+EVENT_TYPE_WORKFLOW_STREAM_RECORDS_APPENDED\x10>\x127\n" +
-	"3EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED\x10?B\x86\x01\n" +
+	"3EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_SUBSCRIBED\x10?\x129\n" +
+	"5EVENT_TYPE_WORKFLOW_NOTIFICATION_CHANNEL_UNSUBSCRIBED\x10@B\x86\x01\n" +
 	"\x18io.temporal.api.enums.v1B\x0eEventTypeProtoP\x01Z!go.temporal.io/api/enums/v1;enums\xaa\x02\x17Temporalio.Api.Enums.V1\xea\x02\x1aTemporalio::Api::Enums::V1b\x06proto3"
 
 var (

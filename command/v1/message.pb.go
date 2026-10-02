@@ -1506,6 +1506,7 @@ type Command struct {
 	//	*Command_AppendStreamRecordsCommandAttributes
 	//	*Command_SubscribeStreamCommandAttributes
 	//	*Command_SubscribeNotificationChannelCommandAttributes
+	//	*Command_UnsubscribeNotificationChannelCommandAttributes
 	Attributes    isCommand_Attributes `protobuf_oneof:"attributes"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1749,6 +1750,15 @@ func (x *Command) GetSubscribeNotificationChannelCommandAttributes() *SubscribeN
 	return nil
 }
 
+func (x *Command) GetUnsubscribeNotificationChannelCommandAttributes() *UnsubscribeNotificationChannelCommandAttributes {
+	if x != nil {
+		if x, ok := x.Attributes.(*Command_UnsubscribeNotificationChannelCommandAttributes); ok {
+			return x.UnsubscribeNotificationChannelCommandAttributes
+		}
+	}
+	return nil
+}
+
 type isCommand_Attributes interface {
 	isCommand_Attributes()
 }
@@ -1834,6 +1844,10 @@ type Command_SubscribeNotificationChannelCommandAttributes struct {
 	SubscribeNotificationChannelCommandAttributes *SubscribeNotificationChannelCommandAttributes `protobuf:"bytes,22,opt,name=subscribe_notification_channel_command_attributes,json=subscribeNotificationChannelCommandAttributes,proto3,oneof"`
 }
 
+type Command_UnsubscribeNotificationChannelCommandAttributes struct {
+	UnsubscribeNotificationChannelCommandAttributes *UnsubscribeNotificationChannelCommandAttributes `protobuf:"bytes,23,opt,name=unsubscribe_notification_channel_command_attributes,json=unsubscribeNotificationChannelCommandAttributes,proto3,oneof"`
+}
+
 func (*Command_ScheduleActivityTaskCommandAttributes) isCommand_Attributes() {}
 
 func (*Command_StartTimerCommandAttributes) isCommand_Attributes() {}
@@ -1873,6 +1887,8 @@ func (*Command_AppendStreamRecordsCommandAttributes) isCommand_Attributes() {}
 func (*Command_SubscribeStreamCommandAttributes) isCommand_Attributes() {}
 
 func (*Command_SubscribeNotificationChannelCommandAttributes) isCommand_Attributes() {}
+
+func (*Command_UnsubscribeNotificationChannelCommandAttributes) isCommand_Attributes() {}
 
 // Appends records to a stream the Workflow owns. Applied inside the Workflow
 // Task's own commit. Produces one `WorkflowStreamRecordsAppended` event
@@ -2063,6 +2079,55 @@ func (x *SubscribeNotificationChannelCommandAttributes) GetChannel() string {
 	return ""
 }
 
+// Ends the run's subscription to a notification channel. Notifications already
+// recorded on a scheduled event still reach that Workflow Task; later ones do
+// not. A command naming a channel the run is not subscribed to records its
+// event and changes nothing, so replay matches every command to an event.
+type UnsubscribeNotificationChannelCommandAttributes struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The channel to stop listening on, as the writers name it.
+	Channel       string `protobuf:"bytes,1,opt,name=channel,proto3" json:"channel,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UnsubscribeNotificationChannelCommandAttributes) Reset() {
+	*x = UnsubscribeNotificationChannelCommandAttributes{}
+	mi := &file_temporal_api_command_v1_message_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UnsubscribeNotificationChannelCommandAttributes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UnsubscribeNotificationChannelCommandAttributes) ProtoMessage() {}
+
+func (x *UnsubscribeNotificationChannelCommandAttributes) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_command_v1_message_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UnsubscribeNotificationChannelCommandAttributes.ProtoReflect.Descriptor instead.
+func (*UnsubscribeNotificationChannelCommandAttributes) Descriptor() ([]byte, []int) {
+	return file_temporal_api_command_v1_message_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UnsubscribeNotificationChannelCommandAttributes) GetChannel() string {
+	if x != nil {
+		return x.Channel
+	}
+	return ""
+}
+
 var File_temporal_api_command_v1_message_proto protoreflect.FileDescriptor
 
 const file_temporal_api_command_v1_message_proto_rawDesc = "" +
@@ -2187,7 +2252,7 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\\\n" +
 	",RequestCancelNexusOperationCommandAttributes\x12,\n" +
-	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\"\xe4\x1b\n" +
+	"\x12scheduled_event_id\x18\x01 \x01(\x03R\x10scheduledEventId\"\x9f\x1d\n" +
 	"\aCommand\x12E\n" +
 	"\fcommand_type\x18\x01 \x01(\x0e2\".temporal.api.enums.v1.CommandTypeR\vcommandType\x12G\n" +
 	"\ruser_metadata\x18\xad\x02 \x01(\v2!.temporal.api.sdk.v1.UserMetadataR\fuserMetadata\x12V\n" +
@@ -2212,7 +2277,8 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"1request_cancel_nexus_operation_command_attributes\x18\x13 \x01(\v2E.temporal.api.command.v1.RequestCancelNexusOperationCommandAttributesH\x00R,requestCancelNexusOperationCommandAttributes\x12\x97\x01\n" +
 	"(append_stream_records_command_attributes\x18\x14 \x01(\v2=.temporal.api.command.v1.AppendStreamRecordsCommandAttributesH\x00R$appendStreamRecordsCommandAttributes\x12\x8a\x01\n" +
 	"#subscribe_stream_command_attributes\x18\x15 \x01(\v29.temporal.api.command.v1.SubscribeStreamCommandAttributesH\x00R subscribeStreamCommandAttributes\x12\xb2\x01\n" +
-	"1subscribe_notification_channel_command_attributes\x18\x16 \x01(\v2F.temporal.api.command.v1.SubscribeNotificationChannelCommandAttributesH\x00R-subscribeNotificationChannelCommandAttributesB\f\n" +
+	"1subscribe_notification_channel_command_attributes\x18\x16 \x01(\v2F.temporal.api.command.v1.SubscribeNotificationChannelCommandAttributesH\x00R-subscribeNotificationChannelCommandAttributes\x12\xb8\x01\n" +
+	"3unsubscribe_notification_channel_command_attributes\x18\x17 \x01(\v2H.temporal.api.command.v1.UnsubscribeNotificationChannelCommandAttributesH\x00R/unsubscribeNotificationChannelCommandAttributesB\f\n" +
 	"\n" +
 	"attributes\"\x87\x01\n" +
 	"$AppendStreamRecordsCommandAttributes\x12\x1f\n" +
@@ -2224,6 +2290,8 @@ const file_temporal_api_command_v1_message_proto_rawDesc = "" +
 	"\fstart_offset\x18\x02 \x01(\x03R\vstartOffset\x12R\n" +
 	"\x0estart_position\x18\x03 \x01(\v2+.temporal.api.stream.v1.StreamStartPositionR\rstartPosition\"I\n" +
 	"-SubscribeNotificationChannelCommandAttributes\x12\x18\n" +
+	"\achannel\x18\x01 \x01(\tR\achannel\"K\n" +
+	"/UnsubscribeNotificationChannelCommandAttributes\x12\x18\n" +
 	"\achannel\x18\x01 \x01(\tR\achannelB\x8e\x01\n" +
 	"\x1aio.temporal.api.command.v1B\fMessageProtoP\x01Z%go.temporal.io/api/command/v1;command\xaa\x02\x19Temporalio.Api.Command.V1\xea\x02\x1cTemporalio::Api::Command::V1b\x06proto3"
 
@@ -2239,7 +2307,7 @@ func file_temporal_api_command_v1_message_proto_rawDescGZIP() []byte {
 	return file_temporal_api_command_v1_message_proto_rawDescData
 }
 
-var file_temporal_api_command_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_temporal_api_command_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_temporal_api_command_v1_message_proto_goTypes = []any{
 	(*ScheduleActivityTaskCommandAttributes)(nil),                   // 0: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes
 	(*RequestCancelActivityTaskCommandAttributes)(nil),              // 1: temporal.api.command.v1.RequestCancelActivityTaskCommandAttributes
@@ -2259,94 +2327,95 @@ var file_temporal_api_command_v1_message_proto_goTypes = []any{
 	(*ScheduleNexusOperationCommandAttributes)(nil),                 // 15: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes
 	(*RequestCancelNexusOperationCommandAttributes)(nil),            // 16: temporal.api.command.v1.RequestCancelNexusOperationCommandAttributes
 	(*Command)(nil), // 17: temporal.api.command.v1.Command
-	(*AppendStreamRecordsCommandAttributes)(nil),          // 18: temporal.api.command.v1.AppendStreamRecordsCommandAttributes
-	(*SubscribeStreamCommandAttributes)(nil),              // 19: temporal.api.command.v1.SubscribeStreamCommandAttributes
-	(*SubscribeNotificationChannelCommandAttributes)(nil), // 20: temporal.api.command.v1.SubscribeNotificationChannelCommandAttributes
-	nil,                                      // 21: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
-	nil,                                      // 22: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
-	(*v1.ActivityType)(nil),                  // 23: temporal.api.common.v1.ActivityType
-	(*v11.TaskQueue)(nil),                    // 24: temporal.api.taskqueue.v1.TaskQueue
-	(*v1.Header)(nil),                        // 25: temporal.api.common.v1.Header
-	(*v1.Payloads)(nil),                      // 26: temporal.api.common.v1.Payloads
-	(*durationpb.Duration)(nil),              // 27: google.protobuf.Duration
-	(*v1.RetryPolicy)(nil),                   // 28: temporal.api.common.v1.RetryPolicy
-	(*v1.Priority)(nil),                      // 29: temporal.api.common.v1.Priority
-	(*v12.Failure)(nil),                      // 30: temporal.api.failure.v1.Failure
-	(*v1.WorkflowExecution)(nil),             // 31: temporal.api.common.v1.WorkflowExecution
-	(*v1.SearchAttributes)(nil),              // 32: temporal.api.common.v1.SearchAttributes
-	(*v1.Memo)(nil),                          // 33: temporal.api.common.v1.Memo
-	(*v1.WorkflowType)(nil),                  // 34: temporal.api.common.v1.WorkflowType
-	(v13.ContinueAsNewInitiator)(0),          // 35: temporal.api.enums.v1.ContinueAsNewInitiator
-	(v13.ContinueAsNewVersioningBehavior)(0), // 36: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
-	(v13.ParentClosePolicy)(0),               // 37: temporal.api.enums.v1.ParentClosePolicy
-	(v13.WorkflowIdReusePolicy)(0),           // 38: temporal.api.enums.v1.WorkflowIdReusePolicy
-	(*v14.VersioningOverride)(nil),           // 39: temporal.api.workflow.v1.VersioningOverride
-	(*v1.Payload)(nil),                       // 40: temporal.api.common.v1.Payload
-	(v13.CommandType)(0),                     // 41: temporal.api.enums.v1.CommandType
-	(*v15.UserMetadata)(nil),                 // 42: temporal.api.sdk.v1.UserMetadata
-	(*v15.EventGroupMarker)(nil),             // 43: temporal.api.sdk.v1.EventGroupMarker
-	(*v16.StreamRecord)(nil),                 // 44: temporal.api.stream.v1.StreamRecord
-	(*v16.StreamStartPosition)(nil),          // 45: temporal.api.stream.v1.StreamStartPosition
+	(*AppendStreamRecordsCommandAttributes)(nil),            // 18: temporal.api.command.v1.AppendStreamRecordsCommandAttributes
+	(*SubscribeStreamCommandAttributes)(nil),                // 19: temporal.api.command.v1.SubscribeStreamCommandAttributes
+	(*SubscribeNotificationChannelCommandAttributes)(nil),   // 20: temporal.api.command.v1.SubscribeNotificationChannelCommandAttributes
+	(*UnsubscribeNotificationChannelCommandAttributes)(nil), // 21: temporal.api.command.v1.UnsubscribeNotificationChannelCommandAttributes
+	nil,                                      // 22: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
+	nil,                                      // 23: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
+	(*v1.ActivityType)(nil),                  // 24: temporal.api.common.v1.ActivityType
+	(*v11.TaskQueue)(nil),                    // 25: temporal.api.taskqueue.v1.TaskQueue
+	(*v1.Header)(nil),                        // 26: temporal.api.common.v1.Header
+	(*v1.Payloads)(nil),                      // 27: temporal.api.common.v1.Payloads
+	(*durationpb.Duration)(nil),              // 28: google.protobuf.Duration
+	(*v1.RetryPolicy)(nil),                   // 29: temporal.api.common.v1.RetryPolicy
+	(*v1.Priority)(nil),                      // 30: temporal.api.common.v1.Priority
+	(*v12.Failure)(nil),                      // 31: temporal.api.failure.v1.Failure
+	(*v1.WorkflowExecution)(nil),             // 32: temporal.api.common.v1.WorkflowExecution
+	(*v1.SearchAttributes)(nil),              // 33: temporal.api.common.v1.SearchAttributes
+	(*v1.Memo)(nil),                          // 34: temporal.api.common.v1.Memo
+	(*v1.WorkflowType)(nil),                  // 35: temporal.api.common.v1.WorkflowType
+	(v13.ContinueAsNewInitiator)(0),          // 36: temporal.api.enums.v1.ContinueAsNewInitiator
+	(v13.ContinueAsNewVersioningBehavior)(0), // 37: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
+	(v13.ParentClosePolicy)(0),               // 38: temporal.api.enums.v1.ParentClosePolicy
+	(v13.WorkflowIdReusePolicy)(0),           // 39: temporal.api.enums.v1.WorkflowIdReusePolicy
+	(*v14.VersioningOverride)(nil),           // 40: temporal.api.workflow.v1.VersioningOverride
+	(*v1.Payload)(nil),                       // 41: temporal.api.common.v1.Payload
+	(v13.CommandType)(0),                     // 42: temporal.api.enums.v1.CommandType
+	(*v15.UserMetadata)(nil),                 // 43: temporal.api.sdk.v1.UserMetadata
+	(*v15.EventGroupMarker)(nil),             // 44: temporal.api.sdk.v1.EventGroupMarker
+	(*v16.StreamRecord)(nil),                 // 45: temporal.api.stream.v1.StreamRecord
+	(*v16.StreamStartPosition)(nil),          // 46: temporal.api.stream.v1.StreamStartPosition
 }
 var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
-	23, // 0: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
-	24, // 1: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	25, // 2: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.header:type_name -> temporal.api.common.v1.Header
-	26, // 3: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	27, // 4: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
-	27, // 5: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
-	27, // 6: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	27, // 7: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.heartbeat_timeout:type_name -> google.protobuf.Duration
-	28, // 8: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	29, // 9: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	27, // 10: temporal.api.command.v1.StartTimerCommandAttributes.start_to_fire_timeout:type_name -> google.protobuf.Duration
-	26, // 11: temporal.api.command.v1.CompleteWorkflowExecutionCommandAttributes.result:type_name -> temporal.api.common.v1.Payloads
-	30, // 12: temporal.api.command.v1.FailWorkflowExecutionCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	26, // 13: temporal.api.command.v1.CancelWorkflowExecutionCommandAttributes.details:type_name -> temporal.api.common.v1.Payloads
-	31, // 14: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	26, // 15: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	25, // 16: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
-	32, // 17: temporal.api.command.v1.UpsertWorkflowSearchAttributesCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	33, // 18: temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
-	21, // 19: temporal.api.command.v1.RecordMarkerCommandAttributes.details:type_name -> temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
-	25, // 20: temporal.api.command.v1.RecordMarkerCommandAttributes.header:type_name -> temporal.api.common.v1.Header
-	30, // 21: temporal.api.command.v1.RecordMarkerCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	34, // 22: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	24, // 23: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	26, // 24: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	27, // 25: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
-	27, // 26: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
-	27, // 27: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.backoff_start_interval:type_name -> google.protobuf.Duration
-	28, // 28: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	35, // 29: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
-	30, // 30: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	26, // 31: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
-	25, // 32: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
-	33, // 33: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.memo:type_name -> temporal.api.common.v1.Memo
-	32, // 34: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	36, // 35: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.initial_versioning_behavior:type_name -> temporal.api.enums.v1.ContinueAsNewVersioningBehavior
-	34, // 36: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	24, // 37: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	26, // 38: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	27, // 39: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
-	27, // 40: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
-	27, // 41: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
-	37, // 42: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.parent_close_policy:type_name -> temporal.api.enums.v1.ParentClosePolicy
-	38, // 43: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_id_reuse_policy:type_name -> temporal.api.enums.v1.WorkflowIdReusePolicy
-	28, // 44: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	25, // 45: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
-	33, // 46: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.memo:type_name -> temporal.api.common.v1.Memo
-	32, // 47: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	29, // 48: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	39, // 49: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
-	40, // 50: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.input:type_name -> temporal.api.common.v1.Payload
-	27, // 51: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
-	22, // 52: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.nexus_header:type_name -> temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
-	27, // 53: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
-	27, // 54: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	41, // 55: temporal.api.command.v1.Command.command_type:type_name -> temporal.api.enums.v1.CommandType
-	42, // 56: temporal.api.command.v1.Command.user_metadata:type_name -> temporal.api.sdk.v1.UserMetadata
-	43, // 57: temporal.api.command.v1.Command.event_group_markers:type_name -> temporal.api.sdk.v1.EventGroupMarker
+	24, // 0: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
+	25, // 1: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	26, // 2: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.header:type_name -> temporal.api.common.v1.Header
+	27, // 3: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	28, // 4: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
+	28, // 5: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
+	28, // 6: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	28, // 7: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.heartbeat_timeout:type_name -> google.protobuf.Duration
+	29, // 8: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	30, // 9: temporal.api.command.v1.ScheduleActivityTaskCommandAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	28, // 10: temporal.api.command.v1.StartTimerCommandAttributes.start_to_fire_timeout:type_name -> google.protobuf.Duration
+	27, // 11: temporal.api.command.v1.CompleteWorkflowExecutionCommandAttributes.result:type_name -> temporal.api.common.v1.Payloads
+	31, // 12: temporal.api.command.v1.FailWorkflowExecutionCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	27, // 13: temporal.api.command.v1.CancelWorkflowExecutionCommandAttributes.details:type_name -> temporal.api.common.v1.Payloads
+	32, // 14: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	27, // 15: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	26, // 16: temporal.api.command.v1.SignalExternalWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
+	33, // 17: temporal.api.command.v1.UpsertWorkflowSearchAttributesCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	34, // 18: temporal.api.command.v1.ModifyWorkflowPropertiesCommandAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
+	22, // 19: temporal.api.command.v1.RecordMarkerCommandAttributes.details:type_name -> temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry
+	26, // 20: temporal.api.command.v1.RecordMarkerCommandAttributes.header:type_name -> temporal.api.common.v1.Header
+	31, // 21: temporal.api.command.v1.RecordMarkerCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	35, // 22: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	25, // 23: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	27, // 24: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	28, // 25: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
+	28, // 26: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
+	28, // 27: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.backoff_start_interval:type_name -> google.protobuf.Duration
+	29, // 28: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	36, // 29: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
+	31, // 30: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	27, // 31: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
+	26, // 32: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
+	34, // 33: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.memo:type_name -> temporal.api.common.v1.Memo
+	33, // 34: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	37, // 35: temporal.api.command.v1.ContinueAsNewWorkflowExecutionCommandAttributes.initial_versioning_behavior:type_name -> temporal.api.enums.v1.ContinueAsNewVersioningBehavior
+	35, // 36: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	25, // 37: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	27, // 38: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	28, // 39: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
+	28, // 40: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
+	28, // 41: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
+	38, // 42: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.parent_close_policy:type_name -> temporal.api.enums.v1.ParentClosePolicy
+	39, // 43: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.workflow_id_reuse_policy:type_name -> temporal.api.enums.v1.WorkflowIdReusePolicy
+	29, // 44: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	26, // 45: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.header:type_name -> temporal.api.common.v1.Header
+	34, // 46: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.memo:type_name -> temporal.api.common.v1.Memo
+	33, // 47: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	30, // 48: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	40, // 49: temporal.api.command.v1.StartChildWorkflowExecutionCommandAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
+	41, // 50: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.input:type_name -> temporal.api.common.v1.Payload
+	28, // 51: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
+	23, // 52: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.nexus_header:type_name -> temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.NexusHeaderEntry
+	28, // 53: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
+	28, // 54: temporal.api.command.v1.ScheduleNexusOperationCommandAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	42, // 55: temporal.api.command.v1.Command.command_type:type_name -> temporal.api.enums.v1.CommandType
+	43, // 56: temporal.api.command.v1.Command.user_metadata:type_name -> temporal.api.sdk.v1.UserMetadata
+	44, // 57: temporal.api.command.v1.Command.event_group_markers:type_name -> temporal.api.sdk.v1.EventGroupMarker
 	0,  // 58: temporal.api.command.v1.Command.schedule_activity_task_command_attributes:type_name -> temporal.api.command.v1.ScheduleActivityTaskCommandAttributes
 	2,  // 59: temporal.api.command.v1.Command.start_timer_command_attributes:type_name -> temporal.api.command.v1.StartTimerCommandAttributes
 	3,  // 60: temporal.api.command.v1.Command.complete_workflow_execution_command_attributes:type_name -> temporal.api.command.v1.CompleteWorkflowExecutionCommandAttributes
@@ -2367,14 +2436,15 @@ var file_temporal_api_command_v1_message_proto_depIdxs = []int32{
 	18, // 75: temporal.api.command.v1.Command.append_stream_records_command_attributes:type_name -> temporal.api.command.v1.AppendStreamRecordsCommandAttributes
 	19, // 76: temporal.api.command.v1.Command.subscribe_stream_command_attributes:type_name -> temporal.api.command.v1.SubscribeStreamCommandAttributes
 	20, // 77: temporal.api.command.v1.Command.subscribe_notification_channel_command_attributes:type_name -> temporal.api.command.v1.SubscribeNotificationChannelCommandAttributes
-	44, // 78: temporal.api.command.v1.AppendStreamRecordsCommandAttributes.records:type_name -> temporal.api.stream.v1.StreamRecord
-	45, // 79: temporal.api.command.v1.SubscribeStreamCommandAttributes.start_position:type_name -> temporal.api.stream.v1.StreamStartPosition
-	26, // 80: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
-	81, // [81:81] is the sub-list for method output_type
-	81, // [81:81] is the sub-list for method input_type
-	81, // [81:81] is the sub-list for extension type_name
-	81, // [81:81] is the sub-list for extension extendee
-	0,  // [0:81] is the sub-list for field type_name
+	21, // 78: temporal.api.command.v1.Command.unsubscribe_notification_channel_command_attributes:type_name -> temporal.api.command.v1.UnsubscribeNotificationChannelCommandAttributes
+	45, // 79: temporal.api.command.v1.AppendStreamRecordsCommandAttributes.records:type_name -> temporal.api.stream.v1.StreamRecord
+	46, // 80: temporal.api.command.v1.SubscribeStreamCommandAttributes.start_position:type_name -> temporal.api.stream.v1.StreamStartPosition
+	27, // 81: temporal.api.command.v1.RecordMarkerCommandAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
+	82, // [82:82] is the sub-list for method output_type
+	82, // [82:82] is the sub-list for method input_type
+	82, // [82:82] is the sub-list for extension type_name
+	82, // [82:82] is the sub-list for extension extendee
+	0,  // [0:82] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_command_v1_message_proto_init() }
@@ -2403,6 +2473,7 @@ func file_temporal_api_command_v1_message_proto_init() {
 		(*Command_AppendStreamRecordsCommandAttributes)(nil),
 		(*Command_SubscribeStreamCommandAttributes)(nil),
 		(*Command_SubscribeNotificationChannelCommandAttributes)(nil),
+		(*Command_UnsubscribeNotificationChannelCommandAttributes)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2410,7 +2481,7 @@ func file_temporal_api_command_v1_message_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_command_v1_message_proto_rawDesc), len(file_temporal_api_command_v1_message_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

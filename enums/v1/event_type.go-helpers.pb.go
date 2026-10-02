@@ -71,6 +71,7 @@ var (
 		"WorkflowStreamSubscribed":                        61,
 		"WorkflowStreamRecordsAppended":                   62,
 		"WorkflowNotificationChannelSubscribed":           63,
+		"WorkflowNotificationChannelUnsubscribed":         64,
 	}
 )
 

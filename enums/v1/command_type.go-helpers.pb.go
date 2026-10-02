@@ -28,6 +28,7 @@ var (
 		"AppendStreamRecords":                    19,
 		"SubscribeStream":                        20,
 		"SubscribeNotificationChannel":           21,
+		"UnsubscribeNotificationChannel":         22,
 	}
 )
 

@@ -4813,6 +4813,72 @@ func (x *WorkflowNotificationChannelSubscribedEventAttributes) GetChannel() stri
 	return ""
 }
 
+type WorkflowNotificationChannelUnsubscribedEventAttributes struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The WorkflowTaskCompleted event of the task whose command ended this
+	// subscription.
+	WorkflowTaskCompletedEventId int64 `protobuf:"varint,1,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
+	// The channel the Workflow stopped listening on.
+	Channel string `protobuf:"bytes,2,opt,name=channel,proto3" json:"channel,omitempty"`
+	// The WorkflowNotificationChannelSubscribed event that recorded the
+	// subscription this command ended. Zero when the run held no subscription
+	// for the channel.
+	SubscribedEventId int64 `protobuf:"varint,3,opt,name=subscribed_event_id,json=subscribedEventId,proto3" json:"subscribed_event_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) Reset() {
+	*x = WorkflowNotificationChannelUnsubscribedEventAttributes{}
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkflowNotificationChannelUnsubscribedEventAttributes) ProtoMessage() {}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkflowNotificationChannelUnsubscribedEventAttributes.ProtoReflect.Descriptor instead.
+func (*WorkflowNotificationChannelUnsubscribedEventAttributes) Descriptor() ([]byte, []int) {
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
+	if x != nil {
+		return x.WorkflowTaskCompletedEventId
+	}
+	return 0
+}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetChannel() string {
+	if x != nil {
+		return x.Channel
+	}
+	return ""
+}
+
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetSubscribedEventId() int64 {
+	if x != nil {
+		return x.SubscribedEventId
+	}
+	return 0
+}
+
 type WorkflowStreamRecordsAppendedEventAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The WorkflowTaskCompleted event of the task whose command appended this
@@ -4840,7 +4906,7 @@ type WorkflowStreamRecordsAppendedEventAttributes struct {
 
 func (x *WorkflowStreamRecordsAppendedEventAttributes) Reset() {
 	*x = WorkflowStreamRecordsAppendedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[47]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4852,7 +4918,7 @@ func (x *WorkflowStreamRecordsAppendedEventAttributes) String() string {
 func (*WorkflowStreamRecordsAppendedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowStreamRecordsAppendedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[47]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4865,7 +4931,7 @@ func (x *WorkflowStreamRecordsAppendedEventAttributes) ProtoReflect() protorefle
 
 // Deprecated: Use WorkflowStreamRecordsAppendedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowStreamRecordsAppendedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{47}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *WorkflowStreamRecordsAppendedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
@@ -4915,7 +4981,7 @@ type WorkflowExecutionUpdateAcceptedEventAttributes struct {
 
 func (x *WorkflowExecutionUpdateAcceptedEventAttributes) Reset() {
 	*x = WorkflowExecutionUpdateAcceptedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[48]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4927,7 +4993,7 @@ func (x *WorkflowExecutionUpdateAcceptedEventAttributes) String() string {
 func (*WorkflowExecutionUpdateAcceptedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionUpdateAcceptedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[48]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4940,7 +5006,7 @@ func (x *WorkflowExecutionUpdateAcceptedEventAttributes) ProtoReflect() protoref
 
 // Deprecated: Use WorkflowExecutionUpdateAcceptedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionUpdateAcceptedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{48}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *WorkflowExecutionUpdateAcceptedEventAttributes) GetProtocolInstanceId() string {
@@ -4985,7 +5051,7 @@ type WorkflowExecutionUpdateCompletedEventAttributes struct {
 
 func (x *WorkflowExecutionUpdateCompletedEventAttributes) Reset() {
 	*x = WorkflowExecutionUpdateCompletedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[49]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4997,7 +5063,7 @@ func (x *WorkflowExecutionUpdateCompletedEventAttributes) String() string {
 func (*WorkflowExecutionUpdateCompletedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionUpdateCompletedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[49]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5010,7 +5076,7 @@ func (x *WorkflowExecutionUpdateCompletedEventAttributes) ProtoReflect() protore
 
 // Deprecated: Use WorkflowExecutionUpdateCompletedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionUpdateCompletedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{49}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *WorkflowExecutionUpdateCompletedEventAttributes) GetMeta() *v19.Meta {
@@ -5055,7 +5121,7 @@ type WorkflowExecutionUpdateRejectedEventAttributes struct {
 
 func (x *WorkflowExecutionUpdateRejectedEventAttributes) Reset() {
 	*x = WorkflowExecutionUpdateRejectedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[50]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5067,7 +5133,7 @@ func (x *WorkflowExecutionUpdateRejectedEventAttributes) String() string {
 func (*WorkflowExecutionUpdateRejectedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionUpdateRejectedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[50]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5080,7 +5146,7 @@ func (x *WorkflowExecutionUpdateRejectedEventAttributes) ProtoReflect() protoref
 
 // Deprecated: Use WorkflowExecutionUpdateRejectedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionUpdateRejectedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{50}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *WorkflowExecutionUpdateRejectedEventAttributes) GetProtocolInstanceId() string {
@@ -5130,7 +5196,7 @@ type WorkflowExecutionUpdateAdmittedEventAttributes struct {
 
 func (x *WorkflowExecutionUpdateAdmittedEventAttributes) Reset() {
 	*x = WorkflowExecutionUpdateAdmittedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[51]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5142,7 +5208,7 @@ func (x *WorkflowExecutionUpdateAdmittedEventAttributes) String() string {
 func (*WorkflowExecutionUpdateAdmittedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionUpdateAdmittedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[51]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5155,7 +5221,7 @@ func (x *WorkflowExecutionUpdateAdmittedEventAttributes) ProtoReflect() protoref
 
 // Deprecated: Use WorkflowExecutionUpdateAdmittedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionUpdateAdmittedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{51}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *WorkflowExecutionUpdateAdmittedEventAttributes) GetRequest() *v19.Request {
@@ -5187,7 +5253,7 @@ type WorkflowExecutionPausedEventAttributes struct {
 
 func (x *WorkflowExecutionPausedEventAttributes) Reset() {
 	*x = WorkflowExecutionPausedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[52]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5199,7 +5265,7 @@ func (x *WorkflowExecutionPausedEventAttributes) String() string {
 func (*WorkflowExecutionPausedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionPausedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[52]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5212,7 +5278,7 @@ func (x *WorkflowExecutionPausedEventAttributes) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use WorkflowExecutionPausedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionPausedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{52}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *WorkflowExecutionPausedEventAttributes) GetIdentity() string {
@@ -5251,7 +5317,7 @@ type WorkflowExecutionUnpausedEventAttributes struct {
 
 func (x *WorkflowExecutionUnpausedEventAttributes) Reset() {
 	*x = WorkflowExecutionUnpausedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[53]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5263,7 +5329,7 @@ func (x *WorkflowExecutionUnpausedEventAttributes) String() string {
 func (*WorkflowExecutionUnpausedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionUnpausedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[53]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5276,7 +5342,7 @@ func (x *WorkflowExecutionUnpausedEventAttributes) ProtoReflect() protoreflect.M
 
 // Deprecated: Use WorkflowExecutionUnpausedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionUnpausedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{53}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *WorkflowExecutionUnpausedEventAttributes) GetIdentity() string {
@@ -5320,7 +5386,7 @@ type WorkflowExecutionTimeSkippingTransitionedEventAttributes struct {
 
 func (x *WorkflowExecutionTimeSkippingTransitionedEventAttributes) Reset() {
 	*x = WorkflowExecutionTimeSkippingTransitionedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[54]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5332,7 +5398,7 @@ func (x *WorkflowExecutionTimeSkippingTransitionedEventAttributes) String() stri
 func (*WorkflowExecutionTimeSkippingTransitionedEventAttributes) ProtoMessage() {}
 
 func (x *WorkflowExecutionTimeSkippingTransitionedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[54]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5345,7 +5411,7 @@ func (x *WorkflowExecutionTimeSkippingTransitionedEventAttributes) ProtoReflect(
 
 // Deprecated: Use WorkflowExecutionTimeSkippingTransitionedEventAttributes.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionTimeSkippingTransitionedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{54}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *WorkflowExecutionTimeSkippingTransitionedEventAttributes) GetTargetTime() *timestamppb.Timestamp {
@@ -5424,7 +5490,7 @@ type NexusOperationScheduledEventAttributes struct {
 
 func (x *NexusOperationScheduledEventAttributes) Reset() {
 	*x = NexusOperationScheduledEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[55]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5436,7 +5502,7 @@ func (x *NexusOperationScheduledEventAttributes) String() string {
 func (*NexusOperationScheduledEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationScheduledEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[55]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5449,7 +5515,7 @@ func (x *NexusOperationScheduledEventAttributes) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use NexusOperationScheduledEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationScheduledEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{55}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *NexusOperationScheduledEventAttributes) GetEndpoint() string {
@@ -5555,7 +5621,7 @@ type NexusOperationStartedEventAttributes struct {
 
 func (x *NexusOperationStartedEventAttributes) Reset() {
 	*x = NexusOperationStartedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[56]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5567,7 +5633,7 @@ func (x *NexusOperationStartedEventAttributes) String() string {
 func (*NexusOperationStartedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationStartedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[56]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5580,7 +5646,7 @@ func (x *NexusOperationStartedEventAttributes) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use NexusOperationStartedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationStartedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{56}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *NexusOperationStartedEventAttributes) GetScheduledEventId() int64 {
@@ -5628,7 +5694,7 @@ type NexusOperationCompletedEventAttributes struct {
 
 func (x *NexusOperationCompletedEventAttributes) Reset() {
 	*x = NexusOperationCompletedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[57]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5640,7 +5706,7 @@ func (x *NexusOperationCompletedEventAttributes) String() string {
 func (*NexusOperationCompletedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationCompletedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[57]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5653,7 +5719,7 @@ func (x *NexusOperationCompletedEventAttributes) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use NexusOperationCompletedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationCompletedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{57}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *NexusOperationCompletedEventAttributes) GetScheduledEventId() int64 {
@@ -5692,7 +5758,7 @@ type NexusOperationFailedEventAttributes struct {
 
 func (x *NexusOperationFailedEventAttributes) Reset() {
 	*x = NexusOperationFailedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[58]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5704,7 +5770,7 @@ func (x *NexusOperationFailedEventAttributes) String() string {
 func (*NexusOperationFailedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationFailedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[58]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5717,7 +5783,7 @@ func (x *NexusOperationFailedEventAttributes) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use NexusOperationFailedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationFailedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{58}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *NexusOperationFailedEventAttributes) GetScheduledEventId() int64 {
@@ -5756,7 +5822,7 @@ type NexusOperationTimedOutEventAttributes struct {
 
 func (x *NexusOperationTimedOutEventAttributes) Reset() {
 	*x = NexusOperationTimedOutEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[59]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5768,7 +5834,7 @@ func (x *NexusOperationTimedOutEventAttributes) String() string {
 func (*NexusOperationTimedOutEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationTimedOutEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[59]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5781,7 +5847,7 @@ func (x *NexusOperationTimedOutEventAttributes) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use NexusOperationTimedOutEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationTimedOutEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{59}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *NexusOperationTimedOutEventAttributes) GetScheduledEventId() int64 {
@@ -5820,7 +5886,7 @@ type NexusOperationCanceledEventAttributes struct {
 
 func (x *NexusOperationCanceledEventAttributes) Reset() {
 	*x = NexusOperationCanceledEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[60]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5832,7 +5898,7 @@ func (x *NexusOperationCanceledEventAttributes) String() string {
 func (*NexusOperationCanceledEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationCanceledEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[60]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5845,7 +5911,7 @@ func (x *NexusOperationCanceledEventAttributes) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use NexusOperationCanceledEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationCanceledEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{60}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *NexusOperationCanceledEventAttributes) GetScheduledEventId() int64 {
@@ -5882,7 +5948,7 @@ type NexusOperationCancelRequestedEventAttributes struct {
 
 func (x *NexusOperationCancelRequestedEventAttributes) Reset() {
 	*x = NexusOperationCancelRequestedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[61]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5894,7 +5960,7 @@ func (x *NexusOperationCancelRequestedEventAttributes) String() string {
 func (*NexusOperationCancelRequestedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationCancelRequestedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[61]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5907,7 +5973,7 @@ func (x *NexusOperationCancelRequestedEventAttributes) ProtoReflect() protorefle
 
 // Deprecated: Use NexusOperationCancelRequestedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationCancelRequestedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{61}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *NexusOperationCancelRequestedEventAttributes) GetScheduledEventId() int64 {
@@ -5939,7 +6005,7 @@ type NexusOperationCancelRequestCompletedEventAttributes struct {
 
 func (x *NexusOperationCancelRequestCompletedEventAttributes) Reset() {
 	*x = NexusOperationCancelRequestCompletedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[62]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5951,7 +6017,7 @@ func (x *NexusOperationCancelRequestCompletedEventAttributes) String() string {
 func (*NexusOperationCancelRequestCompletedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationCancelRequestCompletedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[62]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5964,7 +6030,7 @@ func (x *NexusOperationCancelRequestCompletedEventAttributes) ProtoReflect() pro
 
 // Deprecated: Use NexusOperationCancelRequestCompletedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationCancelRequestCompletedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{62}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *NexusOperationCancelRequestCompletedEventAttributes) GetRequestedEventId() int64 {
@@ -6005,7 +6071,7 @@ type NexusOperationCancelRequestFailedEventAttributes struct {
 
 func (x *NexusOperationCancelRequestFailedEventAttributes) Reset() {
 	*x = NexusOperationCancelRequestFailedEventAttributes{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[63]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6017,7 +6083,7 @@ func (x *NexusOperationCancelRequestFailedEventAttributes) String() string {
 func (*NexusOperationCancelRequestFailedEventAttributes) ProtoMessage() {}
 
 func (x *NexusOperationCancelRequestFailedEventAttributes) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[63]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6030,7 +6096,7 @@ func (x *NexusOperationCancelRequestFailedEventAttributes) ProtoReflect() protor
 
 // Deprecated: Use NexusOperationCancelRequestFailedEventAttributes.ProtoReflect.Descriptor instead.
 func (*NexusOperationCancelRequestFailedEventAttributes) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{63}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *NexusOperationCancelRequestFailedEventAttributes) GetRequestedEventId() int64 {
@@ -6162,6 +6228,7 @@ type HistoryEvent struct {
 	//	*HistoryEvent_WorkflowStreamSubscribedEventAttributes
 	//	*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes
 	//	*HistoryEvent_WorkflowNotificationChannelSubscribedEventAttributes
+	//	*HistoryEvent_WorkflowNotificationChannelUnsubscribedEventAttributes
 	Attributes    isHistoryEvent_Attributes `protobuf_oneof:"attributes"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -6169,7 +6236,7 @@ type HistoryEvent struct {
 
 func (x *HistoryEvent) Reset() {
 	*x = HistoryEvent{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[64]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6181,7 +6248,7 @@ func (x *HistoryEvent) String() string {
 func (*HistoryEvent) ProtoMessage() {}
 
 func (x *HistoryEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[64]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6194,7 +6261,7 @@ func (x *HistoryEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HistoryEvent.ProtoReflect.Descriptor instead.
 func (*HistoryEvent) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{64}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *HistoryEvent) GetEventId() int64 {
@@ -6841,6 +6908,15 @@ func (x *HistoryEvent) GetWorkflowNotificationChannelSubscribedEventAttributes()
 	return nil
 }
 
+func (x *HistoryEvent) GetWorkflowNotificationChannelUnsubscribedEventAttributes() *WorkflowNotificationChannelUnsubscribedEventAttributes {
+	if x != nil {
+		if x, ok := x.Attributes.(*HistoryEvent_WorkflowNotificationChannelUnsubscribedEventAttributes); ok {
+			return x.WorkflowNotificationChannelUnsubscribedEventAttributes
+		}
+	}
+	return nil
+}
+
 type isHistoryEvent_Attributes interface {
 	isHistoryEvent_Attributes()
 }
@@ -7097,6 +7173,10 @@ type HistoryEvent_WorkflowNotificationChannelSubscribedEventAttributes struct {
 	WorkflowNotificationChannelSubscribedEventAttributes *WorkflowNotificationChannelSubscribedEventAttributes `protobuf:"bytes,68,opt,name=workflow_notification_channel_subscribed_event_attributes,json=workflowNotificationChannelSubscribedEventAttributes,proto3,oneof"`
 }
 
+type HistoryEvent_WorkflowNotificationChannelUnsubscribedEventAttributes struct {
+	WorkflowNotificationChannelUnsubscribedEventAttributes *WorkflowNotificationChannelUnsubscribedEventAttributes `protobuf:"bytes,69,opt,name=workflow_notification_channel_unsubscribed_event_attributes,json=workflowNotificationChannelUnsubscribedEventAttributes,proto3,oneof"`
+}
+
 func (*HistoryEvent_WorkflowExecutionStartedEventAttributes) isHistoryEvent_Attributes() {}
 
 func (*HistoryEvent_WorkflowExecutionCompletedEventAttributes) isHistoryEvent_Attributes() {}
@@ -7234,6 +7314,9 @@ func (*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes) isHistoryEvent
 func (*HistoryEvent_WorkflowNotificationChannelSubscribedEventAttributes) isHistoryEvent_Attributes() {
 }
 
+func (*HistoryEvent_WorkflowNotificationChannelUnsubscribedEventAttributes) isHistoryEvent_Attributes() {
+}
+
 type History struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Events        []*HistoryEvent        `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
@@ -7243,7 +7326,7 @@ type History struct {
 
 func (x *History) Reset() {
 	*x = History{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[65]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7255,7 +7338,7 @@ func (x *History) String() string {
 func (*History) ProtoMessage() {}
 
 func (x *History) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[65]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7268,7 +7351,7 @@ func (x *History) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use History.ProtoReflect.Descriptor instead.
 func (*History) Descriptor() ([]byte, []int) {
-	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{65}
+	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *History) GetEvents() []*HistoryEvent {
@@ -7293,7 +7376,7 @@ type WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate 
 
 func (x *WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate) Reset() {
 	*x = WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate{}
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[67]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7305,7 +7388,7 @@ func (x *WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpd
 func (*WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate) ProtoMessage() {}
 
 func (x *WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_temporal_api_history_v1_message_proto_msgTypes[67]
+	mi := &file_temporal_api_history_v1_message_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7747,7 +7830,11 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\fstart_offset\x18\x03 \x01(\x03R\vstartOffset\"\x98\x01\n" +
 	"4WorkflowNotificationChannelSubscribedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x18\n" +
-	"\achannel\x18\x02 \x01(\tR\achannel\"\xd1\x01\n" +
+	"\achannel\x18\x02 \x01(\tR\achannel\"\xca\x01\n" +
+	"6WorkflowNotificationChannelUnsubscribedEventAttributes\x12F\n" +
+	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x18\n" +
+	"\achannel\x18\x02 \x01(\tR\achannel\x12.\n" +
+	"\x13subscribed_event_id\x18\x03 \x01(\x03R\x11subscribedEventId\"\xd1\x01\n" +
 	",WorkflowStreamRecordsAppendedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
 	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12\x1f\n" +
@@ -7842,7 +7929,7 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"\x12requested_event_id\x18\x01 \x01(\x03R\x10requestedEventId\x12F\n" +
 	" workflow_task_completed_event_id\x18\x02 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12:\n" +
 	"\afailure\x18\x03 \x01(\v2 .temporal.api.failure.v1.FailureR\afailure\x12,\n" +
-	"\x12scheduled_event_id\x18\x04 \x01(\x03R\x10scheduledEventId\"\xd0Y\n" +
+	"\x12scheduled_event_id\x18\x04 \x01(\x03R\x10scheduledEventId\"\xa1[\n" +
 	"\fHistoryEvent\x12\x19\n" +
 	"\bevent_id\x18\x01 \x01(\x03R\aeventId\x129\n" +
 	"\n" +
@@ -7919,7 +8006,8 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	">workflow_execution_time_skipping_transitioned_event_attributes\x18A \x01(\v2Q.temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributesH\x00R8workflowExecutionTimeSkippingTransitionedEventAttributes\x12\xa0\x01\n" +
 	"+workflow_stream_subscribed_event_attributes\x18B \x01(\v2@.temporal.api.history.v1.WorkflowStreamSubscribedEventAttributesH\x00R'workflowStreamSubscribedEventAttributes\x12\xb0\x01\n" +
 	"1workflow_stream_records_appended_event_attributes\x18C \x01(\v2E.temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributesH\x00R,workflowStreamRecordsAppendedEventAttributes\x12\xc8\x01\n" +
-	"9workflow_notification_channel_subscribed_event_attributes\x18D \x01(\v2M.temporal.api.history.v1.WorkflowNotificationChannelSubscribedEventAttributesH\x00R4workflowNotificationChannelSubscribedEventAttributesB\f\n" +
+	"9workflow_notification_channel_subscribed_event_attributes\x18D \x01(\v2M.temporal.api.history.v1.WorkflowNotificationChannelSubscribedEventAttributesH\x00R4workflowNotificationChannelSubscribedEventAttributes\x12\xce\x01\n" +
+	";workflow_notification_channel_unsubscribed_event_attributes\x18E \x01(\v2O.temporal.api.history.v1.WorkflowNotificationChannelUnsubscribedEventAttributesH\x00R6workflowNotificationChannelUnsubscribedEventAttributesB\f\n" +
 	"\n" +
 	"attributes\"H\n" +
 	"\aHistory\x12=\n" +
@@ -7938,7 +8026,7 @@ func file_temporal_api_history_v1_message_proto_rawDescGZIP() []byte {
 	return file_temporal_api_history_v1_message_proto_rawDescData
 }
 
-var file_temporal_api_history_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
+var file_temporal_api_history_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 70)
 var file_temporal_api_history_v1_message_proto_goTypes = []any{
 	(*WorkflowExecutionStartedEventAttributes)(nil),                                    // 0: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes
 	(*DeclinedTargetVersionUpgrade)(nil),                                               // 1: temporal.api.history.v1.DeclinedTargetVersionUpgrade
@@ -7987,255 +8075,256 @@ var file_temporal_api_history_v1_message_proto_goTypes = []any{
 	(*ActivityPropertiesModifiedExternallyEventAttributes)(nil),                        // 44: temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes
 	(*WorkflowStreamSubscribedEventAttributes)(nil),                                    // 45: temporal.api.history.v1.WorkflowStreamSubscribedEventAttributes
 	(*WorkflowNotificationChannelSubscribedEventAttributes)(nil),                       // 46: temporal.api.history.v1.WorkflowNotificationChannelSubscribedEventAttributes
-	(*WorkflowStreamRecordsAppendedEventAttributes)(nil),                               // 47: temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
-	(*WorkflowExecutionUpdateAcceptedEventAttributes)(nil),                             // 48: temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes
-	(*WorkflowExecutionUpdateCompletedEventAttributes)(nil),                            // 49: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes
-	(*WorkflowExecutionUpdateRejectedEventAttributes)(nil),                             // 50: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes
-	(*WorkflowExecutionUpdateAdmittedEventAttributes)(nil),                             // 51: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes
-	(*WorkflowExecutionPausedEventAttributes)(nil),                                     // 52: temporal.api.history.v1.WorkflowExecutionPausedEventAttributes
-	(*WorkflowExecutionUnpausedEventAttributes)(nil),                                   // 53: temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributes
-	(*WorkflowExecutionTimeSkippingTransitionedEventAttributes)(nil),                   // 54: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes
-	(*NexusOperationScheduledEventAttributes)(nil),                                     // 55: temporal.api.history.v1.NexusOperationScheduledEventAttributes
-	(*NexusOperationStartedEventAttributes)(nil),                                       // 56: temporal.api.history.v1.NexusOperationStartedEventAttributes
-	(*NexusOperationCompletedEventAttributes)(nil),                                     // 57: temporal.api.history.v1.NexusOperationCompletedEventAttributes
-	(*NexusOperationFailedEventAttributes)(nil),                                        // 58: temporal.api.history.v1.NexusOperationFailedEventAttributes
-	(*NexusOperationTimedOutEventAttributes)(nil),                                      // 59: temporal.api.history.v1.NexusOperationTimedOutEventAttributes
-	(*NexusOperationCanceledEventAttributes)(nil),                                      // 60: temporal.api.history.v1.NexusOperationCanceledEventAttributes
-	(*NexusOperationCancelRequestedEventAttributes)(nil),                               // 61: temporal.api.history.v1.NexusOperationCancelRequestedEventAttributes
-	(*NexusOperationCancelRequestCompletedEventAttributes)(nil),                        // 62: temporal.api.history.v1.NexusOperationCancelRequestCompletedEventAttributes
-	(*NexusOperationCancelRequestFailedEventAttributes)(nil),                           // 63: temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes
-	(*HistoryEvent)(nil),                                                               // 64: temporal.api.history.v1.HistoryEvent
-	(*History)(nil),                                                                    // 65: temporal.api.history.v1.History
-	nil,                                                                                // 66: temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry
-	(*WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate)(nil), // 67: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate
-	nil,                                                 // 68: temporal.api.history.v1.NexusOperationScheduledEventAttributes.NexusHeaderEntry
-	(*v1.WorkflowType)(nil),                             // 69: temporal.api.common.v1.WorkflowType
-	(*v1.WorkflowExecution)(nil),                        // 70: temporal.api.common.v1.WorkflowExecution
-	(*v11.TaskQueue)(nil),                               // 71: temporal.api.taskqueue.v1.TaskQueue
-	(*v1.Payloads)(nil),                                 // 72: temporal.api.common.v1.Payloads
-	(*durationpb.Duration)(nil),                         // 73: google.protobuf.Duration
-	(v12.ContinueAsNewInitiator)(0),                     // 74: temporal.api.enums.v1.ContinueAsNewInitiator
-	(*v13.Failure)(nil),                                 // 75: temporal.api.failure.v1.Failure
-	(*v1.RetryPolicy)(nil),                              // 76: temporal.api.common.v1.RetryPolicy
-	(*timestamppb.Timestamp)(nil),                       // 77: google.protobuf.Timestamp
-	(*v1.Memo)(nil),                                     // 78: temporal.api.common.v1.Memo
-	(*v1.SearchAttributes)(nil),                         // 79: temporal.api.common.v1.SearchAttributes
-	(*v14.ResetPoints)(nil),                             // 80: temporal.api.workflow.v1.ResetPoints
-	(*v1.Header)(nil),                                   // 81: temporal.api.common.v1.Header
-	(*v1.WorkerVersionStamp)(nil),                       // 82: temporal.api.common.v1.WorkerVersionStamp
-	(*v1.Callback)(nil),                                 // 83: temporal.api.common.v1.Callback
-	(*v14.VersioningOverride)(nil),                      // 84: temporal.api.workflow.v1.VersioningOverride
-	(*v1.Priority)(nil),                                 // 85: temporal.api.common.v1.Priority
-	(*v15.WorkerDeploymentVersion)(nil),                 // 86: temporal.api.deployment.v1.WorkerDeploymentVersion
-	(*v15.InheritedAutoUpgradeInfo)(nil),                // 87: temporal.api.deployment.v1.InheritedAutoUpgradeInfo
-	(*v1.TimeSkippingConfig)(nil),                       // 88: temporal.api.common.v1.TimeSkippingConfig
-	(*v1.TimeSkippingStatePropagation)(nil),             // 89: temporal.api.common.v1.TimeSkippingStatePropagation
-	(v12.RetryState)(0),                                 // 90: temporal.api.enums.v1.RetryState
-	(v12.ContinueAsNewVersioningBehavior)(0),            // 91: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
-	(*v16.Notification)(nil),                            // 92: temporal.api.notification.v1.Notification
-	(v12.SuggestContinueAsNewReason)(0),                 // 93: temporal.api.enums.v1.SuggestContinueAsNewReason
-	(*v17.WorkflowTaskCompletedMetadata)(nil),           // 94: temporal.api.sdk.v1.WorkflowTaskCompletedMetadata
-	(*v1.MeteringMetadata)(nil),                         // 95: temporal.api.common.v1.MeteringMetadata
-	(*v15.Deployment)(nil),                              // 96: temporal.api.deployment.v1.Deployment
-	(v12.VersioningBehavior)(0),                         // 97: temporal.api.enums.v1.VersioningBehavior
-	(*v18.StreamRange)(nil),                             // 98: temporal.api.stream.v1.StreamRange
-	(v12.TimeoutType)(0),                                // 99: temporal.api.enums.v1.TimeoutType
-	(v12.WorkflowTaskFailedCause)(0),                    // 100: temporal.api.enums.v1.WorkflowTaskFailedCause
-	(*v1.ActivityType)(nil),                             // 101: temporal.api.common.v1.ActivityType
-	(v12.ActivityTaskFailedCause)(0),                    // 102: temporal.api.enums.v1.ActivityTaskFailedCause
-	(v12.CancelExternalWorkflowExecutionFailedCause)(0), // 103: temporal.api.enums.v1.CancelExternalWorkflowExecutionFailedCause
-	(v12.SignalExternalWorkflowExecutionFailedCause)(0), // 104: temporal.api.enums.v1.SignalExternalWorkflowExecutionFailedCause
-	(v12.ParentClosePolicy)(0),                          // 105: temporal.api.enums.v1.ParentClosePolicy
-	(v12.WorkflowIdReusePolicy)(0),                      // 106: temporal.api.enums.v1.WorkflowIdReusePolicy
-	(v12.StartChildWorkflowExecutionFailedCause)(0),     // 107: temporal.api.enums.v1.StartChildWorkflowExecutionFailedCause
-	(*v19.Request)(nil),                                 // 108: temporal.api.update.v1.Request
-	(*v19.Meta)(nil),                                    // 109: temporal.api.update.v1.Meta
-	(*v19.Outcome)(nil),                                 // 110: temporal.api.update.v1.Outcome
-	(v12.UpdateAdmittedEventOrigin)(0),                  // 111: temporal.api.enums.v1.UpdateAdmittedEventOrigin
-	(*v1.Payload)(nil),                                  // 112: temporal.api.common.v1.Payload
-	(v12.EventType)(0),                                  // 113: temporal.api.enums.v1.EventType
-	(*v17.UserMetadata)(nil),                            // 114: temporal.api.sdk.v1.UserMetadata
-	(*v1.Link)(nil),                                     // 115: temporal.api.common.v1.Link
-	(*v1.Principal)(nil),                                // 116: temporal.api.common.v1.Principal
-	(*v17.EventGroupMarker)(nil),                        // 117: temporal.api.sdk.v1.EventGroupMarker
+	(*WorkflowNotificationChannelUnsubscribedEventAttributes)(nil),                     // 47: temporal.api.history.v1.WorkflowNotificationChannelUnsubscribedEventAttributes
+	(*WorkflowStreamRecordsAppendedEventAttributes)(nil),                               // 48: temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
+	(*WorkflowExecutionUpdateAcceptedEventAttributes)(nil),                             // 49: temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes
+	(*WorkflowExecutionUpdateCompletedEventAttributes)(nil),                            // 50: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes
+	(*WorkflowExecutionUpdateRejectedEventAttributes)(nil),                             // 51: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes
+	(*WorkflowExecutionUpdateAdmittedEventAttributes)(nil),                             // 52: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes
+	(*WorkflowExecutionPausedEventAttributes)(nil),                                     // 53: temporal.api.history.v1.WorkflowExecutionPausedEventAttributes
+	(*WorkflowExecutionUnpausedEventAttributes)(nil),                                   // 54: temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributes
+	(*WorkflowExecutionTimeSkippingTransitionedEventAttributes)(nil),                   // 55: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes
+	(*NexusOperationScheduledEventAttributes)(nil),                                     // 56: temporal.api.history.v1.NexusOperationScheduledEventAttributes
+	(*NexusOperationStartedEventAttributes)(nil),                                       // 57: temporal.api.history.v1.NexusOperationStartedEventAttributes
+	(*NexusOperationCompletedEventAttributes)(nil),                                     // 58: temporal.api.history.v1.NexusOperationCompletedEventAttributes
+	(*NexusOperationFailedEventAttributes)(nil),                                        // 59: temporal.api.history.v1.NexusOperationFailedEventAttributes
+	(*NexusOperationTimedOutEventAttributes)(nil),                                      // 60: temporal.api.history.v1.NexusOperationTimedOutEventAttributes
+	(*NexusOperationCanceledEventAttributes)(nil),                                      // 61: temporal.api.history.v1.NexusOperationCanceledEventAttributes
+	(*NexusOperationCancelRequestedEventAttributes)(nil),                               // 62: temporal.api.history.v1.NexusOperationCancelRequestedEventAttributes
+	(*NexusOperationCancelRequestCompletedEventAttributes)(nil),                        // 63: temporal.api.history.v1.NexusOperationCancelRequestCompletedEventAttributes
+	(*NexusOperationCancelRequestFailedEventAttributes)(nil),                           // 64: temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes
+	(*HistoryEvent)(nil),                                                               // 65: temporal.api.history.v1.HistoryEvent
+	(*History)(nil),                                                                    // 66: temporal.api.history.v1.History
+	nil,                                                                                // 67: temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry
+	(*WorkflowExecutionOptionsUpdatedEventAttributes_WorkflowUpdateOptionsUpdate)(nil), // 68: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate
+	nil,                                                 // 69: temporal.api.history.v1.NexusOperationScheduledEventAttributes.NexusHeaderEntry
+	(*v1.WorkflowType)(nil),                             // 70: temporal.api.common.v1.WorkflowType
+	(*v1.WorkflowExecution)(nil),                        // 71: temporal.api.common.v1.WorkflowExecution
+	(*v11.TaskQueue)(nil),                               // 72: temporal.api.taskqueue.v1.TaskQueue
+	(*v1.Payloads)(nil),                                 // 73: temporal.api.common.v1.Payloads
+	(*durationpb.Duration)(nil),                         // 74: google.protobuf.Duration
+	(v12.ContinueAsNewInitiator)(0),                     // 75: temporal.api.enums.v1.ContinueAsNewInitiator
+	(*v13.Failure)(nil),                                 // 76: temporal.api.failure.v1.Failure
+	(*v1.RetryPolicy)(nil),                              // 77: temporal.api.common.v1.RetryPolicy
+	(*timestamppb.Timestamp)(nil),                       // 78: google.protobuf.Timestamp
+	(*v1.Memo)(nil),                                     // 79: temporal.api.common.v1.Memo
+	(*v1.SearchAttributes)(nil),                         // 80: temporal.api.common.v1.SearchAttributes
+	(*v14.ResetPoints)(nil),                             // 81: temporal.api.workflow.v1.ResetPoints
+	(*v1.Header)(nil),                                   // 82: temporal.api.common.v1.Header
+	(*v1.WorkerVersionStamp)(nil),                       // 83: temporal.api.common.v1.WorkerVersionStamp
+	(*v1.Callback)(nil),                                 // 84: temporal.api.common.v1.Callback
+	(*v14.VersioningOverride)(nil),                      // 85: temporal.api.workflow.v1.VersioningOverride
+	(*v1.Priority)(nil),                                 // 86: temporal.api.common.v1.Priority
+	(*v15.WorkerDeploymentVersion)(nil),                 // 87: temporal.api.deployment.v1.WorkerDeploymentVersion
+	(*v15.InheritedAutoUpgradeInfo)(nil),                // 88: temporal.api.deployment.v1.InheritedAutoUpgradeInfo
+	(*v1.TimeSkippingConfig)(nil),                       // 89: temporal.api.common.v1.TimeSkippingConfig
+	(*v1.TimeSkippingStatePropagation)(nil),             // 90: temporal.api.common.v1.TimeSkippingStatePropagation
+	(v12.RetryState)(0),                                 // 91: temporal.api.enums.v1.RetryState
+	(v12.ContinueAsNewVersioningBehavior)(0),            // 92: temporal.api.enums.v1.ContinueAsNewVersioningBehavior
+	(*v16.Notification)(nil),                            // 93: temporal.api.notification.v1.Notification
+	(v12.SuggestContinueAsNewReason)(0),                 // 94: temporal.api.enums.v1.SuggestContinueAsNewReason
+	(*v17.WorkflowTaskCompletedMetadata)(nil),           // 95: temporal.api.sdk.v1.WorkflowTaskCompletedMetadata
+	(*v1.MeteringMetadata)(nil),                         // 96: temporal.api.common.v1.MeteringMetadata
+	(*v15.Deployment)(nil),                              // 97: temporal.api.deployment.v1.Deployment
+	(v12.VersioningBehavior)(0),                         // 98: temporal.api.enums.v1.VersioningBehavior
+	(*v18.StreamRange)(nil),                             // 99: temporal.api.stream.v1.StreamRange
+	(v12.TimeoutType)(0),                                // 100: temporal.api.enums.v1.TimeoutType
+	(v12.WorkflowTaskFailedCause)(0),                    // 101: temporal.api.enums.v1.WorkflowTaskFailedCause
+	(*v1.ActivityType)(nil),                             // 102: temporal.api.common.v1.ActivityType
+	(v12.ActivityTaskFailedCause)(0),                    // 103: temporal.api.enums.v1.ActivityTaskFailedCause
+	(v12.CancelExternalWorkflowExecutionFailedCause)(0), // 104: temporal.api.enums.v1.CancelExternalWorkflowExecutionFailedCause
+	(v12.SignalExternalWorkflowExecutionFailedCause)(0), // 105: temporal.api.enums.v1.SignalExternalWorkflowExecutionFailedCause
+	(v12.ParentClosePolicy)(0),                          // 106: temporal.api.enums.v1.ParentClosePolicy
+	(v12.WorkflowIdReusePolicy)(0),                      // 107: temporal.api.enums.v1.WorkflowIdReusePolicy
+	(v12.StartChildWorkflowExecutionFailedCause)(0),     // 108: temporal.api.enums.v1.StartChildWorkflowExecutionFailedCause
+	(*v19.Request)(nil),                                 // 109: temporal.api.update.v1.Request
+	(*v19.Meta)(nil),                                    // 110: temporal.api.update.v1.Meta
+	(*v19.Outcome)(nil),                                 // 111: temporal.api.update.v1.Outcome
+	(v12.UpdateAdmittedEventOrigin)(0),                  // 112: temporal.api.enums.v1.UpdateAdmittedEventOrigin
+	(*v1.Payload)(nil),                                  // 113: temporal.api.common.v1.Payload
+	(v12.EventType)(0),                                  // 114: temporal.api.enums.v1.EventType
+	(*v17.UserMetadata)(nil),                            // 115: temporal.api.sdk.v1.UserMetadata
+	(*v1.Link)(nil),                                     // 116: temporal.api.common.v1.Link
+	(*v1.Principal)(nil),                                // 117: temporal.api.common.v1.Principal
+	(*v17.EventGroupMarker)(nil),                        // 118: temporal.api.sdk.v1.EventGroupMarker
 }
 var file_temporal_api_history_v1_message_proto_depIdxs = []int32{
-	69,  // 0: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	70,  // 1: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.parent_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	71,  // 2: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	72,  // 3: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	73,  // 4: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
-	73,  // 5: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
-	73,  // 6: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
-	74,  // 7: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
-	75,  // 8: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.continued_failure:type_name -> temporal.api.failure.v1.Failure
-	72,  // 9: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
-	76,  // 10: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	77,  // 11: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_execution_expiration_time:type_name -> google.protobuf.Timestamp
-	73,  // 12: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.first_workflow_task_backoff:type_name -> google.protobuf.Duration
-	78,  // 13: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
-	79,  // 14: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	80,  // 15: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.prev_auto_reset_points:type_name -> temporal.api.workflow.v1.ResetPoints
-	81,  // 16: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	82,  // 17: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.source_version_stamp:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	83,  // 18: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.completion_callbacks:type_name -> temporal.api.common.v1.Callback
-	70,  // 19: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.root_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	84,  // 20: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
-	85,  // 21: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	86,  // 22: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.inherited_pinned_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
-	87,  // 23: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.inherited_auto_upgrade_info:type_name -> temporal.api.deployment.v1.InheritedAutoUpgradeInfo
+	70,  // 0: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	71,  // 1: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.parent_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	72,  // 2: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	73,  // 3: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	74,  // 4: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
+	74,  // 5: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
+	74,  // 6: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
+	75,  // 7: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
+	76,  // 8: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.continued_failure:type_name -> temporal.api.failure.v1.Failure
+	73,  // 9: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
+	77,  // 10: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	78,  // 11: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.workflow_execution_expiration_time:type_name -> google.protobuf.Timestamp
+	74,  // 12: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.first_workflow_task_backoff:type_name -> google.protobuf.Duration
+	79,  // 13: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
+	80,  // 14: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	81,  // 15: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.prev_auto_reset_points:type_name -> temporal.api.workflow.v1.ResetPoints
+	82,  // 16: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	83,  // 17: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.source_version_stamp:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	84,  // 18: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.completion_callbacks:type_name -> temporal.api.common.v1.Callback
+	71,  // 19: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.root_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	85,  // 20: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
+	86,  // 21: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	87,  // 22: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.inherited_pinned_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
+	88,  // 23: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.inherited_auto_upgrade_info:type_name -> temporal.api.deployment.v1.InheritedAutoUpgradeInfo
 	1,   // 24: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.declined_target_version_upgrade:type_name -> temporal.api.history.v1.DeclinedTargetVersionUpgrade
-	88,  // 25: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
-	89,  // 26: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.time_skipping_state_propagation:type_name -> temporal.api.common.v1.TimeSkippingStatePropagation
-	86,  // 27: temporal.api.history.v1.DeclinedTargetVersionUpgrade.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
-	72,  // 28: temporal.api.history.v1.WorkflowExecutionCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
-	75,  // 29: temporal.api.history.v1.WorkflowExecutionFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	90,  // 30: temporal.api.history.v1.WorkflowExecutionFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	90,  // 31: temporal.api.history.v1.WorkflowExecutionTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	69,  // 32: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	71,  // 33: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	72,  // 34: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	73,  // 35: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
-	73,  // 36: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
-	73,  // 37: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.backoff_start_interval:type_name -> google.protobuf.Duration
-	74,  // 38: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
-	75,  // 39: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	72,  // 40: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
-	81,  // 41: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	78,  // 42: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
-	79,  // 43: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	91,  // 44: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.initial_versioning_behavior:type_name -> temporal.api.enums.v1.ContinueAsNewVersioningBehavior
-	71,  // 45: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	73,  // 46: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	92,  // 47: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.notifications:type_name -> temporal.api.notification.v1.Notification
-	93,  // 48: temporal.api.history.v1.WorkflowTaskStartedEventAttributes.suggest_continue_as_new_reasons:type_name -> temporal.api.enums.v1.SuggestContinueAsNewReason
-	82,  // 49: temporal.api.history.v1.WorkflowTaskStartedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	82,  // 50: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	94,  // 51: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.sdk_metadata:type_name -> temporal.api.sdk.v1.WorkflowTaskCompletedMetadata
-	95,  // 52: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.metering_metadata:type_name -> temporal.api.common.v1.MeteringMetadata
-	96,  // 53: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment:type_name -> temporal.api.deployment.v1.Deployment
-	97,  // 54: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.versioning_behavior:type_name -> temporal.api.enums.v1.VersioningBehavior
-	86,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
-	98,  // 56: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.consumed_stream_ranges:type_name -> temporal.api.stream.v1.StreamRange
-	99,  // 57: temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes.timeout_type:type_name -> temporal.api.enums.v1.TimeoutType
-	100, // 58: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.WorkflowTaskFailedCause
-	75,  // 59: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	82,  // 60: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	101, // 61: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
-	71,  // 62: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	81,  // 63: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	72,  // 64: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	73,  // 65: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
-	73,  // 66: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
-	73,  // 67: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	73,  // 68: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.heartbeat_timeout:type_name -> google.protobuf.Duration
-	76,  // 69: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	85,  // 70: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	75,  // 71: temporal.api.history.v1.ActivityTaskStartedEventAttributes.last_failure:type_name -> temporal.api.failure.v1.Failure
-	82,  // 72: temporal.api.history.v1.ActivityTaskStartedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	72,  // 73: temporal.api.history.v1.ActivityTaskCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
-	82,  // 74: temporal.api.history.v1.ActivityTaskCompletedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	75,  // 75: temporal.api.history.v1.ActivityTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	90,  // 76: temporal.api.history.v1.ActivityTaskFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	82,  // 77: temporal.api.history.v1.ActivityTaskFailedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	102, // 78: temporal.api.history.v1.ActivityTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.ActivityTaskFailedCause
-	75,  // 79: temporal.api.history.v1.ActivityTaskTimedOutEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	90,  // 80: temporal.api.history.v1.ActivityTaskTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	72,  // 81: temporal.api.history.v1.ActivityTaskCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
-	82,  // 82: temporal.api.history.v1.ActivityTaskCanceledEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
-	73,  // 83: temporal.api.history.v1.TimerStartedEventAttributes.start_to_fire_timeout:type_name -> google.protobuf.Duration
-	70,  // 84: temporal.api.history.v1.WorkflowExecutionCancelRequestedEventAttributes.external_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	72,  // 85: temporal.api.history.v1.WorkflowExecutionCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
-	66,  // 86: temporal.api.history.v1.MarkerRecordedEventAttributes.details:type_name -> temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry
-	81,  // 87: temporal.api.history.v1.MarkerRecordedEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	75,  // 88: temporal.api.history.v1.MarkerRecordedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	72,  // 89: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	81,  // 90: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	70,  // 91: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.external_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	72,  // 92: temporal.api.history.v1.WorkflowExecutionTerminatedEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
-	70,  // 93: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionInitiatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	103, // 94: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.CancelExternalWorkflowExecutionFailedCause
-	70,  // 95: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	70,  // 96: temporal.api.history.v1.ExternalWorkflowExecutionCancelRequestedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	70,  // 97: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	72,  // 98: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	81,  // 99: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	104, // 100: temporal.api.history.v1.SignalExternalWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.SignalExternalWorkflowExecutionFailedCause
-	70,  // 101: temporal.api.history.v1.SignalExternalWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	70,  // 102: temporal.api.history.v1.ExternalWorkflowExecutionSignaledEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	79,  // 103: temporal.api.history.v1.UpsertWorkflowSearchAttributesEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	78,  // 104: temporal.api.history.v1.WorkflowPropertiesModifiedEventAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
-	69,  // 105: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	71,  // 106: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
-	72,  // 107: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
-	73,  // 108: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
-	73,  // 109: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
-	73,  // 110: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
-	105, // 111: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.parent_close_policy:type_name -> temporal.api.enums.v1.ParentClosePolicy
-	106, // 112: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_id_reuse_policy:type_name -> temporal.api.enums.v1.WorkflowIdReusePolicy
-	76,  // 113: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	81,  // 114: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	78,  // 115: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
-	79,  // 116: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
-	85,  // 117: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	88,  // 118: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
-	89,  // 119: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.time_skipping_state_propagation:type_name -> temporal.api.common.v1.TimeSkippingStatePropagation
-	84,  // 120: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
-	69,  // 121: temporal.api.history.v1.StartChildWorkflowExecutionFailedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	107, // 122: temporal.api.history.v1.StartChildWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.StartChildWorkflowExecutionFailedCause
-	70,  // 123: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 124: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	81,  // 125: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.header:type_name -> temporal.api.common.v1.Header
-	72,  // 126: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
-	70,  // 127: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 128: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	75,  // 129: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	70,  // 130: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 131: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	90,  // 132: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	72,  // 133: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
-	70,  // 134: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 135: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	70,  // 136: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 137: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	90,  // 138: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
-	70,  // 139: temporal.api.history.v1.ChildWorkflowExecutionTerminatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
-	69,  // 140: temporal.api.history.v1.ChildWorkflowExecutionTerminatedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
-	84,  // 141: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
-	83,  // 142: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.attached_completion_callbacks:type_name -> temporal.api.common.v1.Callback
-	85,  // 143: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
-	88,  // 144: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
-	67,  // 145: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.workflow_update_options:type_name -> temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate
-	73,  // 146: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_task_timeout:type_name -> google.protobuf.Duration
-	73,  // 147: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_run_timeout:type_name -> google.protobuf.Duration
-	73,  // 148: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_execution_timeout:type_name -> google.protobuf.Duration
-	78,  // 149: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
-	76,  // 150: temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes.new_retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
-	108, // 151: temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes.accepted_request:type_name -> temporal.api.update.v1.Request
-	109, // 152: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes.meta:type_name -> temporal.api.update.v1.Meta
-	110, // 153: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes.outcome:type_name -> temporal.api.update.v1.Outcome
-	108, // 154: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes.rejected_request:type_name -> temporal.api.update.v1.Request
-	75,  // 155: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	108, // 156: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes.request:type_name -> temporal.api.update.v1.Request
-	111, // 157: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes.origin:type_name -> temporal.api.enums.v1.UpdateAdmittedEventOrigin
-	77,  // 158: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes.target_time:type_name -> google.protobuf.Timestamp
-	77,  // 159: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes.wall_clock_time:type_name -> google.protobuf.Timestamp
-	112, // 160: temporal.api.history.v1.NexusOperationScheduledEventAttributes.input:type_name -> temporal.api.common.v1.Payload
-	73,  // 161: temporal.api.history.v1.NexusOperationScheduledEventAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
-	68,  // 162: temporal.api.history.v1.NexusOperationScheduledEventAttributes.nexus_header:type_name -> temporal.api.history.v1.NexusOperationScheduledEventAttributes.NexusHeaderEntry
-	73,  // 163: temporal.api.history.v1.NexusOperationScheduledEventAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
-	73,  // 164: temporal.api.history.v1.NexusOperationScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
-	112, // 165: temporal.api.history.v1.NexusOperationCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payload
-	75,  // 166: temporal.api.history.v1.NexusOperationFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	75,  // 167: temporal.api.history.v1.NexusOperationTimedOutEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	75,  // 168: temporal.api.history.v1.NexusOperationCanceledEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	75,  // 169: temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
-	77,  // 170: temporal.api.history.v1.HistoryEvent.event_time:type_name -> google.protobuf.Timestamp
-	113, // 171: temporal.api.history.v1.HistoryEvent.event_type:type_name -> temporal.api.enums.v1.EventType
-	114, // 172: temporal.api.history.v1.HistoryEvent.user_metadata:type_name -> temporal.api.sdk.v1.UserMetadata
-	115, // 173: temporal.api.history.v1.HistoryEvent.links:type_name -> temporal.api.common.v1.Link
-	116, // 174: temporal.api.history.v1.HistoryEvent.principal:type_name -> temporal.api.common.v1.Principal
-	117, // 175: temporal.api.history.v1.HistoryEvent.event_group_markers:type_name -> temporal.api.sdk.v1.EventGroupMarker
+	89,  // 25: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
+	90,  // 26: temporal.api.history.v1.WorkflowExecutionStartedEventAttributes.time_skipping_state_propagation:type_name -> temporal.api.common.v1.TimeSkippingStatePropagation
+	87,  // 27: temporal.api.history.v1.DeclinedTargetVersionUpgrade.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
+	73,  // 28: temporal.api.history.v1.WorkflowExecutionCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
+	76,  // 29: temporal.api.history.v1.WorkflowExecutionFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	91,  // 30: temporal.api.history.v1.WorkflowExecutionFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	91,  // 31: temporal.api.history.v1.WorkflowExecutionTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	70,  // 32: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	72,  // 33: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	73,  // 34: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	74,  // 35: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
+	74,  // 36: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
+	74,  // 37: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.backoff_start_interval:type_name -> google.protobuf.Duration
+	75,  // 38: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.initiator:type_name -> temporal.api.enums.v1.ContinueAsNewInitiator
+	76,  // 39: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	73,  // 40: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.last_completion_result:type_name -> temporal.api.common.v1.Payloads
+	82,  // 41: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	79,  // 42: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
+	80,  // 43: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	92,  // 44: temporal.api.history.v1.WorkflowExecutionContinuedAsNewEventAttributes.initial_versioning_behavior:type_name -> temporal.api.enums.v1.ContinueAsNewVersioningBehavior
+	72,  // 45: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	74,  // 46: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	93,  // 47: temporal.api.history.v1.WorkflowTaskScheduledEventAttributes.notifications:type_name -> temporal.api.notification.v1.Notification
+	94,  // 48: temporal.api.history.v1.WorkflowTaskStartedEventAttributes.suggest_continue_as_new_reasons:type_name -> temporal.api.enums.v1.SuggestContinueAsNewReason
+	83,  // 49: temporal.api.history.v1.WorkflowTaskStartedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	83,  // 50: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	95,  // 51: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.sdk_metadata:type_name -> temporal.api.sdk.v1.WorkflowTaskCompletedMetadata
+	96,  // 52: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.metering_metadata:type_name -> temporal.api.common.v1.MeteringMetadata
+	97,  // 53: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment:type_name -> temporal.api.deployment.v1.Deployment
+	98,  // 54: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.versioning_behavior:type_name -> temporal.api.enums.v1.VersioningBehavior
+	87,  // 55: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.deployment_version:type_name -> temporal.api.deployment.v1.WorkerDeploymentVersion
+	99,  // 56: temporal.api.history.v1.WorkflowTaskCompletedEventAttributes.consumed_stream_ranges:type_name -> temporal.api.stream.v1.StreamRange
+	100, // 57: temporal.api.history.v1.WorkflowTaskTimedOutEventAttributes.timeout_type:type_name -> temporal.api.enums.v1.TimeoutType
+	101, // 58: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.WorkflowTaskFailedCause
+	76,  // 59: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	83,  // 60: temporal.api.history.v1.WorkflowTaskFailedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	102, // 61: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.activity_type:type_name -> temporal.api.common.v1.ActivityType
+	72,  // 62: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	82,  // 63: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	73,  // 64: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	74,  // 65: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
+	74,  // 66: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
+	74,  // 67: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	74,  // 68: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.heartbeat_timeout:type_name -> google.protobuf.Duration
+	77,  // 69: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	86,  // 70: temporal.api.history.v1.ActivityTaskScheduledEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	76,  // 71: temporal.api.history.v1.ActivityTaskStartedEventAttributes.last_failure:type_name -> temporal.api.failure.v1.Failure
+	83,  // 72: temporal.api.history.v1.ActivityTaskStartedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	73,  // 73: temporal.api.history.v1.ActivityTaskCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
+	83,  // 74: temporal.api.history.v1.ActivityTaskCompletedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	76,  // 75: temporal.api.history.v1.ActivityTaskFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	91,  // 76: temporal.api.history.v1.ActivityTaskFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	83,  // 77: temporal.api.history.v1.ActivityTaskFailedEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	103, // 78: temporal.api.history.v1.ActivityTaskFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.ActivityTaskFailedCause
+	76,  // 79: temporal.api.history.v1.ActivityTaskTimedOutEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	91,  // 80: temporal.api.history.v1.ActivityTaskTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	73,  // 81: temporal.api.history.v1.ActivityTaskCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
+	83,  // 82: temporal.api.history.v1.ActivityTaskCanceledEventAttributes.worker_version:type_name -> temporal.api.common.v1.WorkerVersionStamp
+	74,  // 83: temporal.api.history.v1.TimerStartedEventAttributes.start_to_fire_timeout:type_name -> google.protobuf.Duration
+	71,  // 84: temporal.api.history.v1.WorkflowExecutionCancelRequestedEventAttributes.external_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	73,  // 85: temporal.api.history.v1.WorkflowExecutionCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
+	67,  // 86: temporal.api.history.v1.MarkerRecordedEventAttributes.details:type_name -> temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry
+	82,  // 87: temporal.api.history.v1.MarkerRecordedEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	76,  // 88: temporal.api.history.v1.MarkerRecordedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	73,  // 89: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	82,  // 90: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	71,  // 91: temporal.api.history.v1.WorkflowExecutionSignaledEventAttributes.external_workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	73,  // 92: temporal.api.history.v1.WorkflowExecutionTerminatedEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
+	71,  // 93: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionInitiatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	104, // 94: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.CancelExternalWorkflowExecutionFailedCause
+	71,  // 95: temporal.api.history.v1.RequestCancelExternalWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	71,  // 96: temporal.api.history.v1.ExternalWorkflowExecutionCancelRequestedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	71,  // 97: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	73,  // 98: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	82,  // 99: temporal.api.history.v1.SignalExternalWorkflowExecutionInitiatedEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	105, // 100: temporal.api.history.v1.SignalExternalWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.SignalExternalWorkflowExecutionFailedCause
+	71,  // 101: temporal.api.history.v1.SignalExternalWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	71,  // 102: temporal.api.history.v1.ExternalWorkflowExecutionSignaledEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	80,  // 103: temporal.api.history.v1.UpsertWorkflowSearchAttributesEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	79,  // 104: temporal.api.history.v1.WorkflowPropertiesModifiedEventAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
+	70,  // 105: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	72,  // 106: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.task_queue:type_name -> temporal.api.taskqueue.v1.TaskQueue
+	73,  // 107: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.input:type_name -> temporal.api.common.v1.Payloads
+	74,  // 108: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_execution_timeout:type_name -> google.protobuf.Duration
+	74,  // 109: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_run_timeout:type_name -> google.protobuf.Duration
+	74,  // 110: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_task_timeout:type_name -> google.protobuf.Duration
+	106, // 111: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.parent_close_policy:type_name -> temporal.api.enums.v1.ParentClosePolicy
+	107, // 112: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.workflow_id_reuse_policy:type_name -> temporal.api.enums.v1.WorkflowIdReusePolicy
+	77,  // 113: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	82,  // 114: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	79,  // 115: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.memo:type_name -> temporal.api.common.v1.Memo
+	80,  // 116: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.search_attributes:type_name -> temporal.api.common.v1.SearchAttributes
+	86,  // 117: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	89,  // 118: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
+	90,  // 119: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.time_skipping_state_propagation:type_name -> temporal.api.common.v1.TimeSkippingStatePropagation
+	85,  // 120: temporal.api.history.v1.StartChildWorkflowExecutionInitiatedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
+	70,  // 121: temporal.api.history.v1.StartChildWorkflowExecutionFailedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	108, // 122: temporal.api.history.v1.StartChildWorkflowExecutionFailedEventAttributes.cause:type_name -> temporal.api.enums.v1.StartChildWorkflowExecutionFailedCause
+	71,  // 123: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 124: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	82,  // 125: temporal.api.history.v1.ChildWorkflowExecutionStartedEventAttributes.header:type_name -> temporal.api.common.v1.Header
+	73,  // 126: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payloads
+	71,  // 127: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 128: temporal.api.history.v1.ChildWorkflowExecutionCompletedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	76,  // 129: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	71,  // 130: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 131: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	91,  // 132: temporal.api.history.v1.ChildWorkflowExecutionFailedEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	73,  // 133: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.details:type_name -> temporal.api.common.v1.Payloads
+	71,  // 134: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 135: temporal.api.history.v1.ChildWorkflowExecutionCanceledEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	71,  // 136: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 137: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	91,  // 138: temporal.api.history.v1.ChildWorkflowExecutionTimedOutEventAttributes.retry_state:type_name -> temporal.api.enums.v1.RetryState
+	71,  // 139: temporal.api.history.v1.ChildWorkflowExecutionTerminatedEventAttributes.workflow_execution:type_name -> temporal.api.common.v1.WorkflowExecution
+	70,  // 140: temporal.api.history.v1.ChildWorkflowExecutionTerminatedEventAttributes.workflow_type:type_name -> temporal.api.common.v1.WorkflowType
+	85,  // 141: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.versioning_override:type_name -> temporal.api.workflow.v1.VersioningOverride
+	84,  // 142: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.attached_completion_callbacks:type_name -> temporal.api.common.v1.Callback
+	86,  // 143: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.priority:type_name -> temporal.api.common.v1.Priority
+	89,  // 144: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.time_skipping_config:type_name -> temporal.api.common.v1.TimeSkippingConfig
+	68,  // 145: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.workflow_update_options:type_name -> temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate
+	74,  // 146: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_task_timeout:type_name -> google.protobuf.Duration
+	74,  // 147: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_run_timeout:type_name -> google.protobuf.Duration
+	74,  // 148: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.new_workflow_execution_timeout:type_name -> google.protobuf.Duration
+	79,  // 149: temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes.upserted_memo:type_name -> temporal.api.common.v1.Memo
+	77,  // 150: temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes.new_retry_policy:type_name -> temporal.api.common.v1.RetryPolicy
+	109, // 151: temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes.accepted_request:type_name -> temporal.api.update.v1.Request
+	110, // 152: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes.meta:type_name -> temporal.api.update.v1.Meta
+	111, // 153: temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes.outcome:type_name -> temporal.api.update.v1.Outcome
+	109, // 154: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes.rejected_request:type_name -> temporal.api.update.v1.Request
+	76,  // 155: temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	109, // 156: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes.request:type_name -> temporal.api.update.v1.Request
+	112, // 157: temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes.origin:type_name -> temporal.api.enums.v1.UpdateAdmittedEventOrigin
+	78,  // 158: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes.target_time:type_name -> google.protobuf.Timestamp
+	78,  // 159: temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes.wall_clock_time:type_name -> google.protobuf.Timestamp
+	113, // 160: temporal.api.history.v1.NexusOperationScheduledEventAttributes.input:type_name -> temporal.api.common.v1.Payload
+	74,  // 161: temporal.api.history.v1.NexusOperationScheduledEventAttributes.schedule_to_close_timeout:type_name -> google.protobuf.Duration
+	69,  // 162: temporal.api.history.v1.NexusOperationScheduledEventAttributes.nexus_header:type_name -> temporal.api.history.v1.NexusOperationScheduledEventAttributes.NexusHeaderEntry
+	74,  // 163: temporal.api.history.v1.NexusOperationScheduledEventAttributes.schedule_to_start_timeout:type_name -> google.protobuf.Duration
+	74,  // 164: temporal.api.history.v1.NexusOperationScheduledEventAttributes.start_to_close_timeout:type_name -> google.protobuf.Duration
+	113, // 165: temporal.api.history.v1.NexusOperationCompletedEventAttributes.result:type_name -> temporal.api.common.v1.Payload
+	76,  // 166: temporal.api.history.v1.NexusOperationFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	76,  // 167: temporal.api.history.v1.NexusOperationTimedOutEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	76,  // 168: temporal.api.history.v1.NexusOperationCanceledEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	76,  // 169: temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes.failure:type_name -> temporal.api.failure.v1.Failure
+	78,  // 170: temporal.api.history.v1.HistoryEvent.event_time:type_name -> google.protobuf.Timestamp
+	114, // 171: temporal.api.history.v1.HistoryEvent.event_type:type_name -> temporal.api.enums.v1.EventType
+	115, // 172: temporal.api.history.v1.HistoryEvent.user_metadata:type_name -> temporal.api.sdk.v1.UserMetadata
+	116, // 173: temporal.api.history.v1.HistoryEvent.links:type_name -> temporal.api.common.v1.Link
+	117, // 174: temporal.api.history.v1.HistoryEvent.principal:type_name -> temporal.api.common.v1.Principal
+	118, // 175: temporal.api.history.v1.HistoryEvent.event_group_markers:type_name -> temporal.api.sdk.v1.EventGroupMarker
 	0,   // 176: temporal.api.history.v1.HistoryEvent.workflow_execution_started_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionStartedEventAttributes
 	2,   // 177: temporal.api.history.v1.HistoryEvent.workflow_execution_completed_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionCompletedEventAttributes
 	3,   // 178: temporal.api.history.v1.HistoryEvent.workflow_execution_failed_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionFailedEventAttributes
@@ -8276,37 +8365,38 @@ var file_temporal_api_history_v1_message_proto_depIdxs = []int32{
 	30,  // 213: temporal.api.history.v1.HistoryEvent.signal_external_workflow_execution_failed_event_attributes:type_name -> temporal.api.history.v1.SignalExternalWorkflowExecutionFailedEventAttributes
 	31,  // 214: temporal.api.history.v1.HistoryEvent.external_workflow_execution_signaled_event_attributes:type_name -> temporal.api.history.v1.ExternalWorkflowExecutionSignaledEventAttributes
 	32,  // 215: temporal.api.history.v1.HistoryEvent.upsert_workflow_search_attributes_event_attributes:type_name -> temporal.api.history.v1.UpsertWorkflowSearchAttributesEventAttributes
-	48,  // 216: temporal.api.history.v1.HistoryEvent.workflow_execution_update_accepted_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes
-	50,  // 217: temporal.api.history.v1.HistoryEvent.workflow_execution_update_rejected_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes
-	49,  // 218: temporal.api.history.v1.HistoryEvent.workflow_execution_update_completed_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes
+	49,  // 216: temporal.api.history.v1.HistoryEvent.workflow_execution_update_accepted_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateAcceptedEventAttributes
+	51,  // 217: temporal.api.history.v1.HistoryEvent.workflow_execution_update_rejected_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateRejectedEventAttributes
+	50,  // 218: temporal.api.history.v1.HistoryEvent.workflow_execution_update_completed_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateCompletedEventAttributes
 	43,  // 219: temporal.api.history.v1.HistoryEvent.workflow_properties_modified_externally_event_attributes:type_name -> temporal.api.history.v1.WorkflowPropertiesModifiedExternallyEventAttributes
 	44,  // 220: temporal.api.history.v1.HistoryEvent.activity_properties_modified_externally_event_attributes:type_name -> temporal.api.history.v1.ActivityPropertiesModifiedExternallyEventAttributes
 	33,  // 221: temporal.api.history.v1.HistoryEvent.workflow_properties_modified_event_attributes:type_name -> temporal.api.history.v1.WorkflowPropertiesModifiedEventAttributes
-	51,  // 222: temporal.api.history.v1.HistoryEvent.workflow_execution_update_admitted_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes
-	55,  // 223: temporal.api.history.v1.HistoryEvent.nexus_operation_scheduled_event_attributes:type_name -> temporal.api.history.v1.NexusOperationScheduledEventAttributes
-	56,  // 224: temporal.api.history.v1.HistoryEvent.nexus_operation_started_event_attributes:type_name -> temporal.api.history.v1.NexusOperationStartedEventAttributes
-	57,  // 225: temporal.api.history.v1.HistoryEvent.nexus_operation_completed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCompletedEventAttributes
-	58,  // 226: temporal.api.history.v1.HistoryEvent.nexus_operation_failed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationFailedEventAttributes
-	60,  // 227: temporal.api.history.v1.HistoryEvent.nexus_operation_canceled_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCanceledEventAttributes
-	59,  // 228: temporal.api.history.v1.HistoryEvent.nexus_operation_timed_out_event_attributes:type_name -> temporal.api.history.v1.NexusOperationTimedOutEventAttributes
-	61,  // 229: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_requested_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestedEventAttributes
+	52,  // 222: temporal.api.history.v1.HistoryEvent.workflow_execution_update_admitted_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUpdateAdmittedEventAttributes
+	56,  // 223: temporal.api.history.v1.HistoryEvent.nexus_operation_scheduled_event_attributes:type_name -> temporal.api.history.v1.NexusOperationScheduledEventAttributes
+	57,  // 224: temporal.api.history.v1.HistoryEvent.nexus_operation_started_event_attributes:type_name -> temporal.api.history.v1.NexusOperationStartedEventAttributes
+	58,  // 225: temporal.api.history.v1.HistoryEvent.nexus_operation_completed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCompletedEventAttributes
+	59,  // 226: temporal.api.history.v1.HistoryEvent.nexus_operation_failed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationFailedEventAttributes
+	61,  // 227: temporal.api.history.v1.HistoryEvent.nexus_operation_canceled_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCanceledEventAttributes
+	60,  // 228: temporal.api.history.v1.HistoryEvent.nexus_operation_timed_out_event_attributes:type_name -> temporal.api.history.v1.NexusOperationTimedOutEventAttributes
+	62,  // 229: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_requested_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestedEventAttributes
 	42,  // 230: temporal.api.history.v1.HistoryEvent.workflow_execution_options_updated_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes
-	62,  // 231: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_request_completed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestCompletedEventAttributes
-	63,  // 232: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_request_failed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes
-	52,  // 233: temporal.api.history.v1.HistoryEvent.workflow_execution_paused_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionPausedEventAttributes
-	53,  // 234: temporal.api.history.v1.HistoryEvent.workflow_execution_unpaused_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributes
-	54,  // 235: temporal.api.history.v1.HistoryEvent.workflow_execution_time_skipping_transitioned_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes
+	63,  // 231: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_request_completed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestCompletedEventAttributes
+	64,  // 232: temporal.api.history.v1.HistoryEvent.nexus_operation_cancel_request_failed_event_attributes:type_name -> temporal.api.history.v1.NexusOperationCancelRequestFailedEventAttributes
+	53,  // 233: temporal.api.history.v1.HistoryEvent.workflow_execution_paused_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionPausedEventAttributes
+	54,  // 234: temporal.api.history.v1.HistoryEvent.workflow_execution_unpaused_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionUnpausedEventAttributes
+	55,  // 235: temporal.api.history.v1.HistoryEvent.workflow_execution_time_skipping_transitioned_event_attributes:type_name -> temporal.api.history.v1.WorkflowExecutionTimeSkippingTransitionedEventAttributes
 	45,  // 236: temporal.api.history.v1.HistoryEvent.workflow_stream_subscribed_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamSubscribedEventAttributes
-	47,  // 237: temporal.api.history.v1.HistoryEvent.workflow_stream_records_appended_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
+	48,  // 237: temporal.api.history.v1.HistoryEvent.workflow_stream_records_appended_event_attributes:type_name -> temporal.api.history.v1.WorkflowStreamRecordsAppendedEventAttributes
 	46,  // 238: temporal.api.history.v1.HistoryEvent.workflow_notification_channel_subscribed_event_attributes:type_name -> temporal.api.history.v1.WorkflowNotificationChannelSubscribedEventAttributes
-	64,  // 239: temporal.api.history.v1.History.events:type_name -> temporal.api.history.v1.HistoryEvent
-	72,  // 240: temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
-	83,  // 241: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate.attached_completion_callbacks:type_name -> temporal.api.common.v1.Callback
-	242, // [242:242] is the sub-list for method output_type
-	242, // [242:242] is the sub-list for method input_type
-	242, // [242:242] is the sub-list for extension type_name
-	242, // [242:242] is the sub-list for extension extendee
-	0,   // [0:242] is the sub-list for field type_name
+	47,  // 239: temporal.api.history.v1.HistoryEvent.workflow_notification_channel_unsubscribed_event_attributes:type_name -> temporal.api.history.v1.WorkflowNotificationChannelUnsubscribedEventAttributes
+	65,  // 240: temporal.api.history.v1.History.events:type_name -> temporal.api.history.v1.HistoryEvent
+	73,  // 241: temporal.api.history.v1.MarkerRecordedEventAttributes.DetailsEntry.value:type_name -> temporal.api.common.v1.Payloads
+	84,  // 242: temporal.api.history.v1.WorkflowExecutionOptionsUpdatedEventAttributes.WorkflowUpdateOptionsUpdate.attached_completion_callbacks:type_name -> temporal.api.common.v1.Callback
+	243, // [243:243] is the sub-list for method output_type
+	243, // [243:243] is the sub-list for method input_type
+	243, // [243:243] is the sub-list for extension type_name
+	243, // [243:243] is the sub-list for extension extendee
+	0,   // [0:243] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_history_v1_message_proto_init() }
@@ -8314,7 +8404,7 @@ func file_temporal_api_history_v1_message_proto_init() {
 	if File_temporal_api_history_v1_message_proto != nil {
 		return
 	}
-	file_temporal_api_history_v1_message_proto_msgTypes[64].OneofWrappers = []any{
+	file_temporal_api_history_v1_message_proto_msgTypes[65].OneofWrappers = []any{
 		(*HistoryEvent_WorkflowExecutionStartedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowExecutionCompletedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowExecutionFailedEventAttributes)(nil),
@@ -8378,6 +8468,7 @@ func file_temporal_api_history_v1_message_proto_init() {
 		(*HistoryEvent_WorkflowStreamSubscribedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowStreamRecordsAppendedEventAttributes)(nil),
 		(*HistoryEvent_WorkflowNotificationChannelSubscribedEventAttributes)(nil),
+		(*HistoryEvent_WorkflowNotificationChannelUnsubscribedEventAttributes)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -8385,7 +8476,7 @@ func file_temporal_api_history_v1_message_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_history_v1_message_proto_rawDesc), len(file_temporal_api_history_v1_message_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   69,
+			NumMessages:   70,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

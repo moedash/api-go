@@ -1744,6 +1744,43 @@ func (this *WorkflowNotificationChannelSubscribedEventAttributes) Equal(that int
 	return proto.Equal(this, that1)
 }
 
+// Marshal an object of type WorkflowNotificationChannelUnsubscribedEventAttributes to the protobuf v3 wire format
+func (val *WorkflowNotificationChannelUnsubscribedEventAttributes) Marshal() ([]byte, error) {
+	return proto.Marshal(val)
+}
+
+// Unmarshal an object of type WorkflowNotificationChannelUnsubscribedEventAttributes from the protobuf v3 wire format
+func (val *WorkflowNotificationChannelUnsubscribedEventAttributes) Unmarshal(buf []byte) error {
+	return proto.Unmarshal(buf, val)
+}
+
+// Size returns the size of the object, in bytes, once serialized
+func (val *WorkflowNotificationChannelUnsubscribedEventAttributes) Size() int {
+	return proto.Size(val)
+}
+
+// Equal returns whether two WorkflowNotificationChannelUnsubscribedEventAttributes values are equivalent by recursively
+// comparing the message's fields.
+// For more information see the documentation for
+// https://pkg.go.dev/google.golang.org/protobuf/proto#Equal
+func (this *WorkflowNotificationChannelUnsubscribedEventAttributes) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	var that1 *WorkflowNotificationChannelUnsubscribedEventAttributes
+	switch t := that.(type) {
+	case *WorkflowNotificationChannelUnsubscribedEventAttributes:
+		that1 = t
+	case WorkflowNotificationChannelUnsubscribedEventAttributes:
+		that1 = &t
+	default:
+		return false
+	}
+
+	return proto.Equal(this, that1)
+}
+
 // Marshal an object of type WorkflowStreamRecordsAppendedEventAttributes to the protobuf v3 wire format
 func (val *WorkflowStreamRecordsAppendedEventAttributes) Marshal() ([]byte, error) {
 	return proto.Marshal(val)

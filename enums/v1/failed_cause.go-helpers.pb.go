@@ -52,6 +52,7 @@ var (
 		"BadSubscribeStreamAttributes":                        42,
 		"StreamRangeUnavailable":                              43,
 		"BadSubscribeNotificationChannelAttributes":           44,
+		"BadUnsubscribeNotificationChannelAttributes":         45,
 	}
 )
 
