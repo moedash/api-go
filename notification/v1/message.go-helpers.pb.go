@@ -2,6 +2,8 @@
 package notification
 
 import (
+	"fmt"
+
 	"google.golang.org/protobuf/proto"
 )
 
@@ -114,4 +116,23 @@ func (this *WorkflowListener) Equal(that interface{}) bool {
 	}
 
 	return proto.Equal(this, that1)
+}
+
+var (
+	ChannelKind_shorthandValue = map[string]int32{
+		"Unspecified": 0,
+		"Independent": 1,
+		"Linked":      2,
+	}
+)
+
+// ChannelKindFromString parses a ChannelKind value from  either the protojson
+// canonical SCREAMING_CASE enum or the traditional temporal PascalCase enum to ChannelKind
+func ChannelKindFromString(s string) (ChannelKind, error) {
+	if v, ok := ChannelKind_value[s]; ok {
+		return ChannelKind(v), nil
+	} else if v, ok := ChannelKind_shorthandValue[s]; ok {
+		return ChannelKind(v), nil
+	}
+	return ChannelKind(0), fmt.Errorf("%s is not a valid ChannelKind", s)
 }

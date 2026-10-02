@@ -8,6 +8,7 @@ package notification
 
 import (
 	reflect "reflect"
+	"strconv"
 	sync "sync"
 	unsafe "unsafe"
 
@@ -23,6 +24,70 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+// Where a channel lives, which decides how a call addresses it.
+type ChannelKind int32
+
+const (
+	CHANNEL_KIND_UNSPECIFIED ChannelKind = 0
+	// Its own execution, keyed by namespace and channel name. Any number of
+	// workflows and callbacks listen to it.
+	CHANNEL_KIND_INDEPENDENT ChannelKind = 1
+	// Kept in one workflow's state, keyed by namespace, workflow id and
+	// channel name. The owning workflow is its listener by construction.
+	CHANNEL_KIND_LINKED ChannelKind = 2
+)
+
+// Enum value maps for ChannelKind.
+var (
+	ChannelKind_name = map[int32]string{
+		0: "CHANNEL_KIND_UNSPECIFIED",
+		1: "CHANNEL_KIND_INDEPENDENT",
+		2: "CHANNEL_KIND_LINKED",
+	}
+	ChannelKind_value = map[string]int32{
+		"CHANNEL_KIND_UNSPECIFIED": 0,
+		"CHANNEL_KIND_INDEPENDENT": 1,
+		"CHANNEL_KIND_LINKED":      2,
+	}
+)
+
+func (x ChannelKind) Enum() *ChannelKind {
+	p := new(ChannelKind)
+	*p = x
+	return p
+}
+
+func (x ChannelKind) String() string {
+	switch x {
+	case CHANNEL_KIND_UNSPECIFIED:
+		return "Unspecified"
+	case CHANNEL_KIND_INDEPENDENT:
+		return "Independent"
+	case CHANNEL_KIND_LINKED:
+		return "Linked"
+	default:
+		return strconv.Itoa(int(x))
+	}
+
+}
+
+func (ChannelKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_temporal_api_notification_v1_message_proto_enumTypes[0].Descriptor()
+}
+
+func (ChannelKind) Type() protoreflect.EnumType {
+	return &file_temporal_api_notification_v1_message_proto_enumTypes[0]
+}
+
+func (x ChannelKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ChannelKind.Descriptor instead.
+func (ChannelKind) EnumDescriptor() ([]byte, []int) {
+	return file_temporal_api_notification_v1_message_proto_rawDescGZIP(), []int{0}
+}
 
 // A notification tells the listeners of a channel that a source they consume
 // has moved. It is not data: the listener reads the source itself. A channel
@@ -43,7 +108,14 @@ type Notification struct {
 	Counter int64 `protobuf:"varint,3,opt,name=counter,proto3" json:"counter,omitempty"`
 	// Details for the listener, such as which topic moved. Bounded in size and
 	// carried as payloads, so a codec applies as to any payload.
-	Metadata      map[string]*v1.Payload `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Metadata map[string]*v1.Payload `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Set for a channel linked to a workflow: the owner and the run that
+	// received the notification. Empty for an independent channel. A listener
+	// that holds both kinds routes the notification by it.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "to" names the owner the channel is linked to. --)
+	LinkedTo      *v1.WorkflowExecution `protobuf:"bytes,5,opt,name=linked_to,json=linkedTo,proto3" json:"linked_to,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -102,6 +174,13 @@ func (x *Notification) GetCounter() int64 {
 func (x *Notification) GetMetadata() map[string]*v1.Payload {
 	if x != nil {
 		return x.Metadata
+	}
+	return nil
+}
+
+func (x *Notification) GetLinkedTo() *v1.WorkflowExecution {
+	if x != nil {
+		return x.LinkedTo
 	}
 	return nil
 }
@@ -266,12 +345,13 @@ var File_temporal_api_notification_v1_message_proto protoreflect.FileDescriptor
 
 const file_temporal_api_notification_v1_message_proto_rawDesc = "" +
 	"\n" +
-	"*temporal/api/notification/v1/message.proto\x12\x1ctemporal.api.notification.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$temporal/api/common/v1/message.proto\"\x92\x02\n" +
+	"*temporal/api/notification/v1/message.proto\x12\x1ctemporal.api.notification.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$temporal/api/common/v1/message.proto\"\xda\x02\n" +
 	"\fNotification\x12\x18\n" +
 	"\achannel\x18\x01 \x01(\tR\achannel\x12\x1a\n" +
 	"\bposition\x18\x02 \x01(\fR\bposition\x12\x18\n" +
 	"\acounter\x18\x03 \x01(\x03R\acounter\x12T\n" +
-	"\bmetadata\x18\x04 \x03(\v28.temporal.api.notification.v1.Notification.MetadataEntryR\bmetadata\x1a\\\n" +
+	"\bmetadata\x18\x04 \x03(\v28.temporal.api.notification.v1.Notification.MetadataEntryR\bmetadata\x12F\n" +
+	"\tlinked_to\x18\x05 \x01(\v2).temporal.api.common.v1.WorkflowExecutionR\blinkedTo\x1a\\\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x125\n" +
 	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\x91\x02\n" +
@@ -286,7 +366,11 @@ const file_temporal_api_notification_v1_message_proto_rawDesc = "" +
 	"\x10WorkflowListener\x12\x1f\n" +
 	"\vworkflow_id\x18\x01 \x01(\tR\n" +
 	"workflowId\x12\x15\n" +
-	"\x06run_id\x18\x02 \x01(\tR\x05runIdB\xa7\x01\n" +
+	"\x06run_id\x18\x02 \x01(\tR\x05runId*b\n" +
+	"\vChannelKind\x12\x1c\n" +
+	"\x18CHANNEL_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18CHANNEL_KIND_INDEPENDENT\x10\x01\x12\x17\n" +
+	"\x13CHANNEL_KIND_LINKED\x10\x02B\xa7\x01\n" +
 	"\x1fio.temporal.api.notification.v1B\fMessageProtoP\x01Z/go.temporal.io/api/notification/v1;notification\xaa\x02\x1eTemporalio.Api.Notification.V1\xea\x02!Temporalio::Api::Notification::V1b\x06proto3"
 
 var (
@@ -301,27 +385,31 @@ func file_temporal_api_notification_v1_message_proto_rawDescGZIP() []byte {
 	return file_temporal_api_notification_v1_message_proto_rawDescData
 }
 
+var file_temporal_api_notification_v1_message_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_temporal_api_notification_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_temporal_api_notification_v1_message_proto_goTypes = []any{
-	(*Notification)(nil),          // 0: temporal.api.notification.v1.Notification
-	(*ChannelListener)(nil),       // 1: temporal.api.notification.v1.ChannelListener
-	(*WorkflowListener)(nil),      // 2: temporal.api.notification.v1.WorkflowListener
-	nil,                           // 3: temporal.api.notification.v1.Notification.MetadataEntry
-	(*v1.Callback)(nil),           // 4: temporal.api.common.v1.Callback
-	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
-	(*v1.Payload)(nil),            // 6: temporal.api.common.v1.Payload
+	(ChannelKind)(0),              // 0: temporal.api.notification.v1.ChannelKind
+	(*Notification)(nil),          // 1: temporal.api.notification.v1.Notification
+	(*ChannelListener)(nil),       // 2: temporal.api.notification.v1.ChannelListener
+	(*WorkflowListener)(nil),      // 3: temporal.api.notification.v1.WorkflowListener
+	nil,                           // 4: temporal.api.notification.v1.Notification.MetadataEntry
+	(*v1.WorkflowExecution)(nil),  // 5: temporal.api.common.v1.WorkflowExecution
+	(*v1.Callback)(nil),           // 6: temporal.api.common.v1.Callback
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*v1.Payload)(nil),            // 8: temporal.api.common.v1.Payload
 }
 var file_temporal_api_notification_v1_message_proto_depIdxs = []int32{
-	3, // 0: temporal.api.notification.v1.Notification.metadata:type_name -> temporal.api.notification.v1.Notification.MetadataEntry
-	2, // 1: temporal.api.notification.v1.ChannelListener.workflow:type_name -> temporal.api.notification.v1.WorkflowListener
-	4, // 2: temporal.api.notification.v1.ChannelListener.callback:type_name -> temporal.api.common.v1.Callback
-	5, // 3: temporal.api.notification.v1.ChannelListener.registered_time:type_name -> google.protobuf.Timestamp
-	6, // 4: temporal.api.notification.v1.Notification.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	4, // 0: temporal.api.notification.v1.Notification.metadata:type_name -> temporal.api.notification.v1.Notification.MetadataEntry
+	5, // 1: temporal.api.notification.v1.Notification.linked_to:type_name -> temporal.api.common.v1.WorkflowExecution
+	3, // 2: temporal.api.notification.v1.ChannelListener.workflow:type_name -> temporal.api.notification.v1.WorkflowListener
+	6, // 3: temporal.api.notification.v1.ChannelListener.callback:type_name -> temporal.api.common.v1.Callback
+	7, // 4: temporal.api.notification.v1.ChannelListener.registered_time:type_name -> google.protobuf.Timestamp
+	8, // 5: temporal.api.notification.v1.Notification.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_notification_v1_message_proto_init() }
@@ -338,13 +426,14 @@ func file_temporal_api_notification_v1_message_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_notification_v1_message_proto_rawDesc), len(file_temporal_api_notification_v1_message_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_temporal_api_notification_v1_message_proto_goTypes,
 		DependencyIndexes: file_temporal_api_notification_v1_message_proto_depIdxs,
+		EnumInfos:         file_temporal_api_notification_v1_message_proto_enumTypes,
 		MessageInfos:      file_temporal_api_notification_v1_message_proto_msgTypes,
 	}.Build()
 	File_temporal_api_notification_v1_message_proto = out.File
