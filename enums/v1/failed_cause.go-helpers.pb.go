@@ -51,6 +51,7 @@ var (
 		"BadAppendStreamRecordsAttributes":                    41,
 		"BadSubscribeStreamAttributes":                        42,
 		"StreamRangeUnavailable":                              43,
+		"BadSubscribeNotificationChannelAttributes":           44,
 	}
 )
 

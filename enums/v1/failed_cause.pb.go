@@ -112,6 +112,9 @@ const (
 	// History can no longer be served, for example after truncation or because it exceeds the
 	// replay bound. Check the workflow task failure message for more information.
 	WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE WorkflowTaskFailedCause = 43
+	// A SubscribeNotificationChannel command named an empty or too-long channel, or hit a
+	// subscription or listener limit.
+	WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES WorkflowTaskFailedCause = 44
 )
 
 // Enum value maps for WorkflowTaskFailedCause.
@@ -161,6 +164,7 @@ var (
 		41: "WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES",
 		42: "WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES",
 		43: "WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE",
+		44: "WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES",
 	}
 	WorkflowTaskFailedCause_value = map[string]int32{
 		"WORKFLOW_TASK_FAILED_CAUSE_UNSPECIFIED":                                               0,
@@ -207,6 +211,7 @@ var (
 		"WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES":                      41,
 		"WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES":                           42,
 		"WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE":                                  43,
+		"WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES":             44,
 	}
 )
 
@@ -329,6 +334,8 @@ func (x WorkflowTaskFailedCause) String() string {
 
 		// Enum value maps for StartChildWorkflowExecutionFailedCause.
 		return "StreamRangeUnavailable"
+	case WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES:
+		return "BadSubscribeNotificationChannelAttributes"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -786,7 +793,7 @@ var File_temporal_api_enums_v1_failed_cause_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_failed_cause_proto_rawDesc = "" +
 	"\n" +
-	"(temporal/api/enums/v1/failed_cause.proto\x12\x15temporal.api.enums.v1*\xce\x15\n" +
+	"(temporal/api/enums/v1/failed_cause.proto\x12\x15temporal.api.enums.v1*\x9c\x16\n" +
 	"\x17WorkflowTaskFailedCause\x12*\n" +
 	"&WORKFLOW_TASK_FAILED_CAUSE_UNSPECIFIED\x10\x00\x120\n" +
 	",WORKFLOW_TASK_FAILED_CAUSE_UNHANDLED_COMMAND\x10\x01\x12?\n" +
@@ -832,7 +839,8 @@ const file_temporal_api_enums_v1_failed_cause_proto_rawDesc = "" +
 	",WORKFLOW_TASK_FAILED_CAUSE_REQUEST_TOO_LARGE\x10(\x12C\n" +
 	"?WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES\x10)\x12>\n" +
 	":WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES\x10*\x127\n" +
-	"3WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE\x10+*\xf3\x01\n" +
+	"3WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE\x10+\x12L\n" +
+	"HWORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES\x10,*\xf3\x01\n" +
 	"\x17ActivityTaskFailedCause\x12*\n" +
 	"&ACTIVITY_TASK_FAILED_CAUSE_UNSPECIFIED\x10\x00\x121\n" +
 	"-ACTIVITY_TASK_FAILED_CAUSE_PAYLOADS_TOO_LARGE\x10\x01\x127\n" +
