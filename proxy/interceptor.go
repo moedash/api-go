@@ -3967,6 +3967,39 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
+		case []*workflow.ChannelSubscriptionInfo:
+			for _, x := range o {
+				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
+					return err
+				}
+			}
+
+		case *workflow.ChannelSubscriptionInfo:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetPendingNotification(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
 		case *workflow.NewWorkflowExecutionInfo:
 
 			if o == nil {
@@ -4699,6 +4732,7 @@ func visitPayloads(
 				o,
 				concState,
 				o.GetCallbacks(),
+				o.GetChannelSubscriptions(),
 				o.GetExecutionConfig(),
 				o.GetPendingActivities(),
 				o.GetPendingNexusOperations(),
