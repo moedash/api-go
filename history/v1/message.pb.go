@@ -4815,17 +4815,17 @@ func (x *WorkflowNotificationChannelSubscribedEventAttributes) GetChannel() stri
 
 type WorkflowNotificationChannelUnsubscribedEventAttributes struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
+	// The WorkflowTaskCompleted event of the task whose command ended this
+	// subscription.
+	WorkflowTaskCompletedEventId int64 `protobuf:"varint,1,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
 	// The channel the Workflow stopped listening on.
-	Channel string `protobuf:"bytes,1,opt,name=channel,proto3" json:"channel,omitempty"`
+	Channel string `protobuf:"bytes,2,opt,name=channel,proto3" json:"channel,omitempty"`
 	// The WorkflowNotificationChannelSubscribed event that recorded the
 	// subscription this command ended. Zero when the run held no subscription
 	// for the channel.
-	SubscribedEventId int64 `protobuf:"varint,2,opt,name=subscribed_event_id,json=subscribedEventId,proto3" json:"subscribed_event_id,omitempty"`
-	// The WorkflowTaskCompleted event of the task whose command ended this
-	// subscription.
-	WorkflowTaskCompletedEventId int64 `protobuf:"varint,3,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
-	unknownFields                protoimpl.UnknownFields
-	sizeCache                    protoimpl.SizeCache
+	SubscribedEventId int64 `protobuf:"varint,3,opt,name=subscribed_event_id,json=subscribedEventId,proto3" json:"subscribed_event_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) Reset() {
@@ -4858,6 +4858,13 @@ func (*WorkflowNotificationChannelUnsubscribedEventAttributes) Descriptor() ([]b
 	return file_temporal_api_history_v1_message_proto_rawDescGZIP(), []int{47}
 }
 
+func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
+	if x != nil {
+		return x.WorkflowTaskCompletedEventId
+	}
+	return 0
+}
+
 func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetChannel() string {
 	if x != nil {
 		return x.Channel
@@ -4868,13 +4875,6 @@ func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetChannel() st
 func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetSubscribedEventId() int64 {
 	if x != nil {
 		return x.SubscribedEventId
-	}
-	return 0
-}
-
-func (x *WorkflowNotificationChannelUnsubscribedEventAttributes) GetWorkflowTaskCompletedEventId() int64 {
-	if x != nil {
-		return x.WorkflowTaskCompletedEventId
 	}
 	return 0
 }
@@ -7831,10 +7831,10 @@ const file_temporal_api_history_v1_message_proto_rawDesc = "" +
 	"4WorkflowNotificationChannelSubscribedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\tR\achannel\"\xca\x01\n" +
-	"6WorkflowNotificationChannelUnsubscribedEventAttributes\x12\x18\n" +
-	"\achannel\x18\x01 \x01(\tR\achannel\x12.\n" +
-	"\x13subscribed_event_id\x18\x02 \x01(\x03R\x11subscribedEventId\x12F\n" +
-	" workflow_task_completed_event_id\x18\x03 \x01(\x03R\x1cworkflowTaskCompletedEventId\"\xd1\x01\n" +
+	"6WorkflowNotificationChannelUnsubscribedEventAttributes\x12F\n" +
+	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x18\n" +
+	"\achannel\x18\x02 \x01(\tR\achannel\x12.\n" +
+	"\x13subscribed_event_id\x18\x03 \x01(\x03R\x11subscribedEventId\"\xd1\x01\n" +
 	",WorkflowStreamRecordsAppendedEventAttributes\x12F\n" +
 	" workflow_task_completed_event_id\x18\x01 \x01(\x03R\x1cworkflowTaskCompletedEventId\x12\x1b\n" +
 	"\tstream_id\x18\x02 \x01(\tR\bstreamId\x12\x1f\n" +
