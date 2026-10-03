@@ -4319,7 +4319,7 @@ type NotifyChannelRequest struct {
 	// `run_id` is optional and resolves to the current run of a workflow chain,
 	// as a Signal does. When unset, the call addresses the independent channel
 	// of that name.
-	Execution     *v14.Execution `protobuf:"bytes,6,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution     *v14.Execution `protobuf:"bytes,5,opt,name=execution,proto3" json:"execution,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4449,7 +4449,7 @@ type RegisterChannelListenerRequest struct {
 	// `run_id` is optional and resolves to the current run of a workflow chain,
 	// as a Signal does. When unset, the call addresses the independent channel
 	// of that name.
-	Execution     *v14.Execution `protobuf:"bytes,7,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution     *v14.Execution `protobuf:"bytes,6,opt,name=execution,proto3" json:"execution,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4581,7 +4581,7 @@ type UnregisterChannelListenerRequest struct {
 	// `run_id` is optional and resolves to the current run of a workflow chain,
 	// as a Signal does. When unset, the call addresses the independent channel
 	// of that name.
-	Execution     *v14.Execution `protobuf:"bytes,6,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution     *v14.Execution `protobuf:"bytes,5,opt,name=execution,proto3" json:"execution,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4706,7 +4706,7 @@ type PollChannelRequest struct {
 	// `run_id` is optional and resolves to the current run of a workflow chain,
 	// as a Signal does. When unset, the call addresses the independent channel
 	// of that name.
-	Execution     *v14.Execution `protobuf:"bytes,7,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution     *v14.Execution `protobuf:"bytes,6,opt,name=execution,proto3" json:"execution,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4835,7 +4835,7 @@ type DescribeChannelRequest struct {
 	// `run_id` is optional and resolves to the current run of a workflow chain,
 	// as a Signal does. When unset, the call addresses the independent channel
 	// of that name.
-	Execution     *v14.Execution `protobuf:"bytes,4,opt,name=execution,proto3" json:"execution,omitempty"`
+	Execution     *v14.Execution `protobuf:"bytes,3,opt,name=execution,proto3" json:"execution,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4904,7 +4904,7 @@ type DescribeChannelResponse struct {
 	// (-- api-linter: core::0140::prepositions=disabled
 	//
 	//	aip.dev/not-precedent: "to" names the owner the channel is linked to. --)
-	LinkedTo      *v14.Execution `protobuf:"bytes,6,opt,name=linked_to,json=linkedTo,proto3" json:"linked_to,omitempty"`
+	LinkedTo      *v14.Execution `protobuf:"bytes,5,opt,name=linked_to,json=linkedTo,proto3" json:"linked_to,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -21680,16 +21680,16 @@ const file_temporal_api_workflowservice_v1_request_response_proto_rawDesc = "" +
 	" \x03(\v2\x1c.temporal.api.common.v1.LinkR\x05linksJ\x04\b\t\x10\n" +
 	"\"S\n" +
 	"\x1fSignalWorkflowExecutionResponse\x120\n" +
-	"\x04link\x18\x01 \x01(\v2\x1c.temporal.api.common.v1.LinkR\x04link\"\x9a\x02\n" +
+	"\x04link\x18\x01 \x01(\v2\x1c.temporal.api.common.v1.LinkR\x04link\"\x80\x02\n" +
 	"\x14NotifyChannelRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12N\n" +
 	"\fnotification\x18\x02 \x01(\v2*.temporal.api.notification.v1.NotificationR\fnotification\x12\x1a\n" +
 	"\bidentity\x18\x03 \x01(\tR\bidentity\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x04 \x01(\tR\trequestId\x12?\n" +
-	"\texecution\x18\x06 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecutionJ\x04\b\x05\x10\x06R\x12workflow_execution\">\n" +
+	"\texecution\x18\x05 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecution\">\n" +
 	"\x15NotifyChannelResponse\x12%\n" +
-	"\x0elistener_count\x18\x01 \x01(\x05R\rlistenerCount\"\xac\x02\n" +
+	"\x0elistener_count\x18\x01 \x01(\x05R\rlistenerCount\"\x92\x02\n" +
 	"\x1eRegisterChannelListenerRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\tR\achannel\x12<\n" +
@@ -21697,37 +21697,37 @@ const file_temporal_api_workflowservice_v1_request_response_proto_rawDesc = "" +
 	"\n" +
 	"request_id\x18\x04 \x01(\tR\trequestId\x12\x1a\n" +
 	"\bidentity\x18\x05 \x01(\tR\bidentity\x12?\n" +
-	"\texecution\x18\a \x01(\v2!.temporal.api.common.v1.ExecutionR\texecutionJ\x04\b\x06\x10\aR\x12workflow_execution\"B\n" +
+	"\texecution\x18\x06 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecution\"B\n" +
 	"\x1fRegisterChannelListenerResponse\x12\x1f\n" +
 	"\vlistener_id\x18\x01 \x01(\tR\n" +
-	"listenerId\"\xf2\x01\n" +
+	"listenerId\"\xd8\x01\n" +
 	" UnregisterChannelListenerRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\tR\achannel\x12\x1f\n" +
 	"\vlistener_id\x18\x03 \x01(\tR\n" +
 	"listenerId\x12\x1a\n" +
 	"\bidentity\x18\x04 \x01(\tR\bidentity\x12?\n" +
-	"\texecution\x18\x06 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecutionJ\x04\b\x05\x10\x06R\x12workflow_execution\"#\n" +
-	"!UnregisterChannelListenerResponse\"\xa8\x02\n" +
+	"\texecution\x18\x05 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecution\"#\n" +
+	"!UnregisterChannelListenerResponse\"\x8e\x02\n" +
 	"\x12PollChannelRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\tR\achannel\x12#\n" +
 	"\rafter_counter\x18\x03 \x01(\x03R\fafterCounter\x12-\n" +
 	"\x04wait\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x04wait\x12+\n" +
 	"\x11max_notifications\x18\x05 \x01(\x05R\x10maxNotifications\x12?\n" +
-	"\texecution\x18\a \x01(\v2!.temporal.api.common.v1.ExecutionR\texecutionJ\x04\b\x06\x10\aR\x12workflow_execution\"g\n" +
+	"\texecution\x18\x06 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecution\"g\n" +
 	"\x13PollChannelResponse\x12P\n" +
-	"\rnotifications\x18\x01 \x03(\v2*.temporal.api.notification.v1.NotificationR\rnotifications\"\xab\x01\n" +
+	"\rnotifications\x18\x01 \x03(\v2*.temporal.api.notification.v1.NotificationR\rnotifications\"\x91\x01\n" +
 	"\x16DescribeChannelRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\tR\achannel\x12?\n" +
-	"\texecution\x18\x04 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecutionJ\x04\b\x03\x10\x04R\x12workflow_execution\"\xd6\x02\n" +
+	"\texecution\x18\x03 \x01(\v2!.temporal.api.common.v1.ExecutionR\texecution\"\xd0\x02\n" +
 	"\x17DescribeChannelResponse\x12K\n" +
 	"\tlisteners\x18\x01 \x03(\v2-.temporal.api.notification.v1.ChannelListenerR\tlisteners\x12B\n" +
 	"\x06latest\x18\x02 \x01(\v2*.temporal.api.notification.v1.NotificationR\x06latest\x12%\n" +
 	"\x0eretained_count\x18\x03 \x01(\x05R\rretainedCount\x12=\n" +
 	"\x04kind\x18\x04 \x01(\x0e2).temporal.api.notification.v1.ChannelKindR\x04kind\x12>\n" +
-	"\tlinked_to\x18\x06 \x01(\v2!.temporal.api.common.v1.ExecutionR\blinkedToJ\x04\b\x05\x10\x06\"\xb3\r\n" +
+	"\tlinked_to\x18\x05 \x01(\v2!.temporal.api.common.v1.ExecutionR\blinkedTo\"\xb3\r\n" +
 	"'SignalWithStartWorkflowExecutionRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
