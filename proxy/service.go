@@ -108,6 +108,10 @@ func (s *workflowServiceProxyServer) DescribeBatchOperation(ctx context.Context,
 	return s.client.DescribeBatchOperation(s.reqCtx(ctx), in0)
 }
 
+func (s *workflowServiceProxyServer) DescribeChannel(ctx context.Context, in0 *workflowservice.DescribeChannelRequest) (*workflowservice.DescribeChannelResponse, error) {
+	return s.client.DescribeChannel(s.reqCtx(ctx), in0)
+}
+
 func (s *workflowServiceProxyServer) DescribeDeployment(ctx context.Context, in0 *workflowservice.DescribeDeploymentRequest) (*workflowservice.DescribeDeploymentResponse, error) {
 	return s.client.DescribeDeployment(s.reqCtx(ctx), in0)
 }
@@ -256,6 +260,10 @@ func (s *workflowServiceProxyServer) ListWorkflowRules(ctx context.Context, in0 
 	return s.client.ListWorkflowRules(s.reqCtx(ctx), in0)
 }
 
+func (s *workflowServiceProxyServer) NotifyChannel(ctx context.Context, in0 *workflowservice.NotifyChannelRequest) (*workflowservice.NotifyChannelResponse, error) {
+	return s.client.NotifyChannel(s.reqCtx(ctx), in0)
+}
+
 func (s *workflowServiceProxyServer) PatchSchedule(ctx context.Context, in0 *workflowservice.PatchScheduleRequest) (*workflowservice.PatchScheduleResponse, error) {
 	return s.client.PatchSchedule(s.reqCtx(ctx), in0)
 }
@@ -278,6 +286,10 @@ func (s *workflowServiceProxyServer) PollActivityExecution(ctx context.Context, 
 
 func (s *workflowServiceProxyServer) PollActivityTaskQueue(ctx context.Context, in0 *workflowservice.PollActivityTaskQueueRequest) (*workflowservice.PollActivityTaskQueueResponse, error) {
 	return s.client.PollActivityTaskQueue(s.reqCtx(ctx), in0)
+}
+
+func (s *workflowServiceProxyServer) PollChannel(ctx context.Context, in0 *workflowservice.PollChannelRequest) (*workflowservice.PollChannelResponse, error) {
+	return s.client.PollChannel(s.reqCtx(ctx), in0)
 }
 
 func (s *workflowServiceProxyServer) PollNexusOperationExecution(ctx context.Context, in0 *workflowservice.PollNexusOperationExecutionRequest) (*workflowservice.PollNexusOperationExecutionResponse, error) {
@@ -314,6 +326,10 @@ func (s *workflowServiceProxyServer) RecordActivityTaskHeartbeatById(ctx context
 
 func (s *workflowServiceProxyServer) RecordWorkerHeartbeat(ctx context.Context, in0 *workflowservice.RecordWorkerHeartbeatRequest) (*workflowservice.RecordWorkerHeartbeatResponse, error) {
 	return s.client.RecordWorkerHeartbeat(s.reqCtx(ctx), in0)
+}
+
+func (s *workflowServiceProxyServer) RegisterChannelListener(ctx context.Context, in0 *workflowservice.RegisterChannelListenerRequest) (*workflowservice.RegisterChannelListenerResponse, error) {
+	return s.client.RegisterChannelListener(s.reqCtx(ctx), in0)
 }
 
 func (s *workflowServiceProxyServer) RegisterNamespace(ctx context.Context, in0 *workflowservice.RegisterNamespaceRequest) (*workflowservice.RegisterNamespaceResponse, error) {
@@ -470,6 +486,10 @@ func (s *workflowServiceProxyServer) UnpauseActivityExecution(ctx context.Contex
 
 func (s *workflowServiceProxyServer) UnpauseWorkflowExecution(ctx context.Context, in0 *workflowservice.UnpauseWorkflowExecutionRequest) (*workflowservice.UnpauseWorkflowExecutionResponse, error) {
 	return s.client.UnpauseWorkflowExecution(s.reqCtx(ctx), in0)
+}
+
+func (s *workflowServiceProxyServer) UnregisterChannelListener(ctx context.Context, in0 *workflowservice.UnregisterChannelListenerRequest) (*workflowservice.UnregisterChannelListenerResponse, error) {
+	return s.client.UnregisterChannelListener(s.reqCtx(ctx), in0)
 }
 
 func (s *workflowServiceProxyServer) UpdateActivityExecutionOptions(ctx context.Context, in0 *workflowservice.UpdateActivityExecutionOptionsRequest) (*workflowservice.UpdateActivityExecutionOptionsResponse, error) {
