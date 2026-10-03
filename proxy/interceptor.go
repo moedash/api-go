@@ -756,6 +756,32 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
+		case *command.AppendStreamRecordsCommandAttributes:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetRecords(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
 		case *command.CancelWorkflowExecutionCommandAttributes:
 
 			if o == nil {
@@ -808,6 +834,7 @@ func visitPayloads(
 				options,
 				o,
 				concState,
+				o.GetAppendStreamRecordsCommandAttributes(),
 				o.GetCancelWorkflowExecutionCommandAttributes(),
 				o.GetCompleteWorkflowExecutionCommandAttributes(),
 				o.GetContinueAsNewWorkflowExecutionCommandAttributes(),
@@ -3674,6 +3701,13 @@ func visitPayloads(
 
 			ctx.Context = prevCtx
 
+		case []*stream.StreamRecord:
+			for _, x := range o {
+				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
+					return err
+				}
+			}
+
 		case *stream.StreamRecord:
 
 			if o == nil {
@@ -3700,6 +3734,39 @@ func visitPayloads(
 				o,
 				concState,
 				o.GetMetadata(),
+			); err != nil {
+				return err
+			}
+
+			ctx.Context = prevCtx
+
+		case []*stream.StreamSlice:
+			for _, x := range o {
+				if err := visitPayloads(ctx, options, parent, concState, x); err != nil {
+					return err
+				}
+			}
+
+		case *stream.StreamSlice:
+
+			if o == nil {
+				continue
+			}
+
+			prevCtx := ctx.Context
+			if options.ContextHook != nil {
+				var hookErr error
+				if ctx.Context, hookErr = options.ContextHook(prevCtx, o); hookErr != nil {
+					return hookErr
+				}
+			}
+
+			if err := visitPayloads(
+				ctx,
+				options,
+				o,
+				concState,
+				o.GetRecords(),
 			); err != nil {
 				return err
 			}
@@ -5304,6 +5371,7 @@ func visitPayloads(
 				o.GetMessages(),
 				o.GetQueries(),
 				o.GetQuery(),
+				o.GetStreamSlices(),
 			); err != nil {
 				return err
 			}

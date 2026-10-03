@@ -44,6 +44,117 @@ func (this *StreamRecord) Equal(that interface{}) bool {
 	return proto.Equal(this, that1)
 }
 
+// Marshal an object of type StreamSlice to the protobuf v3 wire format
+func (val *StreamSlice) Marshal() ([]byte, error) {
+	return proto.Marshal(val)
+}
+
+// Unmarshal an object of type StreamSlice from the protobuf v3 wire format
+func (val *StreamSlice) Unmarshal(buf []byte) error {
+	return proto.Unmarshal(buf, val)
+}
+
+// Size returns the size of the object, in bytes, once serialized
+func (val *StreamSlice) Size() int {
+	return proto.Size(val)
+}
+
+// Equal returns whether two StreamSlice values are equivalent by recursively
+// comparing the message's fields.
+// For more information see the documentation for
+// https://pkg.go.dev/google.golang.org/protobuf/proto#Equal
+func (this *StreamSlice) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	var that1 *StreamSlice
+	switch t := that.(type) {
+	case *StreamSlice:
+		that1 = t
+	case StreamSlice:
+		that1 = &t
+	default:
+		return false
+	}
+
+	return proto.Equal(this, that1)
+}
+
+// Marshal an object of type StreamRange to the protobuf v3 wire format
+func (val *StreamRange) Marshal() ([]byte, error) {
+	return proto.Marshal(val)
+}
+
+// Unmarshal an object of type StreamRange from the protobuf v3 wire format
+func (val *StreamRange) Unmarshal(buf []byte) error {
+	return proto.Unmarshal(buf, val)
+}
+
+// Size returns the size of the object, in bytes, once serialized
+func (val *StreamRange) Size() int {
+	return proto.Size(val)
+}
+
+// Equal returns whether two StreamRange values are equivalent by recursively
+// comparing the message's fields.
+// For more information see the documentation for
+// https://pkg.go.dev/google.golang.org/protobuf/proto#Equal
+func (this *StreamRange) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	var that1 *StreamRange
+	switch t := that.(type) {
+	case *StreamRange:
+		that1 = t
+	case StreamRange:
+		that1 = &t
+	default:
+		return false
+	}
+
+	return proto.Equal(this, that1)
+}
+
+// Marshal an object of type StreamStartPosition to the protobuf v3 wire format
+func (val *StreamStartPosition) Marshal() ([]byte, error) {
+	return proto.Marshal(val)
+}
+
+// Unmarshal an object of type StreamStartPosition from the protobuf v3 wire format
+func (val *StreamStartPosition) Unmarshal(buf []byte) error {
+	return proto.Unmarshal(buf, val)
+}
+
+// Size returns the size of the object, in bytes, once serialized
+func (val *StreamStartPosition) Size() int {
+	return proto.Size(val)
+}
+
+// Equal returns whether two StreamStartPosition values are equivalent by recursively
+// comparing the message's fields.
+// For more information see the documentation for
+// https://pkg.go.dev/google.golang.org/protobuf/proto#Equal
+func (this *StreamStartPosition) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	var that1 *StreamStartPosition
+	switch t := that.(type) {
+	case *StreamStartPosition:
+		that1 = t
+	case StreamStartPosition:
+		that1 = &t
+	default:
+		return false
+	}
+
+	return proto.Equal(this, that1)
+}
+
 var (
 	StreamRecordKind_shorthandValue = map[string]int32{
 		"Unspecified": 0,

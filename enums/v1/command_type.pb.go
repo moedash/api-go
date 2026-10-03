@@ -47,6 +47,8 @@ const (
 	COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION             CommandType = 18
 	COMMAND_TYPE_SUBSCRIBE_NOTIFICATION_CHANNEL             CommandType = 19
 	COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL           CommandType = 20
+	COMMAND_TYPE_APPEND_STREAM_RECORDS                      CommandType = 21
+	COMMAND_TYPE_SUBSCRIBE_STREAM                           CommandType = 22
 )
 
 // Enum value maps for CommandType.
@@ -72,6 +74,8 @@ var (
 		18: "COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION",
 		19: "COMMAND_TYPE_SUBSCRIBE_NOTIFICATION_CHANNEL",
 		20: "COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL",
+		21: "COMMAND_TYPE_APPEND_STREAM_RECORDS",
+		22: "COMMAND_TYPE_SUBSCRIBE_STREAM",
 	}
 	CommandType_value = map[string]int32{
 		"COMMAND_TYPE_UNSPECIFIED":                                0,
@@ -94,6 +98,8 @@ var (
 		"COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION":             18,
 		"COMMAND_TYPE_SUBSCRIBE_NOTIFICATION_CHANNEL":             19,
 		"COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL":           20,
+		"COMMAND_TYPE_APPEND_STREAM_RECORDS":                      21,
+		"COMMAND_TYPE_SUBSCRIBE_STREAM":                           22,
 	}
 )
 
@@ -147,6 +153,10 @@ func (x CommandType) String() string {
 		return "SubscribeNotificationChannel"
 	case COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL:
 		return "UnsubscribeNotificationChannel"
+	case COMMAND_TYPE_APPEND_STREAM_RECORDS:
+		return "AppendStreamRecords"
+	case COMMAND_TYPE_SUBSCRIBE_STREAM:
+		return "SubscribeStream"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -173,7 +183,7 @@ var File_temporal_api_enums_v1_command_type_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"\n" +
-	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\x80\a\n" +
+	"(temporal/api/enums/v1/command_type.proto\x12\x15temporal.api.enums.v1*\xcb\a\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
 	"#COMMAND_TYPE_SCHEDULE_ACTIVITY_TASK\x10\x01\x12-\n" +
@@ -195,7 +205,9 @@ const file_temporal_api_enums_v1_command_type_proto_rawDesc = "" +
 	"%COMMAND_TYPE_SCHEDULE_NEXUS_OPERATION\x10\x11\x12/\n" +
 	"+COMMAND_TYPE_REQUEST_CANCEL_NEXUS_OPERATION\x10\x12\x12/\n" +
 	"+COMMAND_TYPE_SUBSCRIBE_NOTIFICATION_CHANNEL\x10\x13\x121\n" +
-	"-COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL\x10\x14B\x88\x01\n" +
+	"-COMMAND_TYPE_UNSUBSCRIBE_NOTIFICATION_CHANNEL\x10\x14\x12&\n" +
+	"\"COMMAND_TYPE_APPEND_STREAM_RECORDS\x10\x15\x12!\n" +
+	"\x1dCOMMAND_TYPE_SUBSCRIBE_STREAM\x10\x16B\x88\x01\n" +
 	"\x18io.temporal.api.enums.v1B\x10CommandTypeProtoP\x01Z!go.temporal.io/api/enums/v1;enums\xaa\x02\x17Temporalio.Api.Enums.V1\xea\x02\x1aTemporalio::Api::Enums::V1b\x06proto3"
 
 var (

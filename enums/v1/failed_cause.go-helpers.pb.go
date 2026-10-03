@@ -50,6 +50,9 @@ var (
 		"RequestTooLarge":                                     40,
 		"BadSubscribeNotificationChannelAttributes":           41,
 		"BadUnsubscribeNotificationChannelAttributes":         42,
+		"BadAppendStreamRecordsAttributes":                    43,
+		"BadSubscribeStreamAttributes":                        44,
+		"StreamRangeUnavailable":                              45,
 	}
 )
 
