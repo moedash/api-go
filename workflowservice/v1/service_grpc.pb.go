@@ -43,6 +43,11 @@ const (
 	WorkflowService_RespondActivityTaskCanceledById_FullMethodName              = "/temporal.api.workflowservice.v1.WorkflowService/RespondActivityTaskCanceledById"
 	WorkflowService_RequestCancelWorkflowExecution_FullMethodName               = "/temporal.api.workflowservice.v1.WorkflowService/RequestCancelWorkflowExecution"
 	WorkflowService_SignalWorkflowExecution_FullMethodName                      = "/temporal.api.workflowservice.v1.WorkflowService/SignalWorkflowExecution"
+	WorkflowService_NotifyChannel_FullMethodName                                = "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel"
+	WorkflowService_RegisterChannelListener_FullMethodName                      = "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener"
+	WorkflowService_UnregisterChannelListener_FullMethodName                    = "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener"
+	WorkflowService_PollChannel_FullMethodName                                  = "/temporal.api.workflowservice.v1.WorkflowService/PollChannel"
+	WorkflowService_DescribeChannel_FullMethodName                              = "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel"
 	WorkflowService_SignalWithStartWorkflowExecution_FullMethodName             = "/temporal.api.workflowservice.v1.WorkflowService/SignalWithStartWorkflowExecution"
 	WorkflowService_ResetWorkflowExecution_FullMethodName                       = "/temporal.api.workflowservice.v1.WorkflowService/ResetWorkflowExecution"
 	WorkflowService_TerminateWorkflowExecution_FullMethodName                   = "/temporal.api.workflowservice.v1.WorkflowService/TerminateWorkflowExecution"
@@ -336,6 +341,29 @@ type WorkflowServiceClient interface {
 	// This results in a `WORKFLOW_EXECUTION_SIGNALED` event recorded in the history and a workflow
 	// task being created for the execution.
 	SignalWorkflowExecution(ctx context.Context, in *SignalWorkflowExecutionRequest, opts ...grpc.CallOption) (*SignalWorkflowExecutionResponse, error)
+	// NotifyChannel tells every listener of a channel that a source they consume
+	// has moved. The writer names no addressee and never learns who listens. The
+	// server wakes each listener: a Workflow with a Workflow Task, a callback by
+	// invoking it. Nothing goes to History except the notifications a woken
+	// Workflow Task carries on its scheduled event.
+	NotifyChannel(ctx context.Context, in *NotifyChannelRequest, opts ...grpc.CallOption) (*NotifyChannelResponse, error)
+	// RegisterChannelListener registers a callback as a listener of a channel. A
+	// Workflow registers itself with the `SubscribeNotificationChannel` command
+	// instead.
+	RegisterChannelListener(ctx context.Context, in *RegisterChannelListenerRequest, opts ...grpc.CallOption) (*RegisterChannelListenerResponse, error)
+	// UnregisterChannelListener removes a listener from a channel.
+	//
+	// (-- api-linter: core::0136::http-method=disabled
+	//
+	//	aip.dev/not-precedent: Removing a listener is a delete of that listener. --)
+	UnregisterChannelListener(ctx context.Context, in *UnregisterChannelListenerRequest, opts ...grpc.CallOption) (*UnregisterChannelListenerResponse, error)
+	// PollChannel is a long poll for clients. It returns the retained
+	// notifications of a channel with a counter above `after_counter`, waiting
+	// up to `wait` for one when none is retained yet.
+	PollChannel(ctx context.Context, in *PollChannelRequest, opts ...grpc.CallOption) (*PollChannelResponse, error)
+	// DescribeChannel returns the listeners of a channel and its latest
+	// notification.
+	DescribeChannel(ctx context.Context, in *DescribeChannelRequest, opts ...grpc.CallOption) (*DescribeChannelResponse, error)
 	// SignalWithStartWorkflowExecution is used to ensure a signal is sent to a workflow, even if
 	// it isn't yet started.
 	//
@@ -1111,6 +1139,56 @@ func (c *workflowServiceClient) SignalWorkflowExecution(ctx context.Context, in 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SignalWorkflowExecutionResponse)
 	err := c.cc.Invoke(ctx, WorkflowService_SignalWorkflowExecution_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) NotifyChannel(ctx context.Context, in *NotifyChannelRequest, opts ...grpc.CallOption) (*NotifyChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(NotifyChannelResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_NotifyChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) RegisterChannelListener(ctx context.Context, in *RegisterChannelListenerRequest, opts ...grpc.CallOption) (*RegisterChannelListenerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RegisterChannelListenerResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_RegisterChannelListener_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) UnregisterChannelListener(ctx context.Context, in *UnregisterChannelListenerRequest, opts ...grpc.CallOption) (*UnregisterChannelListenerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UnregisterChannelListenerResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_UnregisterChannelListener_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) PollChannel(ctx context.Context, in *PollChannelRequest, opts ...grpc.CallOption) (*PollChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PollChannelResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_PollChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *workflowServiceClient) DescribeChannel(ctx context.Context, in *DescribeChannelRequest, opts ...grpc.CallOption) (*DescribeChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DescribeChannelResponse)
+	err := c.cc.Invoke(ctx, WorkflowService_DescribeChannel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2308,6 +2386,29 @@ type WorkflowServiceServer interface {
 	// This results in a `WORKFLOW_EXECUTION_SIGNALED` event recorded in the history and a workflow
 	// task being created for the execution.
 	SignalWorkflowExecution(context.Context, *SignalWorkflowExecutionRequest) (*SignalWorkflowExecutionResponse, error)
+	// NotifyChannel tells every listener of a channel that a source they consume
+	// has moved. The writer names no addressee and never learns who listens. The
+	// server wakes each listener: a Workflow with a Workflow Task, a callback by
+	// invoking it. Nothing goes to History except the notifications a woken
+	// Workflow Task carries on its scheduled event.
+	NotifyChannel(context.Context, *NotifyChannelRequest) (*NotifyChannelResponse, error)
+	// RegisterChannelListener registers a callback as a listener of a channel. A
+	// Workflow registers itself with the `SubscribeNotificationChannel` command
+	// instead.
+	RegisterChannelListener(context.Context, *RegisterChannelListenerRequest) (*RegisterChannelListenerResponse, error)
+	// UnregisterChannelListener removes a listener from a channel.
+	//
+	// (-- api-linter: core::0136::http-method=disabled
+	//
+	//	aip.dev/not-precedent: Removing a listener is a delete of that listener. --)
+	UnregisterChannelListener(context.Context, *UnregisterChannelListenerRequest) (*UnregisterChannelListenerResponse, error)
+	// PollChannel is a long poll for clients. It returns the retained
+	// notifications of a channel with a counter above `after_counter`, waiting
+	// up to `wait` for one when none is retained yet.
+	PollChannel(context.Context, *PollChannelRequest) (*PollChannelResponse, error)
+	// DescribeChannel returns the listeners of a channel and its latest
+	// notification.
+	DescribeChannel(context.Context, *DescribeChannelRequest) (*DescribeChannelResponse, error)
 	// SignalWithStartWorkflowExecution is used to ensure a signal is sent to a workflow, even if
 	// it isn't yet started.
 	//
@@ -2927,6 +3028,21 @@ func (UnimplementedWorkflowServiceServer) RequestCancelWorkflowExecution(context
 }
 func (UnimplementedWorkflowServiceServer) SignalWorkflowExecution(context.Context, *SignalWorkflowExecutionRequest) (*SignalWorkflowExecutionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SignalWorkflowExecution not implemented")
+}
+func (UnimplementedWorkflowServiceServer) NotifyChannel(context.Context, *NotifyChannelRequest) (*NotifyChannelResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method NotifyChannel not implemented")
+}
+func (UnimplementedWorkflowServiceServer) RegisterChannelListener(context.Context, *RegisterChannelListenerRequest) (*RegisterChannelListenerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RegisterChannelListener not implemented")
+}
+func (UnimplementedWorkflowServiceServer) UnregisterChannelListener(context.Context, *UnregisterChannelListenerRequest) (*UnregisterChannelListenerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UnregisterChannelListener not implemented")
+}
+func (UnimplementedWorkflowServiceServer) PollChannel(context.Context, *PollChannelRequest) (*PollChannelResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PollChannel not implemented")
+}
+func (UnimplementedWorkflowServiceServer) DescribeChannel(context.Context, *DescribeChannelRequest) (*DescribeChannelResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DescribeChannel not implemented")
 }
 func (UnimplementedWorkflowServiceServer) SignalWithStartWorkflowExecution(context.Context, *SignalWithStartWorkflowExecutionRequest) (*SignalWithStartWorkflowExecutionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SignalWithStartWorkflowExecution not implemented")
@@ -3659,6 +3775,96 @@ func _WorkflowService_SignalWorkflowExecution_Handler(srv interface{}, ctx conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WorkflowServiceServer).SignalWorkflowExecution(ctx, req.(*SignalWorkflowExecutionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_NotifyChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotifyChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).NotifyChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_NotifyChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).NotifyChannel(ctx, req.(*NotifyChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_RegisterChannelListener_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterChannelListenerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).RegisterChannelListener(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_RegisterChannelListener_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).RegisterChannelListener(ctx, req.(*RegisterChannelListenerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_UnregisterChannelListener_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnregisterChannelListenerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).UnregisterChannelListener(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_UnregisterChannelListener_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).UnregisterChannelListener(ctx, req.(*UnregisterChannelListenerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_PollChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PollChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).PollChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_PollChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).PollChannel(ctx, req.(*PollChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WorkflowService_DescribeChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowServiceServer).DescribeChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowService_DescribeChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowServiceServer).DescribeChannel(ctx, req.(*DescribeChannelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5561,6 +5767,26 @@ var WorkflowService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignalWorkflowExecution",
 			Handler:    _WorkflowService_SignalWorkflowExecution_Handler,
+		},
+		{
+			MethodName: "NotifyChannel",
+			Handler:    _WorkflowService_NotifyChannel_Handler,
+		},
+		{
+			MethodName: "RegisterChannelListener",
+			Handler:    _WorkflowService_RegisterChannelListener_Handler,
+		},
+		{
+			MethodName: "UnregisterChannelListener",
+			Handler:    _WorkflowService_UnregisterChannelListener_Handler,
+		},
+		{
+			MethodName: "PollChannel",
+			Handler:    _WorkflowService_PollChannel_Handler,
+		},
+		{
+			MethodName: "DescribeChannel",
+			Handler:    _WorkflowService_DescribeChannel_Handler,
 		},
 		{
 			MethodName: "SignalWithStartWorkflowExecution",

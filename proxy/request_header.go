@@ -73,6 +73,10 @@ func ExtractTemporalRequestHeaders(ctx context.Context, opts ExtractHeadersOptio
 		if val := r.GetJobId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("batch:%s", val))
 		}
+	case *workflowservice.DescribeChannelRequest:
+		if val := r.GetChannel(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
+			headers = append(headers, "temporal-resource-id", fmt.Sprintf("channel:%s", val))
+		}
 	case *workflowservice.DescribeScheduleRequest:
 		if val := r.GetScheduleId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("schedule:%s", val))
@@ -121,6 +125,10 @@ func ExtractTemporalRequestHeaders(ctx context.Context, opts ExtractHeadersOptio
 		if val := r.GetTaskQueue().GetName(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("taskqueue:%s", val))
 		}
+	case *workflowservice.NotifyChannelRequest:
+		if val := r.GetNotification().GetChannel(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
+			headers = append(headers, "temporal-resource-id", fmt.Sprintf("channel:%s", val))
+		}
 	case *workflowservice.PatchScheduleRequest:
 		if val := r.GetScheduleId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("schedule:%s", val))
@@ -144,6 +152,10 @@ func ExtractTemporalRequestHeaders(ctx context.Context, opts ExtractHeadersOptio
 	case *workflowservice.PollActivityTaskQueueRequest:
 		if val := r.GetPollerGroupId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("poller:%s", val))
+		}
+	case *workflowservice.PollChannelRequest:
+		if val := r.GetChannel(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
+			headers = append(headers, "temporal-resource-id", fmt.Sprintf("channel:%s", val))
 		}
 	case *workflowservice.PollNexusTaskQueueRequest:
 		if val := r.GetPollerGroupId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
@@ -176,6 +188,10 @@ func ExtractTemporalRequestHeaders(ctx context.Context, opts ExtractHeadersOptio
 	case *workflowservice.RecordWorkerHeartbeatRequest:
 		if val := r.GetResourceId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", val)
+		}
+	case *workflowservice.RegisterChannelListenerRequest:
+		if val := r.GetChannel(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
+			headers = append(headers, "temporal-resource-id", fmt.Sprintf("channel:%s", val))
 		}
 	case *workflowservice.RequestCancelActivityExecutionRequest:
 		if val := r.GetActivityId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
@@ -304,6 +320,10 @@ func ExtractTemporalRequestHeaders(ctx context.Context, opts ExtractHeadersOptio
 	case *workflowservice.UnpauseWorkflowExecutionRequest:
 		if val := r.GetWorkflowId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
 			headers = append(headers, "temporal-resource-id", fmt.Sprintf("workflow:%s", val))
+		}
+	case *workflowservice.UnregisterChannelListenerRequest:
+		if val := r.GetChannel(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {
+			headers = append(headers, "temporal-resource-id", fmt.Sprintf("channel:%s", val))
 		}
 	case *workflowservice.UpdateActivityExecutionOptionsRequest:
 		if val := r.GetResourceId(); val != "" && len(opts.ExistingMetadata.Get("temporal-resource-id")) == 0 {

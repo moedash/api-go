@@ -416,6 +416,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) DescribeBatchOperation(ctx, in 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeBatchOperation", reflect.TypeOf((*MockWorkflowServiceClient)(nil).DescribeBatchOperation), varargs...)
 }
 
+// DescribeChannel mocks base method.
+func (m *MockWorkflowServiceClient) DescribeChannel(ctx context.Context, in *workflowservice.DescribeChannelRequest, opts ...grpc.CallOption) (*workflowservice.DescribeChannelResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DescribeChannel", varargs...)
+	ret0, _ := ret[0].(*workflowservice.DescribeChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DescribeChannel indicates an expected call of DescribeChannel.
+func (mr *MockWorkflowServiceClientMockRecorder) DescribeChannel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeChannel", reflect.TypeOf((*MockWorkflowServiceClient)(nil).DescribeChannel), varargs...)
+}
+
 // DescribeDeployment mocks base method.
 func (m *MockWorkflowServiceClient) DescribeDeployment(ctx context.Context, in *workflowservice.DescribeDeploymentRequest, opts ...grpc.CallOption) (*workflowservice.DescribeDeploymentResponse, error) {
 	m.ctrl.T.Helper()
@@ -1156,6 +1176,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) ListWorkflowRules(ctx, in inter
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkflowRules", reflect.TypeOf((*MockWorkflowServiceClient)(nil).ListWorkflowRules), varargs...)
 }
 
+// NotifyChannel mocks base method.
+func (m *MockWorkflowServiceClient) NotifyChannel(ctx context.Context, in *workflowservice.NotifyChannelRequest, opts ...grpc.CallOption) (*workflowservice.NotifyChannelResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "NotifyChannel", varargs...)
+	ret0, _ := ret[0].(*workflowservice.NotifyChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NotifyChannel indicates an expected call of NotifyChannel.
+func (mr *MockWorkflowServiceClientMockRecorder) NotifyChannel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NotifyChannel", reflect.TypeOf((*MockWorkflowServiceClient)(nil).NotifyChannel), varargs...)
+}
+
 // PatchSchedule mocks base method.
 func (m *MockWorkflowServiceClient) PatchSchedule(ctx context.Context, in *workflowservice.PatchScheduleRequest, opts ...grpc.CallOption) (*workflowservice.PatchScheduleResponse, error) {
 	m.ctrl.T.Helper()
@@ -1274,6 +1314,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) PollActivityTaskQueue(ctx, in i
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PollActivityTaskQueue", reflect.TypeOf((*MockWorkflowServiceClient)(nil).PollActivityTaskQueue), varargs...)
+}
+
+// PollChannel mocks base method.
+func (m *MockWorkflowServiceClient) PollChannel(ctx context.Context, in *workflowservice.PollChannelRequest, opts ...grpc.CallOption) (*workflowservice.PollChannelResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PollChannel", varargs...)
+	ret0, _ := ret[0].(*workflowservice.PollChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PollChannel indicates an expected call of PollChannel.
+func (mr *MockWorkflowServiceClientMockRecorder) PollChannel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PollChannel", reflect.TypeOf((*MockWorkflowServiceClient)(nil).PollChannel), varargs...)
 }
 
 // PollNexusOperationExecution mocks base method.
@@ -1454,6 +1514,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) RecordWorkerHeartbeat(ctx, in i
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecordWorkerHeartbeat", reflect.TypeOf((*MockWorkflowServiceClient)(nil).RecordWorkerHeartbeat), varargs...)
+}
+
+// RegisterChannelListener mocks base method.
+func (m *MockWorkflowServiceClient) RegisterChannelListener(ctx context.Context, in *workflowservice.RegisterChannelListenerRequest, opts ...grpc.CallOption) (*workflowservice.RegisterChannelListenerResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RegisterChannelListener", varargs...)
+	ret0, _ := ret[0].(*workflowservice.RegisterChannelListenerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RegisterChannelListener indicates an expected call of RegisterChannelListener.
+func (mr *MockWorkflowServiceClientMockRecorder) RegisterChannelListener(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterChannelListener", reflect.TypeOf((*MockWorkflowServiceClient)(nil).RegisterChannelListener), varargs...)
 }
 
 // RegisterNamespace mocks base method.
@@ -2236,6 +2316,26 @@ func (mr *MockWorkflowServiceClientMockRecorder) UnpauseWorkflowExecution(ctx, i
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnpauseWorkflowExecution", reflect.TypeOf((*MockWorkflowServiceClient)(nil).UnpauseWorkflowExecution), varargs...)
 }
 
+// UnregisterChannelListener mocks base method.
+func (m *MockWorkflowServiceClient) UnregisterChannelListener(ctx context.Context, in *workflowservice.UnregisterChannelListenerRequest, opts ...grpc.CallOption) (*workflowservice.UnregisterChannelListenerResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UnregisterChannelListener", varargs...)
+	ret0, _ := ret[0].(*workflowservice.UnregisterChannelListenerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UnregisterChannelListener indicates an expected call of UnregisterChannelListener.
+func (mr *MockWorkflowServiceClientMockRecorder) UnregisterChannelListener(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnregisterChannelListener", reflect.TypeOf((*MockWorkflowServiceClient)(nil).UnregisterChannelListener), varargs...)
+}
+
 // UpdateActivityExecutionOptions mocks base method.
 func (m *MockWorkflowServiceClient) UpdateActivityExecutionOptions(ctx context.Context, in *workflowservice.UpdateActivityExecutionOptionsRequest, opts ...grpc.CallOption) (*workflowservice.UpdateActivityExecutionOptionsResponse, error) {
 	m.ctrl.T.Helper()
@@ -2807,6 +2907,21 @@ func (mr *MockWorkflowServiceServerMockRecorder) DescribeBatchOperation(arg0, ar
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeBatchOperation", reflect.TypeOf((*MockWorkflowServiceServer)(nil).DescribeBatchOperation), arg0, arg1)
 }
 
+// DescribeChannel mocks base method.
+func (m *MockWorkflowServiceServer) DescribeChannel(arg0 context.Context, arg1 *workflowservice.DescribeChannelRequest) (*workflowservice.DescribeChannelResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DescribeChannel", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.DescribeChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DescribeChannel indicates an expected call of DescribeChannel.
+func (mr *MockWorkflowServiceServerMockRecorder) DescribeChannel(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeChannel", reflect.TypeOf((*MockWorkflowServiceServer)(nil).DescribeChannel), arg0, arg1)
+}
+
 // DescribeDeployment mocks base method.
 func (m *MockWorkflowServiceServer) DescribeDeployment(arg0 context.Context, arg1 *workflowservice.DescribeDeploymentRequest) (*workflowservice.DescribeDeploymentResponse, error) {
 	m.ctrl.T.Helper()
@@ -3362,6 +3477,21 @@ func (mr *MockWorkflowServiceServerMockRecorder) ListWorkflowRules(arg0, arg1 in
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkflowRules", reflect.TypeOf((*MockWorkflowServiceServer)(nil).ListWorkflowRules), arg0, arg1)
 }
 
+// NotifyChannel mocks base method.
+func (m *MockWorkflowServiceServer) NotifyChannel(arg0 context.Context, arg1 *workflowservice.NotifyChannelRequest) (*workflowservice.NotifyChannelResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "NotifyChannel", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.NotifyChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NotifyChannel indicates an expected call of NotifyChannel.
+func (mr *MockWorkflowServiceServerMockRecorder) NotifyChannel(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NotifyChannel", reflect.TypeOf((*MockWorkflowServiceServer)(nil).NotifyChannel), arg0, arg1)
+}
+
 // PatchSchedule mocks base method.
 func (m *MockWorkflowServiceServer) PatchSchedule(arg0 context.Context, arg1 *workflowservice.PatchScheduleRequest) (*workflowservice.PatchScheduleResponse, error) {
 	m.ctrl.T.Helper()
@@ -3450,6 +3580,21 @@ func (m *MockWorkflowServiceServer) PollActivityTaskQueue(arg0 context.Context, 
 func (mr *MockWorkflowServiceServerMockRecorder) PollActivityTaskQueue(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PollActivityTaskQueue", reflect.TypeOf((*MockWorkflowServiceServer)(nil).PollActivityTaskQueue), arg0, arg1)
+}
+
+// PollChannel mocks base method.
+func (m *MockWorkflowServiceServer) PollChannel(arg0 context.Context, arg1 *workflowservice.PollChannelRequest) (*workflowservice.PollChannelResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PollChannel", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.PollChannelResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PollChannel indicates an expected call of PollChannel.
+func (mr *MockWorkflowServiceServerMockRecorder) PollChannel(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PollChannel", reflect.TypeOf((*MockWorkflowServiceServer)(nil).PollChannel), arg0, arg1)
 }
 
 // PollNexusOperationExecution mocks base method.
@@ -3585,6 +3730,21 @@ func (m *MockWorkflowServiceServer) RecordWorkerHeartbeat(arg0 context.Context, 
 func (mr *MockWorkflowServiceServerMockRecorder) RecordWorkerHeartbeat(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecordWorkerHeartbeat", reflect.TypeOf((*MockWorkflowServiceServer)(nil).RecordWorkerHeartbeat), arg0, arg1)
+}
+
+// RegisterChannelListener mocks base method.
+func (m *MockWorkflowServiceServer) RegisterChannelListener(arg0 context.Context, arg1 *workflowservice.RegisterChannelListenerRequest) (*workflowservice.RegisterChannelListenerResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RegisterChannelListener", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.RegisterChannelListenerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RegisterChannelListener indicates an expected call of RegisterChannelListener.
+func (mr *MockWorkflowServiceServerMockRecorder) RegisterChannelListener(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterChannelListener", reflect.TypeOf((*MockWorkflowServiceServer)(nil).RegisterChannelListener), arg0, arg1)
 }
 
 // RegisterNamespace mocks base method.
@@ -4170,6 +4330,21 @@ func (m *MockWorkflowServiceServer) UnpauseWorkflowExecution(arg0 context.Contex
 func (mr *MockWorkflowServiceServerMockRecorder) UnpauseWorkflowExecution(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnpauseWorkflowExecution", reflect.TypeOf((*MockWorkflowServiceServer)(nil).UnpauseWorkflowExecution), arg0, arg1)
+}
+
+// UnregisterChannelListener mocks base method.
+func (m *MockWorkflowServiceServer) UnregisterChannelListener(arg0 context.Context, arg1 *workflowservice.UnregisterChannelListenerRequest) (*workflowservice.UnregisterChannelListenerResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UnregisterChannelListener", arg0, arg1)
+	ret0, _ := ret[0].(*workflowservice.UnregisterChannelListenerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UnregisterChannelListener indicates an expected call of UnregisterChannelListener.
+func (mr *MockWorkflowServiceServerMockRecorder) UnregisterChannelListener(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnregisterChannelListener", reflect.TypeOf((*MockWorkflowServiceServer)(nil).UnregisterChannelListener), arg0, arg1)
 }
 
 // UpdateActivityExecutionOptions mocks base method.
