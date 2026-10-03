@@ -25,6 +25,8 @@ var (
 		"ModifyWorkflowProperties":               16,
 		"ScheduleNexusOperation":                 17,
 		"RequestCancelNexusOperation":            18,
+		"SubscribeNotificationChannel":           19,
+		"UnsubscribeNotificationChannel":         20,
 	}
 )
 

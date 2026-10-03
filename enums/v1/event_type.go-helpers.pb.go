@@ -68,6 +68,8 @@ var (
 		"WorkflowExecutionPaused":                         58,
 		"WorkflowExecutionUnpaused":                       59,
 		"WorkflowExecutionTimeSkippingTransitioned":       60,
+		"WorkflowNotificationChannelSubscribed":           61,
+		"WorkflowNotificationChannelUnsubscribed":         62,
 	}
 )
 

@@ -48,6 +48,8 @@ var (
 		"ExternalStorageFailure":                              38,
 		"WorkflowPauseRequestedBeforeTaskStarted":             39,
 		"RequestTooLarge":                                     40,
+		"BadSubscribeNotificationChannelAttributes":           41,
+		"BadUnsubscribeNotificationChannelAttributes":         42,
 	}
 )
 
