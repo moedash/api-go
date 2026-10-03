@@ -2632,13 +2632,13 @@ func request_WorkflowService_NotifyChannel_2(ctx context.Context, marshaler runt
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["notification.channel"]
 	if !ok {
@@ -2672,13 +2672,13 @@ func local_request_WorkflowService_NotifyChannel_2(ctx context.Context, marshale
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["notification.channel"]
 	if !ok {
@@ -2709,13 +2709,13 @@ func request_WorkflowService_NotifyChannel_3(ctx context.Context, marshaler runt
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["notification.channel"]
 	if !ok {
@@ -2749,13 +2749,167 @@ func local_request_WorkflowService_NotifyChannel_3(ctx context.Context, marshale
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["notification.channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notification.channel")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "notification.channel", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notification.channel", err)
+	}
+	msg, err := server.NotifyChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_WorkflowService_NotifyChannel_4(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq NotifyChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["notification.channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notification.channel")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "notification.channel", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notification.channel", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.NotifyChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_NotifyChannel_4(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq NotifyChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["notification.channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notification.channel")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "notification.channel", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notification.channel", err)
+	}
+	msg, err := server.NotifyChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_WorkflowService_NotifyChannel_5(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq NotifyChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["notification.channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "notification.channel")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "notification.channel", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "notification.channel", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.NotifyChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_NotifyChannel_5(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq NotifyChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["notification.channel"]
 	if !ok {
@@ -2908,13 +3062,13 @@ func request_WorkflowService_RegisterChannelListener_2(ctx context.Context, mars
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -2948,13 +3102,13 @@ func local_request_WorkflowService_RegisterChannelListener_2(ctx context.Context
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -2985,13 +3139,13 @@ func request_WorkflowService_RegisterChannelListener_3(ctx context.Context, mars
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3025,13 +3179,167 @@ func local_request_WorkflowService_RegisterChannelListener_3(ctx context.Context
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	msg, err := server.RegisterChannelListener(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_WorkflowService_RegisterChannelListener_4(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq RegisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.RegisterChannelListener(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_RegisterChannelListener_4(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq RegisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	msg, err := server.RegisterChannelListener(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_WorkflowService_RegisterChannelListener_5(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq RegisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.RegisterChannelListener(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_RegisterChannelListener_5(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq RegisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3215,7 +3523,7 @@ func local_request_WorkflowService_UnregisterChannelListener_1(ctx context.Conte
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_UnregisterChannelListener_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
+var filter_WorkflowService_UnregisterChannelListener_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
 
 func request_WorkflowService_UnregisterChannelListener_2(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3231,13 +3539,13 @@ func request_WorkflowService_UnregisterChannelListener_2(ctx context.Context, ma
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3282,13 +3590,13 @@ func local_request_WorkflowService_UnregisterChannelListener_2(ctx context.Conte
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3316,7 +3624,7 @@ func local_request_WorkflowService_UnregisterChannelListener_2(ctx context.Conte
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_UnregisterChannelListener_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
+var filter_WorkflowService_UnregisterChannelListener_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
 
 func request_WorkflowService_UnregisterChannelListener_3(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3332,13 +3640,13 @@ func request_WorkflowService_UnregisterChannelListener_3(ctx context.Context, ma
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3383,13 +3691,13 @@ func local_request_WorkflowService_UnregisterChannelListener_3(ctx context.Conte
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3411,6 +3719,208 @@ func local_request_WorkflowService_UnregisterChannelListener_3(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_UnregisterChannelListener_3); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.UnregisterChannelListener(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_UnregisterChannelListener_4 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
+
+func request_WorkflowService_UnregisterChannelListener_4(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq UnregisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	val, ok = pathParams["listener_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "listener_id")
+	}
+	protoReq.ListenerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "listener_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_UnregisterChannelListener_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.UnregisterChannelListener(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_UnregisterChannelListener_4(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq UnregisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	val, ok = pathParams["listener_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "listener_id")
+	}
+	protoReq.ListenerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "listener_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_UnregisterChannelListener_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.UnregisterChannelListener(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_UnregisterChannelListener_5 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3, "listener_id": 4}, Base: []int{1, 1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 1, 2, 4, 5, 6}}
+
+func request_WorkflowService_UnregisterChannelListener_5(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq UnregisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	val, ok = pathParams["listener_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "listener_id")
+	}
+	protoReq.ListenerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "listener_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_UnregisterChannelListener_5); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.UnregisterChannelListener(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_UnregisterChannelListener_5(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq UnregisterChannelListenerRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	val, ok = pathParams["listener_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "listener_id")
+	}
+	protoReq.ListenerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "listener_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_UnregisterChannelListener_5); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.UnregisterChannelListener(ctx, &protoReq)
@@ -3555,7 +4065,7 @@ func local_request_WorkflowService_PollChannel_1(ctx context.Context, marshaler 
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_PollChannel_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+var filter_WorkflowService_PollChannel_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
 
 func request_WorkflowService_PollChannel_2(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3571,13 +4081,13 @@ func request_WorkflowService_PollChannel_2(ctx context.Context, marshaler runtim
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3614,13 +4124,13 @@ func local_request_WorkflowService_PollChannel_2(ctx context.Context, marshaler 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3640,7 +4150,7 @@ func local_request_WorkflowService_PollChannel_2(ctx context.Context, marshaler 
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_PollChannel_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+var filter_WorkflowService_PollChannel_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
 
 func request_WorkflowService_PollChannel_3(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3656,13 +4166,13 @@ func request_WorkflowService_PollChannel_3(ctx context.Context, marshaler runtim
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3699,13 +4209,13 @@ func local_request_WorkflowService_PollChannel_3(ctx context.Context, marshaler 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3719,6 +4229,176 @@ func local_request_WorkflowService_PollChannel_3(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_PollChannel_3); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.PollChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_PollChannel_4 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+
+func request_WorkflowService_PollChannel_4(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq PollChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_PollChannel_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.PollChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_PollChannel_4(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq PollChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_PollChannel_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.PollChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_PollChannel_5 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+
+func request_WorkflowService_PollChannel_5(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq PollChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_PollChannel_5); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.PollChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_PollChannel_5(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq PollChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_PollChannel_5); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.PollChannel(ctx, &protoReq)
@@ -3863,7 +4543,7 @@ func local_request_WorkflowService_DescribeChannel_1(ctx context.Context, marsha
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_DescribeChannel_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+var filter_WorkflowService_DescribeChannel_2 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
 
 func request_WorkflowService_DescribeChannel_2(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3879,13 +4559,13 @@ func request_WorkflowService_DescribeChannel_2(ctx context.Context, marshaler ru
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3922,13 +4602,13 @@ func local_request_WorkflowService_DescribeChannel_2(ctx context.Context, marsha
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -3948,7 +4628,7 @@ func local_request_WorkflowService_DescribeChannel_2(ctx context.Context, marsha
 	return msg, metadata, err
 }
 
-var filter_WorkflowService_DescribeChannel_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "workflow_execution": 1, "workflow_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+var filter_WorkflowService_DescribeChannel_3 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
 
 func request_WorkflowService_DescribeChannel_3(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -3964,13 +4644,13 @@ func request_WorkflowService_DescribeChannel_3(ctx context.Context, marshaler ru
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -4007,13 +4687,13 @@ func local_request_WorkflowService_DescribeChannel_3(ctx context.Context, marsha
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
-	val, ok = pathParams["workflow_execution.workflow_id"]
+	val, ok = pathParams["execution.business_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workflow_execution.workflow_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
 	}
-	err = runtime.PopulateFieldFromPath(&protoReq, "workflow_execution.workflow_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workflow_execution.workflow_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
 	}
 	val, ok = pathParams["channel"]
 	if !ok {
@@ -4027,6 +4707,176 @@ func local_request_WorkflowService_DescribeChannel_3(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_DescribeChannel_3); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.DescribeChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_DescribeChannel_4 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+
+func request_WorkflowService_DescribeChannel_4(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DescribeChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_DescribeChannel_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.DescribeChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_DescribeChannel_4(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DescribeChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_DescribeChannel_4); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.DescribeChannel(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+var filter_WorkflowService_DescribeChannel_5 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "execution": 1, "business_id": 2, "channel": 3}, Base: []int{1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 3, 1, 2, 4, 5}}
+
+func request_WorkflowService_DescribeChannel_5(ctx context.Context, marshaler runtime.Marshaler, client WorkflowServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DescribeChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_DescribeChannel_5); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.DescribeChannel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_WorkflowService_DescribeChannel_5(ctx context.Context, marshaler runtime.Marshaler, server WorkflowServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DescribeChannelRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["namespace"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
+	}
+	protoReq.Namespace, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
+	}
+	val, ok = pathParams["execution.business_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "execution.business_id")
+	}
+	err = runtime.PopulateFieldFromPath(&protoReq, "execution.business_id", val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "execution.business_id", err)
+	}
+	val, ok = pathParams["channel"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel")
+	}
+	protoReq.Channel, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WorkflowService_DescribeChannel_5); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.DescribeChannel(ctx, &protoReq)
@@ -15459,7 +16309,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{notification.channel}/notify"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{notification.channel}/notify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15479,7 +16329,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{notification.channel}/notify"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{notification.channel}/notify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15492,6 +16342,46 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_NotifyChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_NotifyChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{notification.channel}/notify"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_NotifyChannel_4(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_NotifyChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_NotifyChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{notification.channel}/notify"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_NotifyChannel_5(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_NotifyChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -15539,7 +16429,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15559,7 +16449,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15572,6 +16462,46 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_RegisterChannelListener_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_RegisterChannelListener_4(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_RegisterChannelListener_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_RegisterChannelListener_5(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_RegisterChannelListener_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -15619,7 +16549,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners/{listener_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15639,7 +16569,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners/{listener_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15652,6 +16582,46 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_UnregisterChannelListener_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_UnregisterChannelListener_4(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_UnregisterChannelListener_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_UnregisterChannelListener_5(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_UnregisterChannelListener_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -15699,7 +16669,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/notifications"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/notifications"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15719,7 +16689,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/notifications"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/notifications"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15732,6 +16702,46 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_PollChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/notifications"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_PollChannel_4(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_PollChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/notifications"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_PollChannel_5(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_PollChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -15779,7 +16789,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15799,7 +16809,7 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -15812,6 +16822,46 @@ func RegisterWorkflowServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_DescribeChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_DescribeChannel_4(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_DescribeChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_WorkflowService_DescribeChannel_5(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_DescribeChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodPost, pattern_WorkflowService_SignalWithStartWorkflowExecution_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -20085,7 +21135,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{notification.channel}/notify"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{notification.channel}/notify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20102,7 +21152,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{notification.channel}/notify"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{notification.channel}/notify"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20114,6 +21164,40 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_NotifyChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_NotifyChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{notification.channel}/notify"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_NotifyChannel_4(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_NotifyChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_NotifyChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/NotifyChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{notification.channel}/notify"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_NotifyChannel_5(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_NotifyChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -20153,7 +21237,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20170,7 +21254,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20182,6 +21266,40 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_RegisterChannelListener_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_RegisterChannelListener_4(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_RegisterChannelListener_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_WorkflowService_RegisterChannelListener_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/RegisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_RegisterChannelListener_5(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_RegisterChannelListener_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -20221,7 +21339,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners/{listener_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20238,7 +21356,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/listeners/{listener_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20250,6 +21368,40 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_UnregisterChannelListener_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_UnregisterChannelListener_4(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_UnregisterChannelListener_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_WorkflowService_UnregisterChannelListener_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/UnregisterChannelListener", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/listeners/{listener_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_UnregisterChannelListener_5(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_UnregisterChannelListener_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -20289,7 +21441,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/notifications"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/notifications"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20306,7 +21458,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}/notifications"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}/notifications"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20318,6 +21470,40 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_PollChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/notifications"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_PollChannel_4(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_PollChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_PollChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/PollChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}/notifications"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_PollChannel_5(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_PollChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -20357,7 +21543,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20374,7 +21560,7 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{workflow_execution.workflow_id}/channels/{channel}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/workflows/{execution.business_id}/channels/{channel}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -20386,6 +21572,40 @@ func RegisterWorkflowServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			return
 		}
 		forward_WorkflowService_DescribeChannel_3(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_4, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_DescribeChannel_4(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_DescribeChannel_4(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_WorkflowService_DescribeChannel_5, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/temporal.api.workflowservice.v1.WorkflowService/DescribeChannel", runtime.WithHTTPPathPattern("/api/v1/namespaces/{namespace}/activities/{execution.business_id}/channels/{channel}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_WorkflowService_DescribeChannel_5(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_WorkflowService_DescribeChannel_5(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	mux.Handle(http.MethodPost, pattern_WorkflowService_SignalWithStartWorkflowExecution_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -23393,24 +24613,34 @@ var (
 	pattern_WorkflowService_SignalWorkflowExecution_1                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "signal", "signal_name"}, ""))
 	pattern_WorkflowService_NotifyChannel_0                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"namespaces", "namespace", "channels", "notification.channel", "notify"}, ""))
 	pattern_WorkflowService_NotifyChannel_1                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "namespaces", "namespace", "channels", "notification.channel", "notify"}, ""))
-	pattern_WorkflowService_NotifyChannel_2                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "notification.channel", "notify"}, ""))
-	pattern_WorkflowService_NotifyChannel_3                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "notification.channel", "notify"}, ""))
+	pattern_WorkflowService_NotifyChannel_2                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "execution.business_id", "channels", "notification.channel", "notify"}, ""))
+	pattern_WorkflowService_NotifyChannel_3                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "execution.business_id", "channels", "notification.channel", "notify"}, ""))
+	pattern_WorkflowService_NotifyChannel_4                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "activities", "execution.business_id", "channels", "notification.channel", "notify"}, ""))
+	pattern_WorkflowService_NotifyChannel_5                                = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "activities", "execution.business_id", "channels", "notification.channel", "notify"}, ""))
 	pattern_WorkflowService_RegisterChannelListener_0                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"namespaces", "namespace", "channels", "channel", "listeners"}, ""))
 	pattern_WorkflowService_RegisterChannelListener_1                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "namespaces", "namespace", "channels", "channel", "listeners"}, ""))
-	pattern_WorkflowService_RegisterChannelListener_2                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "listeners"}, ""))
-	pattern_WorkflowService_RegisterChannelListener_3                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "listeners"}, ""))
+	pattern_WorkflowService_RegisterChannelListener_2                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "listeners"}, ""))
+	pattern_WorkflowService_RegisterChannelListener_3                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "listeners"}, ""))
+	pattern_WorkflowService_RegisterChannelListener_4                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "listeners"}, ""))
+	pattern_WorkflowService_RegisterChannelListener_5                      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "listeners"}, ""))
 	pattern_WorkflowService_UnregisterChannelListener_0                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"namespaces", "namespace", "channels", "channel", "listeners", "listener_id"}, ""))
 	pattern_WorkflowService_UnregisterChannelListener_1                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "channels", "channel", "listeners", "listener_id"}, ""))
-	pattern_WorkflowService_UnregisterChannelListener_2                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "listeners", "listener_id"}, ""))
-	pattern_WorkflowService_UnregisterChannelListener_3                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8, 1, 0, 4, 1, 5, 9}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "listeners", "listener_id"}, ""))
+	pattern_WorkflowService_UnregisterChannelListener_2                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "listeners", "listener_id"}, ""))
+	pattern_WorkflowService_UnregisterChannelListener_3                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8, 1, 0, 4, 1, 5, 9}, []string{"api", "v1", "namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "listeners", "listener_id"}, ""))
+	pattern_WorkflowService_UnregisterChannelListener_4                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "listeners", "listener_id"}, ""))
+	pattern_WorkflowService_UnregisterChannelListener_5                    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8, 1, 0, 4, 1, 5, 9}, []string{"api", "v1", "namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "listeners", "listener_id"}, ""))
 	pattern_WorkflowService_PollChannel_0                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"namespaces", "namespace", "channels", "channel", "notifications"}, ""))
 	pattern_WorkflowService_PollChannel_1                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "namespaces", "namespace", "channels", "channel", "notifications"}, ""))
-	pattern_WorkflowService_PollChannel_2                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "notifications"}, ""))
-	pattern_WorkflowService_PollChannel_3                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel", "notifications"}, ""))
+	pattern_WorkflowService_PollChannel_2                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "notifications"}, ""))
+	pattern_WorkflowService_PollChannel_3                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel", "notifications"}, ""))
+	pattern_WorkflowService_PollChannel_4                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "notifications"}, ""))
+	pattern_WorkflowService_PollChannel_5                                  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"api", "v1", "namespaces", "namespace", "activities", "execution.business_id", "channels", "channel", "notifications"}, ""))
 	pattern_WorkflowService_DescribeChannel_0                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"namespaces", "namespace", "channels", "channel"}, ""))
 	pattern_WorkflowService_DescribeChannel_1                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "namespaces", "namespace", "channels", "channel"}, ""))
-	pattern_WorkflowService_DescribeChannel_2                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel"}, ""))
-	pattern_WorkflowService_DescribeChannel_3                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "channels", "channel"}, ""))
+	pattern_WorkflowService_DescribeChannel_2                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel"}, ""))
+	pattern_WorkflowService_DescribeChannel_3                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "workflows", "execution.business_id", "channels", "channel"}, ""))
+	pattern_WorkflowService_DescribeChannel_4                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"namespaces", "namespace", "activities", "execution.business_id", "channels", "channel"}, ""))
+	pattern_WorkflowService_DescribeChannel_5                              = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "activities", "execution.business_id", "channels", "channel"}, ""))
 	pattern_WorkflowService_SignalWithStartWorkflowExecution_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"namespaces", "namespace", "workflows", "workflow_id", "signal-with-start", "signal_name"}, ""))
 	pattern_WorkflowService_SignalWithStartWorkflowExecution_1             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "namespaces", "namespace", "workflows", "workflow_id", "signal-with-start", "signal_name"}, ""))
 	pattern_WorkflowService_ResetWorkflowExecution_0                       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"namespaces", "namespace", "workflows", "workflow_execution.workflow_id", "reset"}, ""))
@@ -23634,22 +24864,32 @@ var (
 	forward_WorkflowService_NotifyChannel_1                                = runtime.ForwardResponseMessage
 	forward_WorkflowService_NotifyChannel_2                                = runtime.ForwardResponseMessage
 	forward_WorkflowService_NotifyChannel_3                                = runtime.ForwardResponseMessage
+	forward_WorkflowService_NotifyChannel_4                                = runtime.ForwardResponseMessage
+	forward_WorkflowService_NotifyChannel_5                                = runtime.ForwardResponseMessage
 	forward_WorkflowService_RegisterChannelListener_0                      = runtime.ForwardResponseMessage
 	forward_WorkflowService_RegisterChannelListener_1                      = runtime.ForwardResponseMessage
 	forward_WorkflowService_RegisterChannelListener_2                      = runtime.ForwardResponseMessage
 	forward_WorkflowService_RegisterChannelListener_3                      = runtime.ForwardResponseMessage
+	forward_WorkflowService_RegisterChannelListener_4                      = runtime.ForwardResponseMessage
+	forward_WorkflowService_RegisterChannelListener_5                      = runtime.ForwardResponseMessage
 	forward_WorkflowService_UnregisterChannelListener_0                    = runtime.ForwardResponseMessage
 	forward_WorkflowService_UnregisterChannelListener_1                    = runtime.ForwardResponseMessage
 	forward_WorkflowService_UnregisterChannelListener_2                    = runtime.ForwardResponseMessage
 	forward_WorkflowService_UnregisterChannelListener_3                    = runtime.ForwardResponseMessage
+	forward_WorkflowService_UnregisterChannelListener_4                    = runtime.ForwardResponseMessage
+	forward_WorkflowService_UnregisterChannelListener_5                    = runtime.ForwardResponseMessage
 	forward_WorkflowService_PollChannel_0                                  = runtime.ForwardResponseMessage
 	forward_WorkflowService_PollChannel_1                                  = runtime.ForwardResponseMessage
 	forward_WorkflowService_PollChannel_2                                  = runtime.ForwardResponseMessage
 	forward_WorkflowService_PollChannel_3                                  = runtime.ForwardResponseMessage
+	forward_WorkflowService_PollChannel_4                                  = runtime.ForwardResponseMessage
+	forward_WorkflowService_PollChannel_5                                  = runtime.ForwardResponseMessage
 	forward_WorkflowService_DescribeChannel_0                              = runtime.ForwardResponseMessage
 	forward_WorkflowService_DescribeChannel_1                              = runtime.ForwardResponseMessage
 	forward_WorkflowService_DescribeChannel_2                              = runtime.ForwardResponseMessage
 	forward_WorkflowService_DescribeChannel_3                              = runtime.ForwardResponseMessage
+	forward_WorkflowService_DescribeChannel_4                              = runtime.ForwardResponseMessage
+	forward_WorkflowService_DescribeChannel_5                              = runtime.ForwardResponseMessage
 	forward_WorkflowService_SignalWithStartWorkflowExecution_0             = runtime.ForwardResponseMessage
 	forward_WorkflowService_SignalWithStartWorkflowExecution_1             = runtime.ForwardResponseMessage
 	forward_WorkflowService_ResetWorkflowExecution_0                       = runtime.ForwardResponseMessage
