@@ -93,9 +93,13 @@ func (StreamRecordKind) EnumDescriptor() ([]byte, []int) {
 // serialized as is and readers in every language decode the same bytes.
 type StreamRecord struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The value the producer published, stored as sent. A stream provider
-	// writes and reads it as part of the record, so applying a payload codec
-	// to it is the provider's job.
+	// The value the producer published, stored as sent.
+	//
+	// A payload codec applies on the paths this API owns: the append command on
+	// RespondWorkflowTaskCompleted, and the slices on PollWorkflowTaskQueue.
+	// Records a producer writes or reads through the stream service take a
+	// different path, whose messages are not part of this API yet and so are
+	// outside what a codec-applying proxy walks.
 	Body *v1.Payload `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	// Producer-supplied provenance, stored as sent.
 	Metadata map[string]*v1.Payload `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
@@ -195,6 +199,313 @@ func (x *StreamRecord) GetSequence() int64 {
 	return 0
 }
 
+// A contiguous range of a stream delivered to a Workflow Task, along with the
+// offsets it covers. The offsets are what History records; the records
+// themselves are never written to History.
+type StreamSlice struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The stream, as the subscribing command addressed it: either the name of
+	// a stream the consuming Workflow owns or the id of one in another
+	// execution.
+	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	// Run id of the execution that owns the stream. Set on both a slice for the
+	// task being started and a re-supplied one.
+	RunId string `protobuf:"bytes,2,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	// Inclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	FromOffset int64 `protobuf:"varint,3,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
+	// Exclusive. Equal to from_offset when the subscription observed nothing,
+	// which is a fact replay has to reproduce rather than an absence of one.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	ToOffset int64           `protobuf:"varint,4,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
+	Records  []*StreamRecord `protobuf:"bytes,5,rep,name=records,proto3" json:"records,omitempty"`
+	// The WorkflowTaskCompleted event whose consumed_stream_ranges recorded
+	// this range. Set only when the server is re-supplying a range for a task
+	// being replayed; a slice for the task now being started leaves it unset,
+	// because the event closing that task does not exist yet.
+	//
+	// Replay needs this because a Workflow Task response carries one slice set
+	// while a cache miss replays every prior task, so the ranges have to be
+	// matched to the events that recorded them rather than to the response.
+	WorkflowTaskCompletedEventId int64 `protobuf:"varint,6,opt,name=workflow_task_completed_event_id,json=workflowTaskCompletedEventId,proto3" json:"workflow_task_completed_event_id,omitempty"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
+}
+
+func (x *StreamSlice) Reset() {
+	*x = StreamSlice{}
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamSlice) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamSlice) ProtoMessage() {}
+
+func (x *StreamSlice) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamSlice.ProtoReflect.Descriptor instead.
+func (*StreamSlice) Descriptor() ([]byte, []int) {
+	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *StreamSlice) GetStreamId() string {
+	if x != nil {
+		return x.StreamId
+	}
+	return ""
+}
+
+func (x *StreamSlice) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
+func (x *StreamSlice) GetFromOffset() int64 {
+	if x != nil {
+		return x.FromOffset
+	}
+	return 0
+}
+
+func (x *StreamSlice) GetToOffset() int64 {
+	if x != nil {
+		return x.ToOffset
+	}
+	return 0
+}
+
+func (x *StreamSlice) GetRecords() []*StreamRecord {
+	if x != nil {
+		return x.Records
+	}
+	return nil
+}
+
+func (x *StreamSlice) GetWorkflowTaskCompletedEventId() int64 {
+	if x != nil {
+		return x.WorkflowTaskCompletedEventId
+	}
+	return 0
+}
+
+// The offsets a Workflow Task consumed, without the payloads. Recorded on
+// WorkflowTaskCompleted so History grows with Workflow Tasks rather than with
+// records.
+type StreamRange struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The stream, as the subscribing command addressed it: either the name of
+	// a stream the consuming Workflow owns or the id of one in another
+	// execution.
+	StreamId string `protobuf:"bytes,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	// Inclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	FromOffset int64 `protobuf:"varint,2,opt,name=from_offset,json=fromOffset,proto3" json:"from_offset,omitempty"`
+	// Exclusive.
+	// (-- api-linter: core::0140::prepositions=disabled
+	//
+	//	aip.dev/not-precedent: "from" and "to" name a half-open offset range. --)
+	ToOffset      int64 `protobuf:"varint,3,opt,name=to_offset,json=toOffset,proto3" json:"to_offset,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamRange) Reset() {
+	*x = StreamRange{}
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamRange) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamRange) ProtoMessage() {}
+
+func (x *StreamRange) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamRange.ProtoReflect.Descriptor instead.
+func (*StreamRange) Descriptor() ([]byte, []int) {
+	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *StreamRange) GetStreamId() string {
+	if x != nil {
+		return x.StreamId
+	}
+	return ""
+}
+
+func (x *StreamRange) GetFromOffset() int64 {
+	if x != nil {
+		return x.FromOffset
+	}
+	return 0
+}
+
+func (x *StreamRange) GetToOffset() int64 {
+	if x != nil {
+		return x.ToOffset
+	}
+	return 0
+}
+
+// Where a new subscription or read begins. The server resolves it against the
+// stream as it stands in the same transaction that registers the reader, so
+// the result does not race with appends or truncation, and records the
+// resolved absolute offset.
+type StreamStartPosition struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Position:
+	//
+	//	*StreamStartPosition_Offset
+	//	*StreamStartPosition_LastN
+	//	*StreamStartPosition_Earliest
+	//	*StreamStartPosition_Tail
+	Position      isStreamStartPosition_Position `protobuf_oneof:"position"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamStartPosition) Reset() {
+	*x = StreamStartPosition{}
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamStartPosition) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamStartPosition) ProtoMessage() {}
+
+func (x *StreamStartPosition) ProtoReflect() protoreflect.Message {
+	mi := &file_temporal_api_stream_v1_message_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamStartPosition.ProtoReflect.Descriptor instead.
+func (*StreamStartPosition) Descriptor() ([]byte, []int) {
+	return file_temporal_api_stream_v1_message_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *StreamStartPosition) GetPosition() isStreamStartPosition_Position {
+	if x != nil {
+		return x.Position
+	}
+	return nil
+}
+
+func (x *StreamStartPosition) GetOffset() int64 {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Offset); ok {
+			return x.Offset
+		}
+	}
+	return 0
+}
+
+func (x *StreamStartPosition) GetLastN() int64 {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_LastN); ok {
+			return x.LastN
+		}
+	}
+	return 0
+}
+
+func (x *StreamStartPosition) GetEarliest() bool {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Earliest); ok {
+			return x.Earliest
+		}
+	}
+	return false
+}
+
+func (x *StreamStartPosition) GetTail() bool {
+	if x != nil {
+		if x, ok := x.Position.(*StreamStartPosition_Tail); ok {
+			return x.Tail
+		}
+	}
+	return false
+}
+
+type isStreamStartPosition_Position interface {
+	isStreamStartPosition_Position()
+}
+
+type StreamStartPosition_Offset struct {
+	// Absolute and inclusive. Refused when below the stream's floor.
+	Offset int64 `protobuf:"varint,1,opt,name=offset,proto3,oneof"`
+}
+
+type StreamStartPosition_LastN struct {
+	// The last N records the stream holds, or all of them when it holds
+	// fewer. Counts records of every kind. Must be positive.
+	LastN int64 `protobuf:"varint,2,opt,name=last_n,json=lastN,proto3,oneof"`
+}
+
+type StreamStartPosition_Earliest struct {
+	// The oldest record the stream still holds. Must be true.
+	Earliest bool `protobuf:"varint,3,opt,name=earliest,proto3,oneof"`
+}
+
+type StreamStartPosition_Tail struct {
+	// Only records appended after registration: the stream's head offset.
+	// Must be true.
+	Tail bool `protobuf:"varint,4,opt,name=tail,proto3,oneof"`
+}
+
+func (*StreamStartPosition_Offset) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_LastN) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_Earliest) isStreamStartPosition_Position() {}
+
+func (*StreamStartPosition_Tail) isStreamStartPosition_Position() {}
+
 var File_temporal_api_stream_v1_message_proto protoreflect.FileDescriptor
 
 const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
@@ -211,7 +522,27 @@ const file_temporal_api_stream_v1_message_proto_rawDesc = "" +
 	"\bsequence\x18\a \x01(\x03R\bsequence\x1a\\\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01*r\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.temporal.api.common.v1.PayloadR\x05value:\x028\x01\"\x87\x02\n" +
+	"\vStreamSlice\x12\x1b\n" +
+	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x15\n" +
+	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12\x1f\n" +
+	"\vfrom_offset\x18\x03 \x01(\x03R\n" +
+	"fromOffset\x12\x1b\n" +
+	"\tto_offset\x18\x04 \x01(\x03R\btoOffset\x12>\n" +
+	"\arecords\x18\x05 \x03(\v2$.temporal.api.stream.v1.StreamRecordR\arecords\x12F\n" +
+	" workflow_task_completed_event_id\x18\x06 \x01(\x03R\x1cworkflowTaskCompletedEventId\"h\n" +
+	"\vStreamRange\x12\x1b\n" +
+	"\tstream_id\x18\x01 \x01(\tR\bstreamId\x12\x1f\n" +
+	"\vfrom_offset\x18\x02 \x01(\x03R\n" +
+	"fromOffset\x12\x1b\n" +
+	"\tto_offset\x18\x03 \x01(\x03R\btoOffset\"\x88\x01\n" +
+	"\x13StreamStartPosition\x12\x18\n" +
+	"\x06offset\x18\x01 \x01(\x03H\x00R\x06offset\x12\x17\n" +
+	"\x06last_n\x18\x02 \x01(\x03H\x00R\x05lastN\x12\x1c\n" +
+	"\bearliest\x18\x03 \x01(\bH\x00R\bearliest\x12\x14\n" +
+	"\x04tail\x18\x04 \x01(\bH\x00R\x04tailB\n" +
+	"\n" +
+	"\bposition*r\n" +
 	"\x10StreamRecordKind\x12\"\n" +
 	"\x1eSTREAM_RECORD_KIND_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17STREAM_RECORD_KIND_DATA\x10\x01\x12\x1d\n" +
@@ -231,23 +562,27 @@ func file_temporal_api_stream_v1_message_proto_rawDescGZIP() []byte {
 }
 
 var file_temporal_api_stream_v1_message_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_temporal_api_stream_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_temporal_api_stream_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_temporal_api_stream_v1_message_proto_goTypes = []any{
-	(StreamRecordKind)(0), // 0: temporal.api.stream.v1.StreamRecordKind
-	(*StreamRecord)(nil),  // 1: temporal.api.stream.v1.StreamRecord
-	nil,                   // 2: temporal.api.stream.v1.StreamRecord.MetadataEntry
-	(*v1.Payload)(nil),    // 3: temporal.api.common.v1.Payload
+	(StreamRecordKind)(0),       // 0: temporal.api.stream.v1.StreamRecordKind
+	(*StreamRecord)(nil),        // 1: temporal.api.stream.v1.StreamRecord
+	(*StreamSlice)(nil),         // 2: temporal.api.stream.v1.StreamSlice
+	(*StreamRange)(nil),         // 3: temporal.api.stream.v1.StreamRange
+	(*StreamStartPosition)(nil), // 4: temporal.api.stream.v1.StreamStartPosition
+	nil,                         // 5: temporal.api.stream.v1.StreamRecord.MetadataEntry
+	(*v1.Payload)(nil),          // 6: temporal.api.common.v1.Payload
 }
 var file_temporal_api_stream_v1_message_proto_depIdxs = []int32{
-	3, // 0: temporal.api.stream.v1.StreamRecord.body:type_name -> temporal.api.common.v1.Payload
-	2, // 1: temporal.api.stream.v1.StreamRecord.metadata:type_name -> temporal.api.stream.v1.StreamRecord.MetadataEntry
+	6, // 0: temporal.api.stream.v1.StreamRecord.body:type_name -> temporal.api.common.v1.Payload
+	5, // 1: temporal.api.stream.v1.StreamRecord.metadata:type_name -> temporal.api.stream.v1.StreamRecord.MetadataEntry
 	0, // 2: temporal.api.stream.v1.StreamRecord.kind:type_name -> temporal.api.stream.v1.StreamRecordKind
-	3, // 3: temporal.api.stream.v1.StreamRecord.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	1, // 3: temporal.api.stream.v1.StreamSlice.records:type_name -> temporal.api.stream.v1.StreamRecord
+	6, // 4: temporal.api.stream.v1.StreamRecord.MetadataEntry.value:type_name -> temporal.api.common.v1.Payload
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_temporal_api_stream_v1_message_proto_init() }
@@ -255,13 +590,19 @@ func file_temporal_api_stream_v1_message_proto_init() {
 	if File_temporal_api_stream_v1_message_proto != nil {
 		return
 	}
+	file_temporal_api_stream_v1_message_proto_msgTypes[3].OneofWrappers = []any{
+		(*StreamStartPosition_Offset)(nil),
+		(*StreamStartPosition_LastN)(nil),
+		(*StreamStartPosition_Earliest)(nil),
+		(*StreamStartPosition_Tail)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_temporal_api_stream_v1_message_proto_rawDesc), len(file_temporal_api_stream_v1_message_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

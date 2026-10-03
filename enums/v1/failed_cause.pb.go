@@ -109,6 +109,14 @@ const (
 	WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES WorkflowTaskFailedCause = 41
 	// An UnsubscribeNotificationChannel command named an empty or too-long channel.
 	WORKFLOW_TASK_FAILED_CAUSE_BAD_UNSUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES WorkflowTaskFailedCause = 42
+	// A workflow task completed with an invalid AppendStreamRecords command.
+	WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES WorkflowTaskFailedCause = 43
+	// A workflow task completed with an invalid SubscribeStream command.
+	WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES WorkflowTaskFailedCause = 44
+	// A workflow task could not be started because a stream range it consumed and recorded in
+	// History can no longer be served, for example after truncation or because it exceeds the
+	// replay bound. Check the workflow task failure message for more information.
+	WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE WorkflowTaskFailedCause = 45
 )
 
 // Enum value maps for WorkflowTaskFailedCause.
@@ -157,6 +165,9 @@ var (
 		40: "WORKFLOW_TASK_FAILED_CAUSE_REQUEST_TOO_LARGE",
 		41: "WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES",
 		42: "WORKFLOW_TASK_FAILED_CAUSE_BAD_UNSUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES",
+		43: "WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES",
+		44: "WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES",
+		45: "WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE",
 	}
 	WorkflowTaskFailedCause_value = map[string]int32{
 		"WORKFLOW_TASK_FAILED_CAUSE_UNSPECIFIED":                                               0,
@@ -202,6 +213,9 @@ var (
 		"WORKFLOW_TASK_FAILED_CAUSE_REQUEST_TOO_LARGE":                                         40,
 		"WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES":             41,
 		"WORKFLOW_TASK_FAILED_CAUSE_BAD_UNSUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES":           42,
+		"WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES":                      43,
+		"WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES":                           44,
+		"WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE":                                  45,
 	}
 )
 
@@ -322,6 +336,12 @@ func (x WorkflowTaskFailedCause) String() string {
 		return "BadUnsubscribeNotificationChannelAttributes"
 
 		// Enum value maps for StartChildWorkflowExecutionFailedCause.
+	case WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES:
+		return "BadAppendStreamRecordsAttributes"
+	case WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES:
+		return "BadSubscribeStreamAttributes"
+	case WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE:
+		return "StreamRangeUnavailable"
 	default:
 		return strconv.Itoa(int(x))
 	}
@@ -779,7 +799,7 @@ var File_temporal_api_enums_v1_failed_cause_proto protoreflect.FileDescriptor
 
 const file_temporal_api_enums_v1_failed_cause_proto_rawDesc = "" +
 	"\n" +
-	"(temporal/api/enums/v1/failed_cause.proto\x12\x15temporal.api.enums.v1*\xae\x15\n" +
+	"(temporal/api/enums/v1/failed_cause.proto\x12\x15temporal.api.enums.v1*\xec\x16\n" +
 	"\x17WorkflowTaskFailedCause\x12*\n" +
 	"&WORKFLOW_TASK_FAILED_CAUSE_UNSPECIFIED\x10\x00\x120\n" +
 	",WORKFLOW_TASK_FAILED_CAUSE_UNHANDLED_COMMAND\x10\x01\x12?\n" +
@@ -824,7 +844,10 @@ const file_temporal_api_enums_v1_failed_cause_proto_rawDesc = "" +
 	"GWORKFLOW_TASK_FAILED_CAUSE_WORKFLOW_PAUSE_REQUESTED_BEFORE_TASK_STARTED\x10'\x120\n" +
 	",WORKFLOW_TASK_FAILED_CAUSE_REQUEST_TOO_LARGE\x10(\x12L\n" +
 	"HWORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES\x10)\x12N\n" +
-	"JWORKFLOW_TASK_FAILED_CAUSE_BAD_UNSUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES\x10**\xf3\x01\n" +
+	"JWORKFLOW_TASK_FAILED_CAUSE_BAD_UNSUBSCRIBE_NOTIFICATION_CHANNEL_ATTRIBUTES\x10*\x12C\n" +
+	"?WORKFLOW_TASK_FAILED_CAUSE_BAD_APPEND_STREAM_RECORDS_ATTRIBUTES\x10+\x12>\n" +
+	":WORKFLOW_TASK_FAILED_CAUSE_BAD_SUBSCRIBE_STREAM_ATTRIBUTES\x10,\x127\n" +
+	"3WORKFLOW_TASK_FAILED_CAUSE_STREAM_RANGE_UNAVAILABLE\x10-*\xf3\x01\n" +
 	"\x17ActivityTaskFailedCause\x12*\n" +
 	"&ACTIVITY_TASK_FAILED_CAUSE_UNSPECIFIED\x10\x00\x121\n" +
 	"-ACTIVITY_TASK_FAILED_CAUSE_PAYLOADS_TOO_LARGE\x10\x01\x127\n" +
